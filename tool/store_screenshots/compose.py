@@ -218,16 +218,19 @@ LAYOUTS = {
 # specifications; the store may crop everything outside it), the iPhone
 # screens it shows, each with its centre x, top and width in pixels, its turn
 # and its class, and the box its words are centred in with the size of their
-# type unit, when it has words. The top of every phone and all the words are
-# inside the safe area; only the phones' lower halves run out of it.
+# type unit, when it has words. An iPhone in portrait shows much more than the
+# safe area: the whole search image, and the header's full height and middle
+# two thirds, under the status bar and the page's buttons (Apple's renders in
+# App Store asset best practices). So the phones are sized for that view and
+# run out of the safe area, and only the words are kept inside it.
 CREATIVE = {
     "header": {
         "size": (3840, 1646),
         "safe": (1097, 493, 1646, 661),
         "phones": [
-            ("look-editor-colour", 1480, 600, 470, -7, "back"),
-            ("live-view", 2360, 600, 470, 7, "back"),
-            ("library", 1920, 500, 560, 0, ""),
+            ("look-editor-colour", 1180, 700, 760, -7, "back"),
+            ("live-view", 2660, 700, 760, 7, "back"),
+            ("library", 1920, 560, 900, 0, ""),
         ],
         "words": None,
     },
@@ -235,11 +238,11 @@ CREATIVE = {
         "size": (3840, 2560),
         "safe": (836, 765, 2168, 1030),
         "phones": [
-            ("look-editor-colour", 2090, 900, 500, -7, "back"),
-            ("live-view", 2730, 900, 500, 7, "back"),
-            ("library", 2410, 775, 620, 0, ""),
+            ("look-editor-colour", 2480, 820, 800, -7, "back"),
+            ("live-view", 3540, 820, 800, 7, "back"),
+            ("library", 3010, 640, 1000, 0, ""),
         ],
-        "words": ((860, 765, 900, 1030), 13.6),
+        "words": ((860, 765, 1120, 1030), 19),
     },
 }
 CREATIVE_GLOW = "#6EA8FF"
@@ -254,18 +257,22 @@ body { display: block; }
 }
 .stage { position: absolute; inset: 0; }
 .words { position: absolute; display: flex; flex-direction: column; justify-content: center; }
-.words p { max-width: none; }
+.words p { max-width: none; font-size: calc(var(--u) * 4.6); }
 """
 
 # A title with a word wider than the box of the words (Finnish and Turkish
-# have one) would run under the phones, and one of four lines (Greek) fills
-# the safe area's height, so the type shrinks until the title fits in three.
+# have one) would run under the phones, one of four lines (Greek) is too much
+# for the space, and words taller than their box would run out of the safe
+# area, so the type shrinks until the title fits in three lines and all the
+# words fit in the box.
 CREATIVE_FIT = """
 document.fonts.ready.then(() => {
+  const words = document.querySelector('.words');
   const title = document.querySelector('.words h1');
   const tooBig = () =>
     title.scrollWidth > title.clientWidth ||
-    title.offsetHeight > 3.2 * parseFloat(getComputedStyle(title).lineHeight);
+    title.offsetHeight > 3.2 * parseFloat(getComputedStyle(title).lineHeight) ||
+    words.firstElementChild.getBoundingClientRect().top < words.getBoundingClientRect().top;
   let unit = parseFloat(document.body.style.getPropertyValue('--u'));
   while (title && tooBig() && unit > 6) {
     unit -= 0.2;
