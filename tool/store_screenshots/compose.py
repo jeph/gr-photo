@@ -504,14 +504,17 @@ def creative(locale, device, table, folder):
     if not assets:
         return
     raw = WORK / "raw" / device / locale
-    (folder / "creative" / locale).mkdir(parents=True, exist_ok=True)
+    # Each device's own: toned() keeps a screen by its name, which the
+    # devices share.
+    toned_screens = folder / "creative" / device / locale
+    toned_screens.mkdir(parents=True, exist_ok=True)
     caption = captions(locale, device)["overview"]
     out = WORK / "out" / "creative" / locale
     out.mkdir(parents=True, exist_ok=True)
     for name, asset in assets.items():
         width, height = asset["size"]
         screens = {
-            shown: toned(raw / f"{shown}.png", table, folder / "creative" / locale)
+            shown: toned(raw / f"{shown}.png", table, toned_screens)
             for shown, *_ in asset["phones"]
         }
         ratio = aspect(next(iter(screens.values())))
