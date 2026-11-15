@@ -12,6 +12,10 @@
 </p>
 
 <p align="center">
+  <a href="https://apps.apple.com/app/id6833800832"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/zh-tw" alt="在 App Store 下載" height="48"></a>
+</p>
+
+<p align="center">
   <a href="../../README.md">English</a> ·
   <a href="README.fr.md">Français</a> ·
   <a href="README.de.md">Deutsch</a> ·

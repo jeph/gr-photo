@@ -12,6 +12,10 @@
 </p>
 
 <p align="center">
+  <a href="https://apps.apple.com/app/id6833800832"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/fr-fr" alt="Télécharger dans l'App Store" height="48"></a>
+</p>
+
+<p align="center">
   <a href="../../README.md">English</a> ·
   <b>Français</b> ·
   <a href="README.de.md">Deutsch</a> ·
