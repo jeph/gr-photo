@@ -5,6 +5,10 @@
 # still gets it. .github/workflows/release.yml runs this in a job that holds
 # the Play publishing credential and nothing else.
 #
+# While the app is still a draft in Play Console (it has never been through
+# Google's review), Play accepts only draft releases. The release is then left
+# as a draft on the track, to be sent for review from Play Console.
+#
 # Adapted from scripts/upload-play-bundle.sh of Pipkin (github.com/jeph/pipkin,
 # v0.0.22, MIT License).
 #
@@ -76,10 +80,29 @@ else
   fi
 fi
 
-jq -n --arg track "$PLAY_TRACK" --arg name "$VERSION_NAME" --arg code "$VERSION_CODE" \
-  '{track: $track, releases: [{name: $name, versionCodes: [$code], status: "completed"}]}' |
-  play --request PUT --header 'Content-Type: application/json' --data-binary @- \
-    "$api/edits/$edit/tracks/$PLAY_TRACK" >/dev/null
+# Sets the track to this version alone, with the given release status.
+put_release() {
+  jq -n --arg track "$PLAY_TRACK" --arg name "$VERSION_NAME" --arg code "$VERSION_CODE" --arg status "$1" \
+    '{track: $track, releases: [{name: $name, versionCodes: [$code], status: $status}]}' |
+    play --request PUT --header 'Content-Type: application/json' --data-binary @- \
+      "$api/edits/$edit/tracks/$PLAY_TRACK" >/dev/null
+}
+
+put_release completed
+status=completed
+if ! validation=$(play --request POST "$api/edits/$edit:validate" 2>&1); then
+  if ! grep -q 'Only releases with status draft may be created on draft app' <<<"$validation"; then
+    printf '%s\n' "$validation" >&2
+    exit 1
+  fi
+  echo "The app is still a draft in Play Console, so the release is left as a draft"
+  put_release draft
+  status=draft
+fi
 
 play --request POST "$api/edits/$edit:commit" >/dev/null
-echo "Released $VERSION_NAME ($VERSION_CODE) on the $PLAY_TRACK track"
+if [[ "$status" == draft ]]; then
+  echo "Added $VERSION_NAME ($VERSION_CODE) to the $PLAY_TRACK track as a draft; send it for review in Play Console"
+else
+  echo "Released $VERSION_NAME ($VERSION_CODE) on the $PLAY_TRACK track"
+fi
