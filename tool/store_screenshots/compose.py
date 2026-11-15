@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
-"""Composes the App Store screenshots, and the images for the top of the
-product page and for search results, from the raw screens run.sh took.
+"""Composes the App Store and Google Play screenshots, the images for the top
+of the App Store's product page and for its search results, Google Play's
+feature graphic and its app icon, from the raw screens run.sh took.
 
     tool/store_screenshots/compose.py [locale ...]
 
 Reads build/store-screenshots/raw/<device>/<locale>/*.png and
 captions/<locale>.json, lays each screenshot out as a web page (a caption,
-set left, above the screen in a drawn device that runs off the bottom edge) and has headless Google Chrome render it at the size the
-App Store takes. The results are
-build/store-screenshots/out/<device>/<locale>/NN-<shot>.jpg, and
-out/creative/<locale>/header.png and search.jpg, which show three phones on
-the same background, the search one beside the caption of the first
-screenshot (CREATIVE). Without arguments it composes every locale run.sh has
-taken. Needs Google Chrome and
-ImageMagick 7 (`magick`).
+set left, above the screen in a drawn device that runs off the bottom edge)
+and has headless Google Chrome render it at the size the store takes. The
+results are build/store-screenshots/out/<device>/<locale>/NN-<shot>.jpg
+(`android` for Google Play, a generic phone with a punch-hole camera), and
+out/creative/<locale>/header.png and search.jpg, which show three iPhones
+on the same background, the search one beside the caption of the first
+screenshot, and feature.png, Google Play's, which shows three Android
+screens beside it (CREATIVE). Google Play takes up to eight screenshots, and
+SHOTS has seven, so both stores show the same ones. out/play-icon.png is
+Google Play's app icon. Without arguments it composes every locale run.sh
+has taken. Needs Google Chrome, ImageMagick 7 (`magick`) and resvg.
 
 The photos on the simulated card are vivid ones, and a screen full of them
 outshines its caption, so each screen is shown a little calmer than the
@@ -39,13 +43,17 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 # The sizes App Store Connect takes for the 6.9-inch iPhone, the 13-inch
 # iPad and the open iPhone Duo, which are also what the simulators'
-# screenshots measure, and the type unit of each as a share of a hundredth
-# of its width: less on the wider canvases, so the caption keeps its
-# proportions.
+# screenshots measure, and the one Google Play takes for a phone (9:16, at
+# least 1080 px a side for the listing to be promoted, where an emulator's
+# screen is taller), and the type unit of each as a share of a hundredth of
+# its width: less on the wider canvases, so the caption keeps its
+# proportions, and less on Google Play's, which asks for captions that take
+# up no more than a fifth of a screenshot.
 DEVICES = {
     "iphone": {"width": 1320, "height": 2868, "unit": 1.0},
     "ipad": {"width": 2064, "height": 2752, "unit": 0.7},
     "duo": {"width": 2853, "height": 2007, "unit": 0.5},
+    "android": {"width": 1080, "height": 1920, "unit": 0.84},
 }
 
 # Each shot in the order of the listing: its caption key, its layout, the raw
@@ -162,6 +170,7 @@ p {
 .iphone { --bezel: .021; --radius: .152; }
 .ipad { --bezel: .028; --radius: .062; }
 .duo { --bezel: .011; --radius: .043; }
+.android { --bezel: .024; --radius: .118; }
 /* The fold of the open display. */
 .duo::after {
   content: ""; position: absolute; top: calc(var(--w) * var(--bezel));
@@ -175,6 +184,21 @@ p {
   width: calc(var(--w) * .276); height: calc(var(--w) * .081);
   transform: translateX(-50%%); border-radius: 999px; background: #000;
 }
+/* A generic Android phone: a punch-hole camera in the middle of the status
+   bar, and the power key above the volume rocker on its right edge. */
+.android .hole {
+  position: absolute; left: 50%%; top: calc(var(--w) * (var(--bezel) + .062));
+  width: calc(var(--w) * .036); height: calc(var(--w) * .036);
+  transform: translate(-50%%, -50%%); border-radius: 50%%;
+  background: radial-gradient(circle at 40%% 38%%, #23262E, #000 62%%);
+}
+.android::before, .android::after {
+  content: ""; position: absolute; right: calc(var(--w) * -.014);
+  width: calc(var(--w) * .012); border-radius: calc(var(--w) * .006);
+  background: #26262A;
+}
+.android::before { top: 20%%; height: 7%%; }
+.android::after { top: 30%%; height: 14%%; }
 """
 
 # Where the devices of each layout stand on the stage, the part of the canvas
@@ -209,22 +233,46 @@ LAYOUTS = {
         ],
         "pair": [(0.67, 0.03, 0.62, 0, ""), (0.33, 0.42, 0.62, 0, "")],
     },
+    # The canvas is shorter for its width than an iPhone's, so the stage is
+    # too, and the phones stand taller on it to be as wide.
+    "android": {
+        "single": [(0.5, 0.045, 1.24, 0, "")],
+        "trio": [
+            (0.16, 0.185, 0.92, -8, "back"),
+            (0.84, 0.185, 0.92, 8, "back"),
+            (0.5, 0.075, 1.0, 0, ""),
+        ],
+        "pair": [(0.3, 0.03, 0.76, 0, ""), (0.7, 0.24, 0.76, 0, "")],
+    },
 }
 
 
-# The App Store's creative assets, the image at the top of the product page
-# and the one in search results: the size the App Store takes, its art safe
-# area as left, top, width and height (App Store Connect Help, Creative assets
-# specifications; the store may crop everything outside it), the iPhone
-# screens it shows, each with its centre x, top and width in pixels, its turn
-# and its class, and the box its words are centred in with the size of their
-# type unit, when it has words. An iPhone in portrait shows much more than the
-# safe area: the whole search image, and the header's full height and middle
-# two thirds, under the status bar and the page's buttons (Apple's renders in
-# App Store asset best practices). So the phones are sized for that view and
-# run out of the safe area, and only the words are kept inside it.
+# The creative assets of each store: the App Store's image at the top of the
+# product page and the one in search results, and Google Play's feature
+# graphic. Each has the device whose screens it shows and what they are shown
+# in, the size the store takes, its art safe area as left, top, width and
+# height (the store may crop everything outside it), the screens it shows,
+# each with its centre x, top and width in pixels, its turn and its class,
+# and the box its words are centred in with the size of their type unit,
+# when it has words.
+#
+# App Store Connect Help (Creative assets specifications) gives the App
+# Store's safe areas. An iPhone in portrait shows much more than the safe
+# area: the whole search image, and the header's full height and middle two
+# thirds, under the status bar and the page's buttons (Apple's renders in App
+# Store asset best practices). So the phones are sized for that view and run
+# out of the safe area, and only the words are kept inside it.
+#
+# Google Play shows the feature graphic in a wide card above the listing and
+# in collections of apps, where formats crop its edges and lay their own
+# controls over it, and asks for no device imagery and no pure black or dark
+# grey, which melt into the store's own background (Play Console Help, Add
+# preview assets to showcase your app). So the screens are bare, on a deep
+# blue, and the words keep clear of the edges.
 CREATIVE = {
     "header": {
+        "device": "iphone",
+        "frame": "iphone",
         "size": (3840, 1646),
         "safe": (1097, 493, 1646, 661),
         "phones": [
@@ -235,6 +283,8 @@ CREATIVE = {
         "words": None,
     },
     "search": {
+        "device": "iphone",
+        "frame": "iphone",
         "size": (3840, 2560),
         "safe": (836, 765, 2168, 1030),
         "phones": [
@@ -244,11 +294,30 @@ CREATIVE = {
         ],
         "words": ((860, 765, 1120, 1030), 19),
     },
+    "feature": {
+        "device": "android",
+        "frame": "screen",
+        "size": (1024, 500),
+        "safe": (64, 48, 896, 404),
+        "phones": [
+            ("look-editor-colour", 668, 112, 184, -7, "back"),
+            ("live-view", 932, 112, 184, 7, "back"),
+            ("library", 800, 64, 216, 0, ""),
+        ],
+        "words": ((72, 48, 470, 404), 4.4),
+    },
 }
 CREATIVE_GLOW = "#6EA8FF"
 
 CREATIVE_CSS = """
 body { display: block; }
+body.feature { background: #142A6B; }
+.feature .glow {
+  background:
+    radial-gradient(ellipse 60% 110% at 80% 30%, color-mix(in srgb, #6EA8FF 70%, transparent), transparent 72%),
+    radial-gradient(ellipse 60% 90% at 6% 104%, color-mix(in srgb, #FFB454 58%, transparent), transparent 72%),
+    radial-gradient(ellipse 50% 70% at 40% -10%, color-mix(in srgb, #B48CFF 60%, transparent), transparent 72%);
+}
 .glow {
   background:
     radial-gradient(ellipse 46% 90% at 74% 34%, color-mix(in srgb, #6EA8FF 62%, transparent), transparent 72%),
@@ -258,6 +327,11 @@ body { display: block; }
 .stage { position: absolute; inset: 0; }
 .words { position: absolute; display: flex; flex-direction: column; justify-content: center; }
 .words p { max-width: none; font-size: calc(var(--u) * 4.6); }
+/* A screen alone, without a device around it. */
+.device.screen {
+  --bezel: 0; --radius: .07; background: none;
+  box-shadow: 0 calc(var(--w) * .05) calc(var(--w) * .16) rgba(0,0,0,.55);
+}
 """
 
 # A title with a word wider than the box of the words (Finnish and Turkish
@@ -353,12 +427,26 @@ def style(locale, width, height, glow):
 def frame(device, source, place):
     """The screen at [source] in a drawn [device] at [place] on the stage."""
     x, y, h, turn, extra = place
-    island = '<div class="island"></div>' if device == "iphone" else ""
+    cutout = {
+        "iphone": '<div class="island"></div>',
+        "android": '<div class="hole"></div>',
+    }.get(device, "")
     return (
         f'<div class="device {device} {extra}" style="--x:{x * 100:.1f};'
         f'--y:{y * 100:.1f};--h:{h * 100:.1f};--r:{turn}deg">'
-        f'<img src="{source.as_uri()}">{island}</div>'
+        f'<img src="{source.as_uri()}">{cutout}</div>'
     )
+
+
+def aspect(screen):
+    """The width of the image at [screen] over its height."""
+    width, height = subprocess.run(
+        ["magick", "identify", "-format", "%w %h", str(screen)],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.split()
+    return int(width) / int(height)
 
 
 def snap(markup, width, height, target, folder):
@@ -401,7 +489,7 @@ def page(device, locale, caption, layout, screens, glow, sources):
     return (
         f'<!doctype html><html lang="{locale.replace("_", "-")}">'
         f'<meta charset="utf-8"><style>{css}</style>'
-        f'<body style="--u:{unit:.2f}px;--aspect:{width / height:.4f}">'
+        f'<body style="--u:{unit:.2f}px;--aspect:{aspect(sources[screens[0]]):.4f}">'
         f'<div class="glow"></div>'
         f'<div class="caption">'
         f"<h1>{heading(locale, caption['title'])}</h1>"
@@ -410,22 +498,28 @@ def page(device, locale, caption, layout, screens, glow, sources):
     )
 
 
-def creative(locale, table, folder):
-    """The header and search results images of [locale]."""
-    raw = WORK / "raw" / "iphone" / locale
-    (folder / "creative" / locale).mkdir(parents=True)
-    caption = captions(locale, "iphone")["overview"]
+def creative(locale, device, table, folder):
+    """The creative assets of [locale] that show [device]'s screens."""
+    assets = {n: a for n, a in CREATIVE.items() if a["device"] == device}
+    if not assets:
+        return
+    raw = WORK / "raw" / device / locale
+    (folder / "creative" / locale).mkdir(parents=True, exist_ok=True)
+    caption = captions(locale, device)["overview"]
     out = WORK / "out" / "creative" / locale
     out.mkdir(parents=True, exist_ok=True)
-    screen = DEVICES["iphone"]
-    aspect = screen["width"] / screen["height"]
-    for name, asset in CREATIVE.items():
+    for name, asset in assets.items():
         width, height = asset["size"]
+        screens = {
+            shown: toned(raw / f"{shown}.png", table, folder / "creative" / locale)
+            for shown, *_ in asset["phones"]
+        }
+        ratio = aspect(next(iter(screens.values())))
         phones = "".join(
             frame(
-                "iphone",
-                toned(raw / f"{shown}.png", table, folder / "creative" / locale),
-                (x / width, top / height, across / aspect / height, turn, extra),
+                asset["frame"],
+                screens[shown],
+                (x / width, top / height, across / ratio / height, turn, extra),
             )
             for shown, x, top, across, turn, extra in asset["phones"]
         )
@@ -444,7 +538,7 @@ def creative(locale, table, folder):
             f'<!doctype html><html lang="{locale.replace("_", "-")}">'
             f'<meta charset="utf-8"><style>'
             f"{style(locale, width, height, CREATIVE_GLOW)}{CREATIVE_CSS}</style>"
-            f'<body style="--u:{unit}px;--aspect:{aspect:.4f}">'
+            f'<body class="{name}" style="--u:{unit}px;--aspect:{ratio:.4f}">'
             f'<div class="glow"></div><div class="stage">{phones}</div>{words}'
             f"<script>{CREATIVE_FIT}</script></body>",
             width,
@@ -452,9 +546,9 @@ def creative(locale, table, folder):
             shot,
             folder,
         )
-        # The App Store takes the header as a PNG only, and neither image
-        # with an alpha channel.
-        target = out / (f"{name}.png" if name == "header" else f"{name}.jpg")
+        # The App Store takes the header as a PNG only, and neither store
+        # takes an image with an alpha channel.
+        target = out / (f"{name}.jpg" if name == "search" else f"{name}.png")
         subprocess.run(
             ["magick", str(shot), "-alpha", "off", "-quality", "95"]
             + [f"PNG24:{target}" if target.suffix == ".png" else str(target)],
@@ -489,7 +583,7 @@ def render(device, locale, table, folder):
             target,
             folder,
         )
-        # App Store Connect refuses screenshots with an alpha channel.
+        # Neither store takes a screenshot with an alpha channel.
         subprocess.run(
             [
                 "sips",
@@ -510,6 +604,31 @@ def render(device, locale, table, folder):
         print(target.with_suffix(".jpg"))
 
 
+def play_icon():
+    """Google Play's 512 px app icon: the square of the App Store's, from the
+    icon's source (tool/render_app_icon.sh), which Google Play rounds itself.
+    """
+    target = WORK / "out" / "play-icon.png"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    # The square is the middle two thirds of the page, which resvg draws
+    # with every variant but the App Store's default one hidden.
+    stylesheet = target.with_suffix(".css")
+    stylesheet.write_text(".variant { display: none } #ios-default { display: inline }")
+    subprocess.run(
+        ["resvg", "--skip-system-fonts", "--use-fonts-dir", str(FONTS)]
+        + ["--stylesheet", str(stylesheet), "--width", "768"]
+        + [str(ROOT / "app" / "icon" / "icon.svg"), str(target)],
+        check=True,
+    )
+    stylesheet.unlink()
+    subprocess.run(
+        ["magick", str(target), "-gravity", "center", "-crop", "512x512+0+0"]
+        + ["+repage", "-alpha", "off", f"PNG24:{target}"],
+        check=True,
+    )
+    print(target)
+
+
 if __name__ == "__main__":
     with tempfile.TemporaryDirectory() as scratch:
         scratch = pathlib.Path(scratch)
@@ -521,5 +640,5 @@ if __name__ == "__main__":
                 if code not in taken:
                     continue
                 render(name, code, lookup, scratch)
-                if name == "iphone":
-                    creative(code, lookup, scratch)
+                creative(code, name, lookup, scratch)
+        play_icon()
