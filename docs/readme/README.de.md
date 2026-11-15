@@ -5,7 +5,9 @@
 <h1 align="center">GR Photo</h1>
 
 <p align="center">
-  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="Lizenz: MIT"></a>
+  <a href="https://github.com/jeph/gr-photo/actions/workflows/release.yml"><img src="https://github.com/jeph/gr-photo/actions/workflows/release.yml/badge.svg" alt="Release-Workflow"></a>
+  <a href="https://github.com/jeph/gr-photo/releases/latest"><img src="https://img.shields.io/github/v/release/jeph/gr-photo" alt="Neueste Version"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/github/license/jeph/gr-photo" alt="Lizenz: MIT"></a>
   <img src="https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey" alt="Plattformen: iOS und Android">
 </p>
 
