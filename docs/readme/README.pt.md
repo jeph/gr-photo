@@ -317,6 +317,11 @@ A compilação vai também para o grupo público do TestFlight, que precisa da r
 chaves são guardadas em ambientes do GitHub que só `main` pode utilizar, e os jobs que compilam as
 apps não têm nenhuma.
 
+Cada versão é também compilada como Android App Bundle, assinada com uma chave de carregamento do
+Google Play à parte e lançada no Google Play, na faixa indicada pela variável `PLAY_TRACK` (por
+agora, teste fechado). O Google Play assina a app para os utilizadores com a mesma chave de
+lançamento do APK da página de versões, pelo que qualquer uma das instalações atualiza a outra.
+
 Cada versão precisa das suas novidades (What's New) nos 21 idiomas, um ficheiro por idioma em
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, com o nome dos ficheiros ARB. O workflow para antes
 de compilar o que quer que seja se algum faltar ou estiver vazio, pelo que as notas são escritas na

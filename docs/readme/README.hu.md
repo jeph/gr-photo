@@ -326,6 +326,11 @@ fel. A build a nyilvános TestFlight-csoportba is bekerül, amihez az Apple bét
 szükséges. A kulcsok olyan GitHub-környezetekben vannak, amelyeket csak a `main` használhat, és az
 alkalmazásokat fordító feladatok egyiket sem kapják meg.
 
+Minden kiadásból Android App Bundle is készül, amelyet egy külön Google Play-feltöltési kulcs ír
+alá, és amely a Google Playen a `PLAY_TRACK` változó által megadott sávban jelenik meg (egyelőre
+zárt tesztelés). A Google Play a felhasználóknak ugyanazzal a kiadási kulccsal írja alá az
+alkalmazást, mint a kiadások oldalán lévő APK-t, így bármelyik telepítés frissíti a másikat.
+
 Minden kiadásnak mind a 21 nyelven szüksége van az újdonságaira (What's New), nyelvenként egy
 fájlban a `tool/app_store/whats_new/0.0.N/<locale>.txt` helyen, az ARB-fájlokhoz hasonlóan
 elnevezve. A munkafolyamat még a fordítás előtt leáll, ha valamelyik hiányzik vagy üres, így a

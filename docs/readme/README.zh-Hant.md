@@ -196,6 +196,8 @@ flutter test integration_test --dart-define=GR_DEMO=true -d <simulator>
 
 每次推送到 `main` 都會產生一個發行版本，由 [`.github/workflows/release.yml`](../../.github/workflows/release.yml) 完成。它將發行版本編號為 0.0.N，比上一個多一，執行 `tool/check.sh`，並以 release 模式建置兩個 App 的 `prod` flavor。Android APK 以 GR Photo 的發行金鑰簽署，並連同它的 SHA-256 檢查碼、建置來源證明，以及用來解讀其 Kotlin 堆疊追蹤的 R8 對應檔，一起發佈在[發行版本頁面](https://github.com/jeph/gr-photo/releases)上。iOS App 會針對 App Store 簽署並上傳到 App Store Connect。Apple 處理完這個版本後，工作流程會把它放進新的 App Store 版本，附上該發行版本的「新功能」（What's New）並提交審查，Apple 一核准，該版本就會上架。仍在等待審查的版本會被撤出審查，由新版本取代。這個版本也會送到公開的 TestFlight 群組，這需要通過 Apple 的 Beta 版審查。金鑰保存在只有 `main` 能使用的 GitHub 環境中，而建置 App 的工作不持有其中任何一把。
 
+每個發行版本也會建置成 Android App Bundle，以另一把 Play 上傳金鑰簽署，並在 Google Play 上由 `PLAY_TRACK` 變數指定的發布管道（track）發佈（目前是封閉測試）。Google Play 會以與發行版本頁面上 APK 相同的發行金鑰為使用者簽署 App，所以任一種安裝都能更新另一種。
+
 每個發行版本都需要全部 21 種語言的「新功能」（What's New），每種語言一個檔案，放在 `tool/app_store/whats_new/0.0.N/<locale>.txt`，命名方式與 ARB 檔案相同。只要有一個檔案缺少或是空的，工作流程就會在建置任何東西之前停止，因此說明要與它所描述的工作在同一次變更中寫好。
 
 `gh attestation verify gr-photo-v<version>.apk --repo jeph/gr-photo` 可檢查某個 APK 是否由該工作流程從這個儲存庫建置而成。

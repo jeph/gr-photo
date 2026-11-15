@@ -322,6 +322,11 @@ TestFlight-groep, waarvoor de bètabeoordeling van Apple nodig is. De sleutels s
 GitHub-omgevingen die alleen `main` kan gebruiken, en de jobs die de apps bouwen hebben er geen
 enkele van.
 
+Elke release wordt ook gebouwd als Android App Bundle, ondertekend met een aparte uploadsleutel voor
+Google Play en uitgebracht op Google Play, in het track dat de variabele `PLAY_TRACK` noemt
+(voorlopig een gesloten test). Google Play ondertekent de app voor gebruikers met dezelfde
+releasesleutel als de APK op de releasepagina, zodat de ene installatie de andere bijwerkt.
+
 Elke release heeft zijn What's New nodig in alle 21 talen, één bestand per taal in
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, met dezelfde namen als de ARB-bestanden. De workflow
 stopt voordat hij iets bouwt als er een ontbreekt of leeg is, dus de notities worden geschreven in

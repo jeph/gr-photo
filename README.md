@@ -298,6 +298,11 @@ out of review and replaced by the new one. The build also goes to the public Tes
 needs Apple's beta review. The keys are kept in GitHub environments that only `main` can use, and
 the jobs that build the apps hold none of them.
 
+Each release is also built as an Android App Bundle, signed with a separate Play upload key and
+released on Google Play, on the track that the `PLAY_TRACK` variable names (closed testing for now).
+Google Play signs the app for users with the same release key as the APK on the releases page, so
+either install updates the other.
+
 Every release needs its What's New in all 21 languages, one file per language in
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, named like the ARB files. The workflow stops before it
 builds anything when one is missing or empty, so the notes are written in the same change as the work

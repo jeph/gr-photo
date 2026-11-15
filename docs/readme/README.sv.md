@@ -311,6 +311,11 @@ på granskning dras tillbaka och ersätts av den nya. Bygget går också till de
 TestFlight-gruppen, vilket kräver Apples betagranskning. Nycklarna förvaras i GitHub-miljöer som
 bara `main` kan använda, och jobben som bygger apparna har ingen av dem.
 
+Varje utgåva byggs också som en Android App Bundle, signeras med en separat uppladdningsnyckel för
+Google Play och släpps på Google Play i det spår som variabeln `PLAY_TRACK` anger (tills vidare
+sluten testning). Google Play signerar appen för användarna med samma releasenyckel som APK:n på
+sidan med utgåvor, så den ena installationen uppdaterar den andra.
+
 Varje utgåva behöver sina nyheter (What's New) på alla 21 språk, en fil per språk i
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, namngiven som ARB-filerna. Arbetsflödet stoppar innan
 det bygger något om en saknas eller är tom, så anteckningarna skrivs i samma ändring som arbetet de

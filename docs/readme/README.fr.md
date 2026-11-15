@@ -332,6 +332,12 @@ remplacée par la nouvelle. Le build va aussi dans le groupe TestFlight public, 
 l'examen bêta d'Apple. Les clés sont conservées dans des environnements GitHub que seule `main` peut
 utiliser, et les jobs qui compilent les applications n'en détiennent aucune.
 
+Chaque version est aussi compilée en Android App Bundle, signée avec une clé d'importation Google
+Play distincte et publiée sur Google Play, dans le canal que nomme la variable `PLAY_TRACK` (test
+fermé pour l'instant). Google Play signe l'application pour les utilisateurs avec la même clé de
+publication que l'APK de la page des versions, si bien que chacune des deux installations met à
+jour l'autre.
+
 Chaque version a besoin de ses nouveautés (What's New) dans les 21 langues, un fichier par langue
 dans `tool/app_store/whats_new/0.0.N/<locale>.txt`, nommé comme les fichiers ARB. Le workflow
 s'arrête avant de compiler quoi que ce soit si l'un d'eux manque ou est vide : les notes s'écrivent

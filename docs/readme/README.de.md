@@ -325,6 +325,12 @@ wird aus der Prüfung genommen und durch die neue ersetzt. Der Build geht außer
 TestFlight-Gruppe, wofür Apples Beta-Prüfung nötig ist. Die Schlüssel liegen in GitHub-Umgebungen,
 die nur `main` verwenden kann, und die Jobs, die die Apps bauen, haben auf keinen davon Zugriff.
 
+Jedes Release wird außerdem als Android App Bundle gebaut, mit einem eigenen Upload-Schlüssel für
+Google Play signiert und bei Google Play in dem Track veröffentlicht, den die Variable `PLAY_TRACK`
+nennt (vorerst ein geschlossener Test). Google Play signiert die App für die Nutzer mit demselben
+Release-Schlüssel wie das APK auf der Release-Seite, sodass jede der beiden Installationen die
+andere aktualisiert.
+
 Jedes Release braucht seine Neuerungen (What's New) in allen 21 Sprachen, eine Datei pro Sprache in
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, benannt wie die ARB-Dateien. Der Workflow bricht ab,
 bevor er irgendetwas baut, wenn eine davon fehlt oder leer ist; die Notizen entstehen also in

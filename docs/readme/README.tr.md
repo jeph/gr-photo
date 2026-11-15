@@ -319,6 +319,11 @@ ve yerini yenisi alır. Derleme ayrıca herkese açık TestFlight grubuna da gid
 incelemesini gerektirir. Anahtarlar yalnızca `main`’in kullanabildiği GitHub ortamlarında tutulur ve
 uygulamaları derleyen işlerin hiçbirinde bu anahtarlar bulunmaz.
 
+Her sürüm ayrıca Android App Bundle olarak derlenir, ayrı bir Google Play yükleme anahtarıyla
+imzalanır ve Google Play’de `PLAY_TRACK` değişkeninin belirttiği kanalda yayımlanır (şimdilik kapalı
+test). Google Play uygulamayı kullanıcılar için sürümler sayfasındaki APK ile aynı yayın
+anahtarıyla imzalar; böylece iki kurulumdan biri diğerini günceller.
+
 Her sürümün 21 dilin hepsinde Yenilikler (What's New) metnine ihtiyacı vardır; her dil için ARB
 dosyaları gibi adlandırılmış bir dosya, `tool/app_store/whats_new/0.0.N/<locale>.txt` içinde. Biri
 eksik ya da boşsa iş akışı hiçbir şey derlemeden durur; bu yüzden notlar, anlattıkları çalışmayla

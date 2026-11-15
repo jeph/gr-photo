@@ -309,6 +309,11 @@ på gennemgang, trækkes tilbage og erstattes af den nye. Buildet går også til
 TestFlight-gruppe, som kræver Apples betagennemgang. Nøglerne ligger i GitHub-miljøer, som kun
 `main` kan bruge, og de job, der bygger de to apps, har ingen af dem.
 
+Hver udgivelse bygges også som en Android App Bundle, signeres med en separat uploadnøgle til
+Google Play og udgives på Google Play i det spor, som variablen `PLAY_TRACK` angiver (indtil videre
+lukket test). Google Play signerer appen til brugerne med den samme udgivelsesnøgle som APK'en på
+udgivelsessiden, så hver af de to installationer kan opdatere den anden.
+
 Hver udgivelse skal have sine nyheder (What's New) på alle 21 sprog, én fil pr. sprog i
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, navngivet som ARB-filerne. Workflowet stopper, før
 det bygger noget, hvis en af dem mangler eller er tom, så noterne skrives i samme ændring som det

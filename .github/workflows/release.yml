@@ -1,14 +1,16 @@
 name: Release
 
-# Every push to main releases GR Photo 0.0.N: the Android app as a signed APK on GitHub release v0.0.N, and the iOS app
-# on TestFlight and, once Apple approves it, on the App Store. N, also the APK's versionCode and the iOS build number, is one more than the latest release's. A
-# rerun for a commit that already has a release reuses its version. The jobs split the work so that each credential
-# is held by as little as possible:
+# Every push to main releases GR Photo 0.0.N: the Android app as a signed APK on GitHub release v0.0.N and on Google
+# Play, and the iOS app on TestFlight and, once Apple approves it, on the App Store. N, also the Android versionCode
+# and the iOS build number, is one more than the latest release's. A rerun for a commit that already has a release
+# reuses its version. The jobs split the work so that each credential is held by as little as possible:
 #   version        numbers the release from the tags and checks that tool/app_store/whats_new/0.0.N holds its What's
 #                  New in every language, before anything is built
-#   android-build  runs tool/check.sh and builds the APK, with read-only repository access and no secrets, so nothing
-#                  the build runs, such as Gradle plugins or pub packages, can reach a key
+#   android-build  runs tool/check.sh and builds the APK and the app bundle, with read-only repository access and no
+#                  secrets, so nothing the build runs, such as Gradle plugins or pub packages, can reach a key
 #   android-sign   signs the APK with the release key from the `release` environment, which only main can deploy to
+#   play-sign      signs the app bundle with the Play upload key from the `play` environment, which only main can
+#                  deploy to
 #   ios-build      builds the iOS archive, with read-only repository access and no secrets
 #   ios-sign       signs the archive for the App Store with the distribution certificate and the provisioning
 #                  profiles from the `testflight` environment, which only main can deploy to
@@ -21,12 +23,25 @@ name: Release
 #                  public group, and submits it for App Review in an App Store version released as soon as Apple
 #                  approves it, taking a version still in review out of review first (tool/app_store/submit.py). It
 #                  holds the same API key as testflight and runs on Linux, as it only calls App Store Connect's API
+#   play-upload    uploads the app bundle to Google Play and releases it on the PLAY_TRACK track, the only job allowed
+#                  to sign in to Google Cloud. It waits for the GitHub release, whose tag takes the version: Google
+#                  Play keeping a version code the tag never took would let the next commit reuse it, and Play skip
+#                  that commit's bundle
+#
+# Google Play signs the app for users with the same release key as the GitHub APK, so either installs over the other.
 #
 # App Store Connect takes each build number once, so rerunning testflight for a build it already has fails.
 #
 # The `release` environment holds:
 #   secrets    ANDROID_RELEASE_KEYSTORE_BASE64, ANDROID_RELEASE_KEYSTORE_PASSWORD
 #   variables  ANDROID_RELEASE_KEY_ALIAS, ANDROID_RELEASE_CERT_SHA256
+#
+# The `play` environment holds:
+#   secrets    PLAY_UPLOAD_KEYSTORE_BASE64, PLAY_UPLOAD_KEYSTORE_PASSWORD
+#   variables  PLAY_UPLOAD_KEY_ALIAS, PLAY_UPLOAD_CERT_SHA256, PLAY_TRACK, PLAY_WORKLOAD_IDENTITY_PROVIDER,
+#              PLAY_SERVICE_ACCOUNT
+# play-upload signs in through Workload Identity Federation as PLAY_SERVICE_ACCOUNT, which Google Cloud lets only this
+# repository's `play` environment impersonate, so no Google credential is stored in GitHub.
 #
 # The `testflight` environment holds:
 #   secrets    IOS_DISTRIBUTION_CERTIFICATE_P12_BASE64, IOS_DISTRIBUTION_CERTIFICATE_PASSWORD,
@@ -202,6 +217,37 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+      # The same release build as an app bundle for Google Play, which makes each phone an APK holding only the code
+      # for its processor. Gradle signs it with the debug key too; play-sign replaces that with the upload key's.
+      - name: Build app bundle
+        working-directory: app
+        run: >-
+          flutter build appbundle --flavor prod --release
+          --build-name "$VERSION_NAME"
+          --build-number "$VERSION_CODE"
+
+      - name: Verify app bundle
+        run: |
+          cp app/build/app/outputs/bundle/prodRelease/app-prod-release.aab dist/gr-photo-built.aab
+          files=$(unzip -Z1 dist/gr-photo-built.aab)
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            if ! grep -q "^base/lib/$abi/libapp\.so$" <<< "$files"; then
+              echo "The app bundle lacks the compiled Dart code for $abi" >&2
+              exit 1
+            fi
+          done
+          if grep -q 'kernel_blob\.bin$' <<< "$files"; then
+            echo "The app bundle's Dart code isn't compiled for release" >&2
+            exit 1
+          fi
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: built-aab
+          path: dist/gr-photo-built.aab
+          if-no-files-found: error
+          retention-days: 7
+
   android-sign:
     name: Sign for Android
     needs: [version, android-build]
@@ -242,6 +288,46 @@ jobs:
         with:
           name: signed-apk
           path: dist/gr-photo-v*.apk
+          if-no-files-found: error
+          retention-days: 7
+
+  play-sign:
+    name: Sign for Google Play
+    needs: [version, android-build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: play
+    permissions:
+      contents: read
+    env:
+      VERSION_NAME: ${{ needs.version.outputs.name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: tool/sign_play_bundle.sh
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: built-aab
+          path: built
+
+      # jarsigner and keytool come from the runner's JDK.
+      - name: Sign app bundle
+        env:
+          PLAY_UPLOAD_KEYSTORE_BASE64: ${{ secrets.PLAY_UPLOAD_KEYSTORE_BASE64 }}
+          PLAY_UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.PLAY_UPLOAD_KEYSTORE_PASSWORD }}
+          PLAY_UPLOAD_KEY_ALIAS: ${{ vars.PLAY_UPLOAD_KEY_ALIAS }}
+          PLAY_UPLOAD_CERT_SHA256: ${{ vars.PLAY_UPLOAD_CERT_SHA256 }}
+        run: |
+          mkdir dist
+          tool/sign_play_bundle.sh built/gr-photo-built.aab "dist/gr-photo-v$VERSION_NAME.aab"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: signed-aab
+          path: dist/gr-photo-v*.aab
           if-no-files-found: error
           retention-days: 7
 
@@ -453,3 +539,44 @@ jobs:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
         run: tool/app_store/submit.py submit "$VERSION_NAME" "$VERSION_CODE"
+
+  play-upload:
+    name: Release on Google Play
+    needs: [version, play-sign, publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    environment: play
+    permissions:
+      contents: read
+      id-token: write # sign in to Google Cloud through Workload Identity Federation
+    env:
+      VERSION_NAME: ${{ needs.version.outputs.name }}
+      VERSION_CODE: ${{ needs.version.outputs.code }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: tool/upload_play_bundle.sh
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: signed-aab
+          path: dist
+
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        id: google
+        with:
+          workload_identity_provider: ${{ vars.PLAY_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.PLAY_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/androidpublisher
+          create_credentials_file: false
+
+      # A rerun for a version Google Play already has releases it on the track without uploading it again.
+      - name: Upload and release
+        env:
+          PLAY_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          PLAY_PACKAGE: io.jeph.grphoto
+          PLAY_TRACK: ${{ vars.PLAY_TRACK }}
+        run: tool/upload_play_bundle.sh "dist/gr-photo-v$VERSION_NAME.aab"

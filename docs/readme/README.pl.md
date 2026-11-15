@@ -315,6 +315,11 @@ Kompilacja trafia też do publicznej grupy TestFlight, co wymaga weryfikacji bet
 są przechowywane w środowiskach GitHub, z których może korzystać tylko `main`, a zadania budujące
 aplikacje nie mają żadnego z nich.
 
+Każde wydanie jest też budowane jako Android App Bundle, podpisywane osobnym kluczem przesyłania do
+Google Play i publikowane w Google Play na ścieżce wskazanej przez zmienną `PLAY_TRACK` (na razie
+test zamknięty). Google Play podpisuje aplikację dla użytkowników tym samym kluczem wydań co APK ze
+strony wydań, więc każda z dwóch instalacji aktualizuje drugą.
+
 Każde wydanie potrzebuje opisu nowości (What's New) we wszystkich 21 językach, po jednym pliku na
 język w `tool/app_store/whats_new/0.0.N/<locale>.txt`, nazwanym jak pliki ARB. Przepływ pracy
 zatrzymuje się, zanim cokolwiek zbuduje, gdy któregoś brakuje lub jest pusty, więc opisy pisze się w

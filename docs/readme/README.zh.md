@@ -196,6 +196,8 @@ flutter test integration_test --dart-define=GR_DEMO=true -d <simulator>
 
 每次推送到 `main` 都会产生一个发行版，由 [`.github/workflows/release.yml`](../../.github/workflows/release.yml) 完成。它把发行版编号为 0.0.N，比上一个大一，运行 `tool/check.sh`，并以 release 模式构建两个应用的 `prod` flavor。Android APK 使用 GR Photo 的发行密钥签名，连同它的 SHA-256 校验和、构建来源证明以及用于解读其 Kotlin 堆栈跟踪的 R8 映射文件一起发布在[发行版页面](https://github.com/jeph/gr-photo/releases)上。iOS 应用针对 App Store 签名并上传到 App Store Connect。Apple 处理完构建后，工作流会把它放进一个新的 App Store 版本，附上该发行版的“新内容”（What's New）并提交审核，Apple 一批准，该版本就会上线。仍在等待审核的版本会被撤出审核，由新版本取代。构建还会发送到公开的 TestFlight 群组，这需要通过 Apple 的 Beta 版审核。密钥保存在只有 `main` 才能使用的 GitHub 环境中，而构建应用的作业不持有其中任何一个。
 
+每个发行版还会构建为 Android App Bundle，使用单独的 Play 上传密钥签名，并在 Google Play 上由 `PLAY_TRACK` 变量指定的轨道（track）发布（目前为封闭式测试）。Google Play 会使用与发行版页面上的 APK 相同的发行密钥为用户签名应用，因此任一种安装都可以更新另一种。
+
 每个发行版都需要全部 21 种语言的“新内容”（What's New），每种语言一个文件，放在 `tool/app_store/whats_new/0.0.N/<locale>.txt`，命名方式与 ARB 文件相同。只要有一个文件缺失或为空，工作流就会在构建任何内容之前停止，因此说明要与它所描述的工作在同一次更改中写好。
 
 `gh attestation verify gr-photo-v<version>.apk --repo jeph/gr-photo` 用于检查某个 APK 是否由该工作流从本仓库构建而成。

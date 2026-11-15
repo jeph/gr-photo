@@ -322,6 +322,12 @@ dalla revisione e sostituita dalla nuova. La build va anche al gruppo TestFlight
 richiede la revisione beta di Apple. Le chiavi sono conservate in ambienti GitHub che solo `main`
 può usare, e i job che compilano le app non ne possiedono nessuna.
 
+Ogni versione viene anche compilata come Android App Bundle, firmata con una chiave di caricamento
+per Google Play separata e pubblicata su Google Play, nel canale indicato dalla variabile
+`PLAY_TRACK` (per ora un test chiuso). Google Play firma l'app per gli utenti con la stessa chiave
+di rilascio dell'APK nella pagina delle versioni, quindi ciascuna delle due installazioni aggiorna
+l'altra.
+
 Ogni versione ha bisogno delle sue novità (What's New) in tutte le 21 lingue, un file per lingua in
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, con il nome dei file ARB. Il workflow si ferma prima
 di compilare qualsiasi cosa se uno manca o è vuoto, quindi le note si scrivono nella stessa modifica

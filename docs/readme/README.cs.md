@@ -311,6 +311,11 @@ kontroly stáhne a nahradí novou. Sestavení jde také do veřejné skupiny Tes
 beta kontrolu od Applu. Klíče jsou uloženy v prostředích GitHubu, která smí používat jen `main`, a
 úlohy, které aplikace sestavují, nemají žádný z nich.
 
+Každé vydání se také sestaví jako Android App Bundle, podepíše samostatným klíčem pro nahrávání do
+Google Play a vydá na Google Play v kanálu, který určuje proměnná `PLAY_TRACK` (zatím uzavřené
+testování). Google Play aplikaci pro uživatele podepisuje stejným klíčem pro vydání jako APK na
+stránce vydání, takže kterákoli z obou instalací aktualizuje tu druhou.
+
 Každé vydání potřebuje své novinky (What's New) ve všech 21 jazycích, jeden soubor pro každý jazyk v
 `tool/app_store/whats_new/0.0.N/<locale>.txt`, pojmenovaný stejně jako soubory ARB. Když některý
 chybí nebo je prázdný, workflow se zastaví dřív, než cokoli sestaví, takže se poznámky píší ve

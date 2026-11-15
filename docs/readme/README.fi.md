@@ -318,6 +318,11 @@ korvataan uudella. Käännös menee myös julkiseen TestFlight-ryhmään, mikä 
 beetatarkastuksen. Avaimet säilytetään GitHub-ympäristöissä, joita vain `main` voi käyttää, eikä
 sovellukset kääntävillä töillä ole niistä yhtäkään.
 
+Jokainen julkaisu käännetään myös Android App Bundleksi, allekirjoitetaan erillisellä Google Playn
+latausavaimella ja julkaistaan Google Playssa kanavalla, jonka `PLAY_TRACK`-muuttuja nimeää
+(toistaiseksi suljettu testi). Google Play allekirjoittaa sovelluksen käyttäjille samalla
+julkaisuavaimella kuin julkaisusivun APK:n, joten kumpi tahansa asennus päivittää toisen.
+
 Jokainen julkaisu tarvitsee Uutta-tekstinsä (What's New) kaikilla 21 kielellä, yksi tiedosto kieltä
 kohden polussa `tool/app_store/whats_new/0.0.N/<locale>.txt`, nimettynä kuten ARB-tiedostot.
 Työnkulku pysähtyy ennen kuin se kääntää mitään, jos jokin niistä puuttuu tai on tyhjä, joten

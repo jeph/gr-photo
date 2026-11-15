@@ -196,6 +196,8 @@ GR Photoは、設定 > 「デバッグログを有効にする」がオンの間
 
 `main`へのプッシュはすべてリリースになり、[`.github/workflows/release.yml`](../../.github/workflows/release.yml)がそれを作成します。このワークフローは、リリースに前回より1つ大きい0.0.Nという番号を付け、`tool/check.sh`を実行し、両方のアプリの`prod`フレーバーをリリースモードでビルドします。AndroidのAPKはGR Photoのリリース用キーで署名され、SHA-256チェックサム、ビルドの来歴証明（アテステーション）、Kotlinのスタックトレースを読み解くためのR8マッピングとともに[リリースページ](https://github.com/jeph/gr-photo/releases)で公開されます。iOSアプリはApp Store向けに署名され、App Store Connectにアップロードされます。Appleがビルドの処理を終えると、ワークフローはそのビルドをリリースの「新機能」（What's New）とともに新しいApp Storeバージョンに入れて審査に提出し、Appleが承認するとすぐにそのバージョンが公開されます。まだ審査待ちのバージョンは審査から取り下げられ、新しいバージョンに置き換えられます。ビルドは公開のTestFlightグループにも配信され、これにはAppleのベータ版審査が必要です。キーは`main`だけが使えるGitHubの環境（Environment）に保管されており、アプリをビルドするジョブはどのキーも持ちません。
 
+各リリースはAndroid App Bundleとしてもビルドされ、別のPlayアップロード用キーで署名されて、`PLAY_TRACK`変数が指定するGoogle Playのトラック（現在はクローズドテスト）でリリースされます。Google PlayはリリースページのAPKと同じリリース用キーでユーザー向けのアプリに署名するため、どちらからインストールしても、もう一方で更新できます。
+
 どのリリースにも21言語すべての「新機能」（What's New）が必要で、言語ごとに1ファイルを、ARBファイルと同じ名前で`tool/app_store/whats_new/0.0.N/<locale>.txt`に置きます。1つでも欠けているか空の場合、ワークフローは何もビルドしないうちに停止するため、ノートはそれが説明する作業と同じ変更の中で書かれます。
 
 `gh attestation verify gr-photo-v<version>.apk --repo jeph/gr-photo`を実行すると、APKがこのリポジトリからそのワークフローでビルドされたものであることを確認できます。
