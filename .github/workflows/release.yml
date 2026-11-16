@@ -23,7 +23,8 @@ name: Release
 #                  public group, and submits it for App Review in an App Store version released as soon as Apple
 #                  approves it, taking a version still in review out of review first (tool/app_store/submit.py). It
 #                  holds the same API key as testflight and runs on Linux, as it only calls App Store Connect's API
-#   play-upload    uploads the app bundle to Google Play and releases it on the PLAY_TRACK track, the only job allowed
+#   play-upload    uploads the app bundle to Google Play and releases it to internal testing and on the PLAY_TRACK
+#                  track (as a draft while the app has never been reviewed), the only job allowed
 #                  to sign in to Google Cloud. It waits for the GitHub release, whose tag takes the version: Google
 #                  Play keeping a version code the tag never took would let the next commit reuse it, and Play skip
 #                  that commit's bundle

@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # Uploads a signed app bundle to Google Play and releases it to every user of
-# one track, through one edit of the Google Play Developer API. A bundle Play
-# already has, as when a release is rerun, isn't uploaded again; the track
-# still gets it. .github/workflows/release.yml runs this in a job that holds
-# the Play publishing credential and nothing else.
+# one track and to the internal testers, through one edit of the Google Play
+# Developer API. A bundle Play already has, as when a release is rerun, isn't
+# uploaded again; the tracks still get it. .github/workflows/release.yml runs
+# this in a job that holds the Play publishing credential and nothing else.
 #
 # While the app is still a draft in Play Console (it has never been through
-# Google's review), Play accepts only draft releases. The release is then left
-# as a draft on the track, to be sent for review from Play Console.
+# Google's review), Play accepts only draft releases on every track but
+# internal testing. The release is then left as a draft on the track, to be
+# sent for review from Play Console, and only internal testers get it.
 #
 # Adapted from scripts/upload-play-bundle.sh of Pipkin (github.com/jeph/pipkin,
 # v0.0.22, MIT License).
@@ -80,15 +81,19 @@ else
   fi
 fi
 
-# Sets the track to this version alone, with the given release status.
+# Sets a track to this version alone, with the given release status.
 put_release() {
-  jq -n --arg track "$PLAY_TRACK" --arg name "$VERSION_NAME" --arg code "$VERSION_CODE" --arg status "$1" \
+  local track=$1 status=$2
+  jq -n --arg track "$track" --arg name "$VERSION_NAME" --arg code "$VERSION_CODE" --arg status "$status" \
     '{track: $track, releases: [{name: $name, versionCodes: [$code], status: $status}]}' |
     play --request PUT --header 'Content-Type: application/json' --data-binary @- \
-      "$api/edits/$edit/tracks/$PLAY_TRACK" >/dev/null
+      "$api/edits/$edit/tracks/$track" >/dev/null
 }
 
-put_release completed
+if [[ "$PLAY_TRACK" != internal ]]; then
+  put_release internal completed
+fi
+put_release "$PLAY_TRACK" completed
 status=completed
 if ! validation=$(play --request POST "$api/edits/$edit:validate" 2>&1); then
   if ! grep -q 'Only releases with status draft may be created on draft app' <<<"$validation"; then
@@ -96,11 +101,14 @@ if ! validation=$(play --request POST "$api/edits/$edit:validate" 2>&1); then
     exit 1
   fi
   echo "The app is still a draft in Play Console, so the release is left as a draft"
-  put_release draft
+  put_release "$PLAY_TRACK" draft
   status=draft
 fi
 
 play --request POST "$api/edits/$edit:commit" >/dev/null
+if [[ "$PLAY_TRACK" != internal ]]; then
+  echo "Released $VERSION_NAME ($VERSION_CODE) on the internal track"
+fi
 if [[ "$status" == draft ]]; then
   echo "Added $VERSION_NAME ($VERSION_CODE) to the $PLAY_TRACK track as a draft; send it for review in Play Console"
 else
