@@ -8,7 +8,7 @@ GR Photo is an app for Ricoh GR cameras. It pairs with your camera over Bluetoot
 
 GR Photo keeps the following in its own app storage on your phone:
 
-- Your settings: the theme, the language if you chose one, whether GR Photo connects to your camera when it is nearby, the auto-disconnect time, the name of the album your downloads are saved to if you changed it, the Shoot mode you used last and whether debug logging is on.
+- Your settings: the theme, the language if you chose one, whether GR Photo connects to your camera when it is nearby, the auto-disconnect time, the name of the album your downloads are saved to if you changed it, the folder your downloads are saved to if you chose one (its name and what your phone needs to find it again), the Shoot mode you used last and whether debug logging is on.
 - Your paired cameras: the name you gave each one, its model, serial number, firmware version, Bluetooth name and address, the identifier your phone uses for it, when you paired it, whether your phone has already joined its Wi-Fi, and whether Live geotagging, Background geotagging and Sync camera clock are on for it.
 - A record of your downloads: which files from which camera you have saved, with the date and size the camera reported for each (so GR Photo notices when a camera later holds a different file under the same name), and downloads still waiting.
 - Your saved looks: the name you gave each one, its Image Control settings, where it came from (a photo's file name or a Custom slot) and, for a look saved from a photo, a smaller copy of that photo, which way up it was taken and the Image Control settings it was taken with.
@@ -19,7 +19,7 @@ GR Photo keeps the following in its own app storage on your phone:
 
 GR Photo reads your camera's Wi-Fi password from the camera over Bluetooth each time it connects and passes it to your phone's Wi-Fi system to join the camera's network. The password is not saved with your paired cameras. While debug logging is on, though, the password is written to the debug log on your phone, like the rest of the exchange with the camera (see below).
 
-Photos and videos you download are saved to your phone's photo library, in an album called GR Photo unless you give it another name in Settings: on iOS an album in Photos, on Android a folder of that name under Pictures. While background geotagging is on for the camera they come from, GR Photo adds a location to a photo that has none before it saves it (see Your location below). Once saved they are yours and are managed by your photo app; GR Photo does not change or delete them.
+Photos and videos you download are saved to your phone's photo library, in an album called GR Photo unless you give it another name in Settings: on iOS an album in Photos, on Android a folder of that name under Pictures. If you turn on Save to a folder in Settings, they are saved as files in the folder you choose with your phone's folder picker instead, and not in your photo library. That folder can belong to another app, such as a cloud storage app; what that app does with the files, uploading them included, is up to it and its own privacy policy. While background geotagging is on for the camera they come from, GR Photo adds a location to a photo that has none before it saves it (see Your location below). Once saved they are yours and are managed by your photo app or the app the folder belongs to; GR Photo does not change or delete them.
 
 The demo version of GR Photo uses a simulated camera with sample photos included in the app. It keeps its data apart from that of real cameras.
 
@@ -76,14 +76,14 @@ On Android, GR Photo asks for or uses:
 - Being left out of battery optimisation, which Android asks you about when you turn Live geotagging on. Some phones pause apps while the screen is off; with this allowed, GR Photo still notices the camera being switched on then. Live geotagging works either way once the screen is on.
 - Starting when the phone restarts, only while background geotagging is on for a camera, to set up the recording of the location history again. Nothing is shown and nothing is sent then.
 
-Saving photos and videos to Pictures needs no permission on the Android versions GR Photo runs on.
+Saving photos and videos to Pictures needs no permission on the Android versions GR Photo runs on. Saving to a folder you chose needs none either: choosing the folder in Android's folder picker gives GR Photo access to that folder, which it uses only to add what you download. Turning Save to a folder off, or choosing another folder, gives the access up.
 
 On iOS, GR Photo asks for:
 
 - Bluetooth, to find, pair with, wake and control your camera. While Live geotagging is on for a camera, GR Photo also uses Bluetooth after you leave the app, to go on sending your location to that camera.
 - Location, only when you turn Live geotagging or Background geotagging on. Live geotagging needs precise location; with approximate location alone it sends nothing, because that can be kilometres off. Always is needed for background geotagging only; with While Using the App, live geotagging starts when you open GR Photo and carries on after you leave it, and iOS shows its location indicator while it does.
 - Local network, to talk to the camera over its Wi-Fi network.
-- Photos, to save the photos and videos you download to its album (GR Photo, or the name you chose in Settings). iOS lets an app keep an album only with full access to your library, so that is what GR Photo asks for. It uses the access only to add what you download and to find the album by its name; it does not look at, change or delete your other photos and videos. If you allow limited access or Add Photos Only instead, GR Photo still saves what you download, outside the album.
+- Photos, to save the photos and videos you download to its album (GR Photo, or the name you chose in Settings). iOS lets an app keep an album only with full access to your library, so that is what GR Photo asks for. It uses the access only to add what you download and to find the album by its name; it does not look at, change or delete your other photos and videos. If you allow limited access or Add Photos Only instead, GR Photo still saves what you download, outside the album. While Save to a folder is on, GR Photo does not use Photos: choosing the folder in the iOS folder picker gives GR Photo access to that folder, which it uses only to add what you download, and turning Save to a folder off, or choosing another folder, gives the access up.
 - Joining the camera's Wi-Fi network, which iOS asks you to approve. GR Photo also reads the name of the Wi-Fi network your phone is on, only to check that it has joined the camera.
 
 On iOS, GR Photo shows two things on the Lock Screen and in the Dynamic Island while you use another app: that live geotagging is running, with the camera's name and a Stop button (iOS 17 and later), and a running download (iOS 26 and later). Neither needs a permission. You can turn Live Activities off for GR Photo in the Settings app; downloads and geotagging run either way.
@@ -92,12 +92,12 @@ GR Photo does not use your phone's camera, microphone or contacts, and it uses y
 
 ## Deleting your data
 
-- Forget camera, on the camera's page under Cameras, removes the camera from GR Photo's paired cameras and deletes what GR Photo keeps about it: the cached file list, thumbnails, previews and videos of that camera, its downloads still waiting and the record of its files you saved. Photos and videos you saved to your photo library stay there, and so do your saved looks, including those saved from that camera. The debug log is not changed; Clear log deletes it. Your phone's Bluetooth settings may still list the camera, and the camera may still list your phone; you can remove those entries in the phone's Bluetooth settings and on the camera.
+- Forget camera, on the camera's page under Cameras, removes the camera from GR Photo's paired cameras and deletes what GR Photo keeps about it: the cached file list, thumbnails, previews and videos of that camera, its downloads still waiting and the record of its files you saved. Photos and videos you saved to your photo library or to a folder stay there, and so do your saved looks, including those saved from that camera. The debug log is not changed; Clear log deletes it. Your phone's Bluetooth settings may still list the camera, and the camera may still list your phone; you can remove those entries in the phone's Bluetooth settings and on the camera.
 - Delete, in a saved look's menu under Looks, removes the look and its copy of the photo from your phone. Looks you loaded into the camera's Custom slots stay on the camera.
 - Delete location history, under Settings, Location, deletes the location history from your phone. Photos you already downloaded keep the location they were given.
 - Clear log, under Settings, Debug log, deletes the debug log from your phone.
 - The parts of the map kept on your phone have no button of their own: clearing GR Photo's storage in your phone's settings, or uninstalling GR Photo, deletes them.
-- Uninstalling GR Photo deletes everything GR Photo keeps on your phone, including the location history, the parts of the map and the debug log. Photos and videos you saved to your photo library stay there.
+- Uninstalling GR Photo deletes everything GR Photo keeps on your phone, including the location history, the parts of the map and the debug log. Photos and videos you saved to your photo library or to a folder stay there.
 
 ## Children
 

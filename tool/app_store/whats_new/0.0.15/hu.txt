@@ -1,0 +1,1 @@
+• A Beállítások › Letöltések részben új kapcsoló található, a Mentés mappába: a letöltések ekkor fájlként kerülnek egy általad választott mappába, például egy felhőtárhely-alkalmazásban vagy SD-kártyán, nem pedig a fotókönyvtárba. Előfordulhat, hogy a fotóalkalmazásod nem jeleníti meg az oda mentett tartalmakat.

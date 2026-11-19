@@ -1,0 +1,1 @@
+• Settings › Downloads has a new Save to a folder switch: downloads are then saved as files in a folder you choose, such as one in a cloud storage app or on an SD card, instead of in your photo library. Your photos app may not show what is saved there.

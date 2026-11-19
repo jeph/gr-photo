@@ -499,11 +499,18 @@ final class CountingTransport implements BleTransport {
   Future<void> close() => _inner.close();
 }
 
-/// One `MediaSaver.saveShot` call.
-typedef SavedShot = ({List<String> names, List<int> sizes, String album});
+/// One `MediaSaver.saveShot` call: its files, and the album or the id of
+/// the folder it went to.
+typedef SavedShot = ({
+  List<String> names,
+  List<int> sizes,
+  String? album,
+  String? folder,
+});
 
-/// Records saved shots instead of writing to the photo library. Set
-/// [failWith] to make the next saves throw, [gate] to hold them.
+/// Records saved shots instead of writing to the photo library or a
+/// folder. Set [failWith] to make the next saves throw, [gate] to hold
+/// them.
 final class RecordingMediaSaver implements MediaSaver {
   final List<SavedShot> shots = [];
   MediaSaveException? failWith;
@@ -514,8 +521,28 @@ final class RecordingMediaSaver implements MediaSaver {
   /// Saves waiting for [gate].
   int held = 0;
 
+  /// What the folder picker answers: the folder the user picks, or null
+  /// when they leave it without one.
+  SaveFolder? picks;
+
+  /// Set to make the folder picker fail.
+  MediaSaveException? pickFailsWith;
+
+  /// The ids of the folders whose access was given up.
+  final List<String> forgotten = [];
+
   @override
-  Future<void> saveShot(List<File> files, {required String album}) async {
+  Future<SaveFolder?> pickFolder() async {
+    if (pickFailsWith case final failure?) throw failure;
+    return picks;
+  }
+
+  @override
+  Future<void> forgetFolder(SaveFolder folder) async =>
+      forgotten.add(folder.id);
+
+  @override
+  Future<void> saveShot(List<File> files, {required SaveDestination to}) async {
     if (gate case final gate?) {
       held++;
       await gate.future;
@@ -528,7 +555,14 @@ final class RecordingMediaSaver implements MediaSaver {
       // Synchronous: async file I/O would wait for real time in a widget
       // test.
       sizes: [for (final f in files) f.lengthSync()],
-      album: album,
+      album: switch (to) {
+        SaveToAlbum(:final name) => name,
+        SaveFolder() => null,
+      },
+      folder: switch (to) {
+        SaveToAlbum() => null,
+        SaveFolder(:final id) => id,
+      },
     ));
   }
 }

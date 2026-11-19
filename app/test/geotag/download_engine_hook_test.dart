@@ -50,11 +50,17 @@ final class _KeepingSaver implements MediaSaver {
   final Map<String, Uint8List> saved = {};
 
   @override
-  Future<void> saveShot(List<File> files, {required String album}) async {
+  Future<void> saveShot(List<File> files, {required SaveDestination to}) async {
     for (final file in files) {
       saved[file.uri.pathSegments.last] = await file.readAsBytes();
     }
   }
+
+  @override
+  Future<SaveFolder?> pickFolder() async => null;
+
+  @override
+  Future<void> forgetFolder(SaveFolder folder) async {}
 }
 
 /// A simulated camera whose photos are [testJpeg] and [testTiff] files,
@@ -104,7 +110,7 @@ final class _Harness {
       cacheDir: Directory('${root.path}/cache'),
       media: media,
       link: link,
-      album: () => 'GR Photo',
+      destination: () => const SaveToAlbum('GR Photo'),
       beforeSave: beforeSave,
       transportGrace: Duration.zero,
       progressInterval: Duration.zero,

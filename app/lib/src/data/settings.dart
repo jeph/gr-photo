@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:grphoto/l10n/app_localizations.dart';
 import 'package:grphoto/src/data/json_file.dart';
+import 'package:grphoto/src/services.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 
 /// How long the camera's Wi-Fi stays connected without use before the app
@@ -68,6 +69,7 @@ final class SettingsController extends ChangeNotifier {
       c
         .._debugLogging = debugLogging is bool ? debugLogging : null
         .._albumName = _usableAlbumName(json[_albumNameKey])
+        .._saveFolder = _savedFolder(json[_saveFolderKey])
         // A language GR Photo is no longer translated into follows the phone.
         .._language = AppLocalizations.supportedLocales
             .where((locale) => locale.toLanguageTag() == json[_languageKey])
@@ -85,6 +87,7 @@ final class SettingsController extends ChangeNotifier {
   /// Holds the language's BCP 47 tag (`de`, `zh-Hant`).
   static const _languageKey = 'language';
   static const _albumNameKey = 'albumName';
+  static const _saveFolderKey = 'saveFolder';
 
   AppTheme _theme = AppTheme.system;
   AutoDisconnect _autoDisconnect = AutoDisconnect.fiveMinutes;
@@ -93,6 +96,7 @@ final class SettingsController extends ChangeNotifier {
   bool? _debugLogging;
   Locale? _language;
   String? _albumName;
+  SaveFolder? _saveFolder;
 
   AppTheme get theme => _theme;
 
@@ -123,6 +127,10 @@ final class SettingsController extends ChangeNotifier {
   /// (`DownloadEngine.albumFor`).
   String? get albumName => _albumName;
 
+  /// The folder downloads are saved to, when the user picked one in
+  /// Settings (`MediaSaver.pickFolder`); null saves to the photo library.
+  SaveFolder? get saveFolder => _saveFolder;
+
   set theme(AppTheme v) => _update(() => _theme = v);
   set autoDisconnect(AutoDisconnect v) => _update(() => _autoDisconnect = v);
   set connectWhenNearby(bool v) => _update(() => _connectWhenNearby = v);
@@ -130,6 +138,7 @@ final class SettingsController extends ChangeNotifier {
   set debugLogging(bool? v) => _update(() => _debugLogging = v);
   set language(Locale? v) => _update(() => _language = v);
   set albumName(String? v) => _update(() => _albumName = _usableAlbumName(v));
+  set saveFolder(SaveFolder? v) => _update(() => _saveFolder = v);
 
   /// [name] cleaned ([cleanAlbumName]); null when it is no string or
   /// nothing of it is left.
@@ -138,6 +147,15 @@ final class SettingsController extends ChangeNotifier {
     final cleaned = cleanAlbumName(name);
     return cleaned.isEmpty ? null : cleaned;
   }
+
+  /// The folder saved as [json]; null when it is not one.
+  static SaveFolder? _savedFolder(Object? json) => switch (json) {
+    {'id': final String id, 'name': final String name} => SaveFolder(
+      id: id,
+      name: name,
+    ),
+    _ => null,
+  };
 
   /// Applies [change] at once and saves every setting; a failed write goes
   /// to the debug log, and the next change writes every setting again.
@@ -152,6 +170,8 @@ final class SettingsController extends ChangeNotifier {
       'debugLogging': ?_debugLogging,
       _languageKey: ?_language?.toLanguageTag(),
       _albumNameKey: ?_albumName,
+      if (_saveFolder case SaveFolder(:final id, :final name))
+        _saveFolderKey: {'id': id, 'name': name},
     };
     unawaited(_file.save(() => snapshot));
   }

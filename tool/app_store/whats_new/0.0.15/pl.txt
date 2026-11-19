@@ -1,0 +1,1 @@
+• Ustawienia › Pobrane mają nowy przełącznik Zapisuj w folderze: pobrane pliki są wtedy zapisywane jako pliki w wybranym przez Ciebie folderze, na przykład w aplikacji do przechowywania w chmurze lub na karcie SD, a nie w bibliotece zdjęć. Twoja aplikacja do zdjęć może nie pokazywać tego, co jest tam zapisane.

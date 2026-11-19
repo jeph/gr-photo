@@ -4,25 +4,70 @@ import 'package:flutter/foundation.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/src/platform/window_pose.dart';
 
-/// Saves downloaded camera files into the device photo library.
-abstract interface class MediaSaver {
-  /// Saves the files of one shot into the album named [album], creating the
-  /// album when the photo library has none of that name. [files] holds a
-  /// JPEG, a DNG, both halves of a RAW+JPEG pair (same base name), or one
-  /// movie. iOS stores a pair as one Photos asset (JPEG primary, DNG
-  /// alternate) and leaves the shot out of the album unless GR Photo has full
-  /// access to Photos; Android writes one MediaStore entry per file under
-  /// `Pictures/<album>`. Throws [MediaSaveException].
-  Future<void> saveShot(List<File> files, {required String album});
+/// Where a downloaded shot is saved: the phone's photo library
+/// ([SaveToAlbum]) or a folder the user picked ([SaveFolder]).
+sealed class SaveDestination {
+  const new();
 }
 
-/// Why the photo library did not take a shot.
+/// The phone's photo library, in the album called [name], which is created
+/// when the library has none of that name. iOS stores a RAW+JPEG pair as
+/// one Photos asset (JPEG primary, DNG alternate) and leaves the shot out
+/// of the album unless GR Photo has full access to Photos; Android writes
+/// one MediaStore entry per file under `Pictures/<name>`.
+final class SaveToAlbum extends SaveDestination {
+  const new(this.name);
+
+  final String name;
+}
+
+/// A folder the user picked with the system's folder picker
+/// ([MediaSaver.pickFolder]), where shots are written as plain files: on
+/// Android a document tree of the Storage Access Framework, on iOS a
+/// folder of the Files app, either of which may belong to a cloud storage
+/// app. Nothing promises that the phone's photo app shows what is saved
+/// there (`research/saving-downloads.md`).
+final class SaveFolder extends SaveDestination {
+  const new({required this.id, required this.name});
+
+  /// What the platform knows the folder by; means nothing to the app.
+  final String id;
+
+  /// The folder's name as the platform shows it, for Settings.
+  final String name;
+}
+
+/// Saves downloaded camera files on the phone: into its photo library or
+/// into a folder the user picked.
+abstract interface class MediaSaver {
+  /// Saves the files of one shot to [to]: all of them or none. [files]
+  /// holds a JPEG, a DNG, both halves of a RAW+JPEG pair (same base name),
+  /// or one movie. Throws [MediaSaveException].
+  Future<void> saveShot(List<File> files, {required SaveDestination to});
+
+  /// Asks the user for a folder with the system's folder picker and keeps
+  /// access to it until [forgetFolder]. Null when the user picked none.
+  /// Throws [MediaSaveException] when the platform has no picker or could
+  /// not keep access to the folder.
+  Future<SaveFolder?> pickFolder();
+
+  /// Gives up the access [pickFolder] took to [folder]. Throws
+  /// [MediaSaveException] when the platform could not be asked.
+  Future<void> forgetFolder(SaveFolder folder);
+}
+
+/// Why a shot was not saved.
 enum MediaSaveFailure {
   /// The user has not allowed GR Photo to add to the photo library.
   permissionDenied,
 
+  /// The folder the user picked can no longer be written to: GR Photo's
+  /// access to it is gone, or the folder was deleted or its storage is not
+  /// there.
+  folderUnavailable,
+
   /// The files are not one shot GR Photo can save, or the platform cannot
-  /// save to its photo library.
+  /// save them.
   unsupported,
 
   /// The platform failed to save.
@@ -38,7 +83,11 @@ final class MediaSaveException implements Exception {
   /// describes [failure].
   final String? detail;
 
-  bool get permissionDenied => failure == MediaSaveFailure.permissionDenied;
+  /// No shot can be saved until the user acts: every save would fail the
+  /// same way.
+  bool get blocksEverySave =>
+      failure == MediaSaveFailure.permissionDenied ||
+      failure == MediaSaveFailure.folderUnavailable;
 
   @override
   String toString() => 'MediaSaveException(${failure.name}): $detail';

@@ -1,0 +1,1 @@
+• Kohdassa Asetukset › Lataukset on uusi Tallenna kansioon -kytkin: lataukset tallennetaan silloin tiedostoina valitsemaasi kansioon, esimerkiksi pilvitallennusapissa tai SD-kortilla olevaan, eikä kuvakirjastoon. Kuvasovelluksesi ei välttämättä näytä sinne tallennettua sisältöä.

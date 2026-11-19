@@ -111,10 +111,11 @@ og at looks til Billedkontrol er noget, det er værd at holde styr på.
 - **Bibliotek.** Gennemse kameraets billeder og videoer dag for dag, filtrer efter JPEG, RAW, video
   eller Ikke downloadet, og åbn en hvilken som helst optagelse i fuld skærm med dens detaljer.
   Download en enkelt optagelse eller et udvalg, som JPEG, RAW eller begge dele, til et
-  GR Photo-album i telefonens fotobibliotek; i Indstillinger kan du give albummet et andet navn.
-  Downloads fortsætter, mens du bruger en anden app eller låser telefonen: Android viser dem i en
-  notifikation med Sæt på pause og Annuller alle, og iOS 26 og nyere viser forløbet på låseskærmen
-  og i Dynamic Island. Videoer afspilles i appen.
+  GR Photo-album i telefonens fotobibliotek; i Indstillinger kan du give albummet et andet navn
+  eller i stedet gemme downloads som filer i en mappe, du selv vælger. Downloads fortsætter, mens du
+  bruger en anden app eller låser telefonen: Android viser dem i en notifikation med Sæt på pause og
+  Annuller alle, og iOS 26 og nyere viser forløbet på låseskærmen og i Dynamic Island. Videoer
+  afspilles i appen.
 - **Fjernudløser.** En stor udløserknap via Bluetooth alene, med selvudløseren, motorfunktionen,
   funktionsvælgeren, billeder tilbage og batteri. På Android udløser lydstyrkeknapperne også
   lukkeren.

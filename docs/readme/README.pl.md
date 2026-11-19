@@ -112,9 +112,10 @@ użytkownikowi i traktowanie stylów Sterowania obrazem jako czegoś, czym warto
 - **Biblioteka.** Przeglądaj zdjęcia i filmy z aparatu według dni, filtruj według JPEG, RAW, Film
   albo Niepobrane i otwieraj dowolne ujęcie na pełnym ekranie razem ze szczegółami. Pobierz jedno
   ujęcie albo kilka zaznaczonych, jako JPEG, RAW albo oba, do albumu GR Photo w bibliotece zdjęć
-  telefonu; w Ustawieniach możesz nadać albumowi inną nazwę. Pobieranie trwa, gdy używasz innej
-  aplikacji albo zablokujesz telefon: Android pokazuje je w powiadomieniu z przyciskami Wstrzymaj i
-  Anuluj wszystkie, a iOS 26 lub nowszy pokazuje postęp na ekranie blokady i w Dynamic Island. Filmy
+  telefonu; w Ustawieniach możesz nadać albumowi inną nazwę albo zamiast tego zapisywać pobrane
+  zdjęcia i filmy jako pliki w wybranym folderze. Pobieranie trwa, gdy używasz innej aplikacji albo
+  zablokujesz telefon: Android pokazuje je w powiadomieniu z przyciskami Wstrzymaj i Anuluj
+  wszystkie, a iOS 26 lub nowszy pokazuje postęp na ekranie blokady i w Dynamic Island. Filmy
   odtwarzają się w aplikacji.
 - **Zdalna migawka.** Duży przycisk migawki działający przez sam Bluetooth, a do tego
   samowyzwalacz, tryb rejestracji, pokrętło trybów, liczba pozostałych zdjęć i stan baterii.

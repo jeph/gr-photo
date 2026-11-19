@@ -18,6 +18,7 @@ import 'package:grphoto/src/library/shot.dart';
 import 'package:grphoto/src/library/shot_cell.dart';
 import 'package:grphoto/src/library/viewer.dart';
 import 'package:grphoto/src/platform/window_pose.dart';
+import 'package:grphoto/src/services.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:grphoto/src/widgets/group.dart';
@@ -65,7 +66,7 @@ class _LibraryViewState extends State<_LibraryView> {
   LibraryFilter _filter = LibraryFilter.all;
   final Set<String> _selected = {};
   bool _selecting = false;
-  bool _permissionDialogOpen = false;
+  bool _saveProblemDialogOpen = false;
   bool _listening = false;
 
   /// The shot on the second page, in a window of two pages at a fold.
@@ -103,8 +104,8 @@ class _LibraryViewState extends State<_LibraryView> {
       _pane
         ..addListener(_onPaneShot)
         ..addListener(_onPaneFullScreen);
-      // The engine is the app's: the photo library may have refused it
-      // while the camera pages were closed.
+      // The engine is the app's: saving may have been refused while the
+      // camera pages were closed.
       _onEngine();
     }
     // A window that is one page has no room for a shot beside the grid;
@@ -122,14 +123,14 @@ class _LibraryViewState extends State<_LibraryView> {
   }
 
   void _onEngine() {
-    final problem = _library.engine.permissionProblem;
-    if (problem == null || _permissionDialogOpen) return;
-    _permissionDialogOpen = true;
+    final problem = _library.engine.saveProblem;
+    if (problem == null || _saveProblemDialogOpen) return;
+    _saveProblemDialogOpen = true;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-      await showPermissionGuidance(context);
-      _library.engine.dismissPermissionProblem();
-      _permissionDialogOpen = false;
+      await showSaveProblem(context, problem.failure);
+      _library.engine.dismissSaveProblem();
+      _saveProblemDialogOpen = false;
     });
   }
 
@@ -666,17 +667,27 @@ class _FirstPage extends StatelessWidget {
   }
 }
 
-/// Explains how to allow photo-library access after the OS refused it.
-Future<void> showPermissionGuidance(BuildContext context) {
+/// Says why no download can be saved and what to do about it: how to allow
+/// photo-library access after the OS refused it, or, for
+/// [MediaSaveFailure.folderUnavailable], to pick the folder again.
+Future<void> showSaveProblem(BuildContext context, MediaSaveFailure failure) {
   final ios = Theme.of(context).platform == TargetPlatform.iOS;
   final l10n = context.l10n;
+  final (title, message) = switch (failure) {
+    MediaSaveFailure.folderUnavailable => (
+      l10n.libraryFolderUnavailableTitle,
+      l10n.libraryFolderUnavailableMessage,
+    ),
+    _ => (
+      l10n.libraryPhotoAccessTitle,
+      ios ? l10n.libraryPhotoAccessIos : l10n.libraryPhotoAccessAndroid,
+    ),
+  };
   return showDialog<void>(
     context: context,
     builder: (context) => GrDialog(
-      title: l10n.libraryPhotoAccessTitle,
-      message: ios
-          ? l10n.libraryPhotoAccessIos
-          : l10n.libraryPhotoAccessAndroid,
+      title: title,
+      message: message,
       actions: [
         GrDialogAction.answer(
           label: l10n.libraryOk,

@@ -1,0 +1,1 @@
+• Ajustes › Descargas tiene un nuevo interruptor Guardar en una carpeta: las descargas se guardan entonces como archivos en una carpeta que tú eliges, por ejemplo en una app de almacenamiento en la nube o en una tarjeta SD, en lugar de en tu fototeca. Puede que tu app de fotos no muestre lo que se guarda ahí.

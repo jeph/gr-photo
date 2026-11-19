@@ -72,9 +72,9 @@ final class AppModels {
       cacheDir: services.cacheDir,
       media: services.media,
       link: link,
-      album: () => settings.albumName ?? DownloadEngine.albumFor(appFlavor),
+      destination: () => settings.saveFolder ?? SaveToAlbum(_album(settings)),
       // Background geotagging: a photo the camera gave no location gets
-      // one from the phone's history before it reaches the photo library.
+      // one from the phone's history before it is saved.
       beforeSave: geotag.geotagger.tag,
     );
     final models = AppModels(
@@ -118,10 +118,14 @@ final class AppModels {
   final GeotagController geotag;
 
   /// The download queue, one engine for the app's lifetime so only it uses
-  /// `downloads.json` and the job files: a photo-library save still running
-  /// when the camera pages close finishes in it, and the queue carries on
-  /// when they open again.
+  /// `downloads.json` and the job files: a save still running when the
+  /// camera pages close finishes in it, and the queue carries on when they
+  /// open again.
   final DownloadEngine downloads;
+
+  /// The photo library album downloads are saved to while the user has
+  /// picked no folder: the one they named, or this build's own.
+  String get album => _album(settings);
 
   /// The current camera's photos, for the Library and the Cameras screen;
   /// its cached listing is read at start.
@@ -134,7 +138,7 @@ final class AppModels {
   /// Removes [serial]'s camera from the app with everything kept about it:
   /// its pairing, cached listing, images and movies, downloads waiting and
   /// the record of its files saved to the phone. The photos themselves
-  /// stay in the photo library. Forgetting the current camera also ends
+  /// stay where they were saved. Forgetting the current camera also ends
   /// its connection.
   Future<void> forgetCamera(String serial) => Future.wait([
     cameras.remove(serial),
@@ -142,6 +146,9 @@ final class AppModels {
     downloads.forgetCamera(serial),
   ]);
 }
+
+String _album(SettingsController settings) =>
+    settings.albumName ?? DownloadEngine.albumFor(appFlavor);
 
 class AppScope extends InheritedWidget {
   const new({required this.models, required super.child, super.key});

@@ -1,0 +1,1 @@
+• Definições › Transferências tem um novo interruptor Guardar numa pasta: as transferências passam então a ser guardadas como ficheiros numa pasta à sua escolha, por exemplo numa aplicação de armazenamento na nuvem ou num cartão SD, em vez de na biblioteca de fotografias. A sua aplicação de fotografias pode não mostrar o que é guardado aí.

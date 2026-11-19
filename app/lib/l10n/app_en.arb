@@ -90,7 +90,7 @@
   "@camerasDetailsForgetConfirm": {
     "description": "Button of the forget-camera confirmation that removes the camera."
   },
-  "camerasDetailsForgetMessage": "GR Photo stops connecting to this camera and deletes its file list, thumbnails, previews, videos and download history from this phone. Photos already saved to your photo library stay there, and so do your saved looks.",
+  "camerasDetailsForgetMessage": "GR Photo stops connecting to this camera and deletes its file list, thumbnails, previews, videos and download history from this phone. Photos and videos you already downloaded stay where they were saved, and so do your saved looks.",
   "@camerasDetailsForgetMessage": {
     "description": "Body of the forget-camera confirmation."
   },
@@ -898,6 +898,10 @@
   "@downloadErrorCutOff": {
     "description": "Why a download failed: the file arrived shorter than announced."
   },
+  "downloadErrorFolderUnavailable": "The folder for downloads can't be used",
+  "@downloadErrorFolderUnavailable": {
+    "description": "Why a download failed: Save to a folder is on in Settings, and GR Photo can no longer write to the folder the user picked (it was moved or deleted, its storage is not connected, or the phone took the access away)."
+  },
   "downloadErrorHttpStatus": "The camera answered HTTP {httpStatus}",
   "@downloadErrorHttpStatus": {
     "description": "Why a download failed: the camera answered with an HTTP error status.",
@@ -944,17 +948,17 @@
       }
     }
   },
-  "downloadErrorSaveFailed": "Couldn't save to the photo library",
+  "downloadErrorSaveFailed": "Couldn't save the download",
   "@downloadErrorSaveFailed": {
-    "description": "Why a download failed: the phone failed to save the shot to its photo library."
+    "description": "Why a download failed: the phone failed to save the shot, to its photo library or to the folder the user picked for downloads."
   },
-  "downloadErrorSaveInterrupted": "GR Photo closed while saving; the shot may already be in your photo library",
+  "downloadErrorSaveInterrupted": "GR Photo closed while saving; the shot may already be saved",
   "@downloadErrorSaveInterrupted": {
-    "description": "Why a download stopped: the app closed while handing the shot to the photo library, so it cannot tell whether the save happened. Retrying saves it again."
+    "description": "Why a download stopped: the app closed while saving the shot to the photo library or the folder for downloads, so it cannot tell whether the save happened. Retrying saves it again."
   },
-  "downloadErrorSaveUnsupported": "These files can't be saved to the photo library",
+  "downloadErrorSaveUnsupported": "These files can't be saved",
   "@downloadErrorSaveUnsupported": {
-    "description": "Why a download failed: the phone cannot save these files to its photo library."
+    "description": "Why a download failed: the phone cannot save these files to its photo library or to the folder for downloads."
   },
   "downloadErrorStalled": "The camera stopped sending",
   "@downloadErrorStalled": {
@@ -1225,6 +1229,14 @@
   "@libraryFilterVideo": {
     "description": "Filter chip that shows videos."
   },
+  "libraryFolderUnavailableMessage": "GR Photo can no longer save to the folder you chose for downloads. It may have been moved or deleted, or its storage may not be connected. Choose a folder again in Settings, under Downloads, then retry the downloads.",
+  "@libraryFolderUnavailableMessage": {
+    "description": "Body of the dialog shown when downloads failed because the folder picked under Settings, Downloads, Save to a folder can no longer be written to. Name Settings and Downloads as the app's Settings screen and its Downloads section are called."
+  },
+  "libraryFolderUnavailableTitle": "Can't save to the folder",
+  "@libraryFolderUnavailableTitle": {
+    "description": "Title of the dialog shown when downloads failed because the folder the user picked for downloads can no longer be written to."
+  },
   "libraryFormatJpeg": "JPEG",
   "@libraryFormatJpeg": {
     "description": "A shot or download of JPEG files."
@@ -1277,7 +1289,7 @@
   },
   "libraryOk": "OK",
   "@libraryOk": {
-    "description": "Button that closes the photo access dialog."
+    "description": "Button that closes the photo access dialog and the dialog about the folder for downloads."
   },
   "libraryPaneEmpty": "Tap a photo or video to see it here.",
   "@libraryPaneEmpty": {
@@ -2876,6 +2888,14 @@
   "@settingsDownloads": {
     "description": "Settings section heading: where photos and videos downloaded from the camera are saved."
   },
+  "settingsFolder": "Folder",
+  "@settingsFolder": {
+    "description": "Settings, Downloads: title of the row that shows the name of the folder downloads are saved to while Save to a folder is on. Tapping it opens the phone's folder picker to choose another."
+  },
+  "settingsFolderPickFailed": "Couldn't use that folder",
+  "@settingsFolderPickFailed": {
+    "description": "Toast in Settings when the phone's folder picker could not be opened or the phone did not let GR Photo keep access to the folder the user picked."
+  },
   "settingsLanguage": "Language",
   "@settingsLanguage": {
     "description": "Settings: title of the row that chooses the language GR Photo is shown in, and heading of the list of languages it opens."
@@ -2891,6 +2911,14 @@
   "settingsLocation": "Location",
   "@settingsLocation": {
     "description": "Settings section heading: the location history that background geotagging keeps."
+  },
+  "settingsSaveToFolder": "Save to a folder",
+  "@settingsSaveToFolder": {
+    "description": "Settings, Downloads: title of the switch that saves downloaded photos and videos as files in a folder the user picks with the phone's folder picker, instead of in the phone's photo library."
+  },
+  "settingsSaveToFolderSubtitle": "Saves downloads as files in a folder you choose, not in your photo library. Your photos app may not show them.",
+  "@settingsSaveToFolderSubtitle": {
+    "description": "Settings: explanation under Save to a folder. The folder can be anywhere the phone's folder picker offers, a cloud storage app included, so the phone's photo or gallery app may not show what is saved there."
   },
   "settingsTheme": "Theme",
   "@settingsTheme": {

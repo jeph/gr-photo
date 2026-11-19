@@ -1,0 +1,1 @@
+• Impostazioni › Download ha un nuovo interruttore Salva in una cartella: i download vengono allora salvati come file in una cartella scelta da te, ad esempio in un'app di archiviazione cloud o su una scheda SD, anziché nella libreria foto. La tua app per le foto potrebbe non mostrare ciò che viene salvato lì.

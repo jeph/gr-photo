@@ -342,6 +342,8 @@ String _failureMessage(AppLocalizations l10n, DownloadFailure failure) =>
     switch (failure) {
       DownloadSaveFailed(:final reason) => switch (reason) {
         MediaSaveFailure.permissionDenied => l10n.downloadErrorNoPhotoAccess,
+        MediaSaveFailure.folderUnavailable =>
+          l10n.downloadErrorFolderUnavailable,
         MediaSaveFailure.unsupported => l10n.downloadErrorSaveUnsupported,
         MediaSaveFailure.failed => l10n.downloadErrorSaveFailed,
       },

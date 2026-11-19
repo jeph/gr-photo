@@ -112,10 +112,11 @@ Ovládání obrazu jako něco, o co stojí za to se starat.
 - **Knihovna.** Procházejte fotky a videa z fotoaparátu po dnech, filtrujte podle JPEG, RAW, videa
   nebo dosud nestažených a kterýkoli snímek si otevřete na celou obrazovku i s podrobnostmi.
   Stáhněte jeden snímek nebo výběr, jako JPEG, RAW nebo obojí, do alba GR Photo v knihovně fotek
-  telefonu; album můžete v Nastavení přejmenovat. Stahování pokračuje, i když používáte jinou
-  aplikaci nebo zamknete telefon: Android ho ukazuje v oznámení s tlačítky Pozastavit a Zrušit vše,
-  iOS 26 a novější ukazuje jeho průběh na zamčené obrazovce a v Dynamic Islandu. Videa se přehrávají
-  přímo v aplikaci.
+  telefonu; album můžete v Nastavení přejmenovat, nebo místo něj ukládat stažené položky jako
+  soubory do složky, kterou si vyberete. Stahování pokračuje, i když používáte jinou aplikaci nebo
+  zamknete telefon: Android ho ukazuje v oznámení s tlačítky Pozastavit a Zrušit vše, iOS 26 a
+  novější ukazuje jeho průběh na zamčené obrazovce a v Dynamic Islandu. Videa se přehrávají přímo v
+  aplikaci.
 - **Dálková spoušť.** Velké tlačítko spouště jen přes Bluetooth, se samospouští, způsobem
   exponování, voličem režimů, počtem zbývajících snímků a stavem baterie. V Androidu spouštějí
   závěrku také tlačítka hlasitosti.

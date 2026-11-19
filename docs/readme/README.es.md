@@ -112,10 +112,10 @@ Control de imagen como algo que merece la pena gestionar.
 - **Biblioteca.** Explora las fotos y los vídeos de la cámara por días, filtra por JPEG, RAW, vídeo
   o sin descargar, y abre cualquier toma a pantalla completa con sus detalles. Descarga una toma o
   una selección, como JPEG, RAW o ambos, en un álbum GR Photo de la fototeca de tu teléfono; en
-  Ajustes puedes darle otro nombre al álbum. Las descargas siguen mientras usas otra app o bloqueas
-  el teléfono: Android las muestra en una notificación con Pausar y Cancelar todo, e iOS 26 o
-  posterior muestra su progreso en la pantalla de bloqueo y en la Dynamic Island. Los vídeos se
-  reproducen en la app.
+  Ajustes puedes darle otro nombre al álbum o, en su lugar, guardar las descargas como archivos en
+  la carpeta que elijas. Las descargas siguen mientras usas otra app o bloqueas el teléfono: Android
+  las muestra en una notificación con Pausar y Cancelar todo, e iOS 26 o posterior muestra su
+  progreso en la pantalla de bloqueo y en la Dynamic Island. Los vídeos se reproducen en la app.
 - **Disparador remoto.** Un botón de disparo grande que funciona solo con Bluetooth, con el
   autodisparador, el modo Fotografiar, el dial de modos, las fotos restantes y la batería. En
   Android, los botones de volumen también disparan.

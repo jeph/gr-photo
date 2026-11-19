@@ -1,0 +1,1 @@
+• Ayarlar › İndirilenler’de yeni bir Klasöre kaydet anahtarı var; açıkken indirilenler fotoğraf arşiviniz yerine, seçtiğiniz bir klasöre dosya olarak kaydedilir. Bu klasör bir bulut depolama uygulamasında veya SD kartta olabilir. Fotoğraf uygulamanız oraya kaydedilenleri göstermeyebilir.

@@ -6,20 +6,25 @@ import 'package:grphoto/src/services.dart';
 
 /// [MediaSaver] over the `io.jeph.grphoto/media` method channel.
 ///
-/// The shot is sent as `{album, files: [{path, name, kind, mimeType}]}`
-/// with the JPEG before the DNG, because iOS makes the first file of a pair
-/// the primary photo and the second its RAW alternate. Android writes each
-/// file as its own MediaStore entry under `Pictures/<album>`, the folder
-/// gallery apps show as the album. iOS adds the shot to the Photos album of
-/// that title, which takes full access to Photos; with limited or add-only
-/// access it saves the shot outside the album.
+/// A shot is sent as `{files: [{path, name, kind, mimeType}]}` with either
+/// `album` or `folder`, the JPEG before the DNG, because iOS makes the
+/// first file of a pair the primary photo and the second its RAW alternate.
+///
+/// With `album`, Android writes each file as its own MediaStore entry under
+/// `Pictures/<album>`, the folder gallery apps show as the album. iOS adds
+/// the shot to the Photos album of that title, which takes full access to
+/// Photos; with limited or add-only access it saves the shot outside the
+/// album.
+///
+/// With `folder` (the id `pickFolder` returned), both write the files into
+/// that folder under their names, never over a file already there.
 final class PlatformMediaSaver implements MediaSaver {
   new({this._channel = const MethodChannel('io.jeph.grphoto/media')});
 
   final MethodChannel _channel;
 
   @override
-  Future<void> saveShot(List<File> files, {required String album}) async {
+  Future<void> saveShot(List<File> files, {required SaveDestination to}) async {
     final entries = [for (final f in files) _entry(f)]
       ..sort((a, b) => a.kind.index.compareTo(b.kind.index));
     final kinds = [for (final e in entries) e.kind];
@@ -34,22 +39,55 @@ final class PlatformMediaSaver implements MediaSaver {
         'not one shot: ${files.map((f) => _name(f.path)).join(', ')}',
       );
     }
+    await _invoke<void>('saveShot', {
+      ...switch (to) {
+        SaveToAlbum(:final name) => {'album': name},
+        SaveFolder(:final id) => {'folder': id},
+      },
+      'files': [
+        for (final e in entries)
+          {
+            'path': e.file.path,
+            'name': _name(e.file.path),
+            'kind': e.kind.name,
+            'mimeType': e.kind.mimeType,
+          },
+      ],
+    });
+  }
+
+  @override
+  Future<SaveFolder?> pickFolder() async {
+    final picked = await _invoke<Map<Object?, Object?>>('pickFolder');
+    return switch (picked) {
+      null => null,
+      {'id': final String id, 'name': final String name} => SaveFolder(
+        id: id,
+        name: name,
+      ),
+      _ => throw MediaSaveException(
+        MediaSaveFailure.failed,
+        'pickFolder returned $picked',
+      ),
+    };
+  }
+
+  @override
+  Future<void> forgetFolder(SaveFolder folder) =>
+      _invoke<void>('forgetFolder', {'id': folder.id});
+
+  /// Calls [method], turning what the platform reports into a
+  /// [MediaSaveException].
+  Future<T?> _invoke<T>(
+    String method, [
+    Map<String, Object?>? arguments,
+  ]) async {
     try {
-      await _channel.invokeMethod<void>('saveShot', {
-        'album': album,
-        'files': [
-          for (final e in entries)
-            {
-              'path': e.file.path,
-              'name': _name(e.file.path),
-              'kind': e.kind.name,
-              'mimeType': e.kind.mimeType,
-            },
-        ],
-      });
+      return await _channel.invokeMethod<T>(method, arguments);
     } on PlatformException catch (e) {
       final failure = switch (e.code) {
         'permissionDenied' => MediaSaveFailure.permissionDenied,
+        'folderUnavailable' => MediaSaveFailure.folderUnavailable,
         'unsupported' => MediaSaveFailure.unsupported,
         _ => MediaSaveFailure.failed,
       };

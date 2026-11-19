@@ -112,9 +112,10 @@ att stilar för Bildkontroll är något värt att hålla ordning på.
 - **Bibliotek.** Bläddra bland kamerans bilder och videor dag för dag, filtrera på JPEG, RAW, video
   eller ej hämtade, och öppna valfri bild i helskärm med dess detaljer. Hämta en bild eller ett
   urval, som JPEG, RAW eller båda, till ett GR Photo-album i telefonens bildbibliotek; i
-  Inställningar kan du ge albumet ett annat namn. Hämtningar fortsätter medan du använder en annan
-  app eller låser telefonen: Android visar dem i en avisering med Pausa och Avbryt alla, och iOS 26
-  eller senare visar förloppet på låsskärmen och i Dynamic Island. Videor spelas upp i appen.
+  Inställningar kan du ge albumet ett annat namn, eller i stället spara hämtningar som filer i en
+  mapp som du väljer. Hämtningar fortsätter medan du använder en annan app eller låser telefonen:
+  Android visar dem i en avisering med Pausa och Avbryt alla, och iOS 26 eller senare visar
+  förloppet på låsskärmen och i Dynamic Island. Videor spelas upp i appen.
 - **Fjärrutlösare.** En stor avtryckare med enbart Bluetooth, med självutlösaren,
   exponeringsmetoden, lägesratten, antal bilder kvar och batterinivån. På Android tar även
   volymknapparna bilden.

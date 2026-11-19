@@ -4,6 +4,7 @@ import 'dart:ui' show Locale;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/src/data/settings.dart';
+import 'package:grphoto/src/services.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 
 void main() {
@@ -79,5 +80,24 @@ void main() {
 
     await File('${temp.path}/settings.json').writeAsString('{"albumName":7}');
     expect((await SettingsController.load(temp)).albumName, isNull);
+  });
+
+  test('the folder for downloads is saved until it is given up, and a saved '
+      'value that is no folder saves to the photo library', () async {
+    final settings = await SettingsController.load(temp);
+    expect(settings.saveFolder, isNull);
+    settings.saveFolder = const SaveFolder(id: 'folder-1', name: 'Imports');
+    await settings.flush();
+    final reloaded = await SettingsController.load(temp);
+    expect(reloaded.saveFolder?.id, 'folder-1');
+    expect(reloaded.saveFolder?.name, 'Imports');
+
+    reloaded.saveFolder = null;
+    await reloaded.flush();
+    expect((await SettingsController.load(temp)).saveFolder, isNull);
+
+    await File('${temp.path}/settings.json')
+        .writeAsString('{"saveFolder":{"id":"folder-1"}}');
+    expect((await SettingsController.load(temp)).saveFolder, isNull);
   });
 }

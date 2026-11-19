@@ -1,0 +1,1 @@
+• Réglages › Téléchargements a un nouveau commutateur Enregistrer dans un dossier : les téléchargements sont alors enregistrés sous forme de fichiers dans un dossier de votre choix, par exemple dans une app de stockage cloud ou sur une carte SD, plutôt que dans votre photothèque. Votre app de photos peut ne pas afficher ce qui y est enregistré.

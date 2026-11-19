@@ -1,6 +1,7 @@
 package io.jeph.grphoto
 
 import android.content.Context
+import android.content.Intent
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 
@@ -22,7 +23,7 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         AppEngine.attached(this)
         val messenger = flutterEngine.dartExecutor.binaryMessenger
-        media = MediaChannel(applicationContext, messenger)
+        media = MediaChannel(this, messenger)
         downloads = DownloadChannel(this, messenger)
         cameraWifi = CameraWifiChannel(applicationContext, messenger)
     }
@@ -36,6 +37,11 @@ class MainActivity : FlutterActivity() {
         cameraWifi = null
         AppEngine.detached(this)
         super.cleanUpFlutterEngine(flutterEngine)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (media?.onActivityResult(requestCode, resultCode, data) == true) return
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {

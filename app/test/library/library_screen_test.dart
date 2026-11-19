@@ -593,7 +593,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('download-bar')));
     await pumpUntilFound(
       tester,
-      find.text("JPEG · SD · Couldn't save to the photo library"),
+      find.text("JPEG · SD · Couldn't save the download"),
     );
 
     app.media.failWith = null;
@@ -605,6 +605,54 @@ void main() {
     );
     expect(app.media.shots.single.names, ['R0000270.JPG']);
     await pumpUntilFound(tester, find.text('Nothing to download'));
+
+    await app.dispose();
+  });
+
+  testWidgets('a folder for downloads that can no longer be written to is '
+      'explained once, and its downloads say why', (tester) async {
+    final app = (await tester.runAsync(
+      () => createTestApp(
+        config: const FakeCameraConfig(bonded: true),
+        saveCamera: true,
+      ),
+    ))!;
+    app.models.settings.saveFolder = const SaveFolder(
+      id: 'folder-1',
+      name: 'Imports',
+    );
+    app.media.failWith = const MediaSaveException(
+      MediaSaveFailure.folderUnavailable,
+      'the grant is gone',
+    );
+    await app.pumpApp(tester);
+    await _openLibrary(tester);
+    const jpeg = 'sd1|101RICOH/R0000270';
+    await pumpUntilFound(tester, _cell(jpeg));
+    await tester.longPress(_cell(jpeg));
+    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('selection-download:jpeg')));
+    await tester.pump();
+    await pumpUntilFound(tester, find.text("Can't save to the folder"));
+    expect(find.text('Allow access to Photos'), findsNothing);
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+    expect(app.models.downloads.saveProblem, isNull);
+
+    await tester.tap(find.byKey(const ValueKey('download-bar')));
+    await pumpUntilFound(
+      tester,
+      find.text("JPEG · SD · The folder for downloads can't be used"),
+    );
+
+    app.media.failWith = null;
+    await tapWhenReady(tester, find.text('Retry failed'));
+    await pumpUntil(
+      tester,
+      () => app.media.shots.isNotEmpty,
+      reason: 'saved on retry',
+    );
+    expect(app.media.shots.single.folder, 'folder-1');
 
     await app.dispose();
   });

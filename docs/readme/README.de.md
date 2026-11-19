@@ -117,10 +117,11 @@ zu stehen und Looks für die Bildsteuerung als etwas zu behandeln, das Verwaltun
   Video oder „Nicht geladen“ und öffne jede Aufnahme im Vollbild mit ihren Details. Lade eine
   einzelne Aufnahme oder eine Auswahl als JPEG, RAW oder beides in ein Album „GR Photo“ in der
   Fotomediathek deines Smartphones; in den Einstellungen kannst du dem Album einen anderen Namen
-  geben. Downloads laufen weiter, während du eine andere App benutzt oder das Smartphone sperrst:
-  Android zeigt sie in einer Benachrichtigung mit „Pausieren“ und „Alle abbrechen“, iOS 26 oder
-  neuer zeigt den Fortschritt auf dem Sperrbildschirm und in der Dynamic Island. Videos werden in
-  der App abgespielt.
+  geben oder Downloads stattdessen als Dateien in einem Ordner deiner Wahl speichern. Downloads
+  laufen weiter, während du eine andere App benutzt oder das Smartphone sperrst: Android zeigt sie
+  in einer Benachrichtigung mit „Pausieren“ und „Alle abbrechen“, iOS 26 oder neuer zeigt den
+  Fortschritt auf dem Sperrbildschirm und in der Dynamic Island. Videos werden in der App
+  abgespielt.
 - **Fernauslöser.** Ein großer Auslöser allein über Bluetooth, mit Selbstauslöser, Aufnahmemodus,
   Moduswahlrad, verbleibenden Aufnahmen und Akkustand. Unter Android lösen auch die Lautstärketasten
   aus.

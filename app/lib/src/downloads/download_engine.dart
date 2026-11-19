@@ -29,14 +29,14 @@ final class DownloadTransferFailed extends DownloadFailure {
   final TransferFailure reason;
 }
 
-/// The photo library did not take the shot.
+/// The photo library or the folder did not take the shot.
 final class DownloadSaveFailed extends DownloadFailure {
   const new(this.reason);
   final MediaSaveFailure reason;
 }
 
-/// The app stopped while the photo library was taking the shot, so whether
-/// it took it is unknown; retrying saves it again.
+/// The app stopped while the shot was being saved, so whether it was saved
+/// is unknown; retrying saves it again.
 final class DownloadSaveInterrupted extends DownloadFailure {
   const new();
 }
@@ -76,9 +76,9 @@ final class DownloadJob {
 
   bool get active => state != DownloadState.failed;
 
-  /// The shot is being handed to the photo library. Saved with the queue
-  /// before the hand-over, so a restart after a crash in it knows the save
-  /// may have happened.
+  /// The shot is being handed to [MediaSaver]. Saved with the queue before
+  /// the hand-over, so a restart after a crash in it knows the save may
+  /// have happened.
   bool _saving = false;
 
   /// The link the copies kept in the job's folder were made on. A copy
@@ -230,8 +230,8 @@ final class DownloadProgress {
   final double bytesPerSecond;
 }
 
-/// Downloads shots from the camera into the phone's photo library, one file
-/// at a time.
+/// Downloads shots from the camera to where the user has them saved, the
+/// phone's photo library or a folder they picked, one file at a time.
 ///
 /// The queue and the record of downloaded files live in
 /// `<dataDir>/downloads.json`, so the queue survives restarts and badges know
@@ -246,15 +246,15 @@ final class DownloadProgress {
 /// finished before it; after a lost connection the whole shot is copied
 /// again, as the camera may hold other files at those paths by then. A
 /// shot the app stopped while saving comes back failed with
-/// [DownloadSaveInterrupted] instead of being saved again, as the photo
-/// library cannot be asked whether it took the shot.
+/// [DownloadSaveInterrupted] instead of being saved again, as neither the
+/// photo library nor a folder can be asked whether it took the shot.
 final class DownloadEngine extends ChangeNotifier {
   new({
     required this.dataDir,
     required this.cacheDir,
     required this.media,
     required this.link,
-    required this.album,
+    required this.destination,
     this.beforeSave,
     this.transportGrace = const Duration(seconds: 3),
     this.progressInterval = const Duration(milliseconds: 100),
@@ -275,16 +275,16 @@ final class DownloadEngine extends ChangeNotifier {
   final ValueListenable<CameraLibrary?> link;
 
   /// Called with the serial number of the camera a shot came from and the
-  /// shot's copies once they are all on the phone, before the photo
-  /// library gets them; it may rewrite them in place. Saving
-  /// waits for it, and a shot is saved as it is when this fails. It can
-  /// get the same copies again, when a save that failed is retried.
+  /// shot's copies once they are all on the phone, before they are saved;
+  /// it may rewrite them in place. Saving waits for it, and a shot is
+  /// saved as it is when this fails. It can get the same copies again,
+  /// when a save that failed is retried.
   final Future<void> Function(String serial, List<File> files)? beforeSave;
 
-  /// The photo library album a shot is saved to, asked for each shot so a
-  /// new name in Settings takes the next one. The app passes the user's
-  /// album name, or [albumFor] its flavor when they chose none.
-  final String Function() album;
+  /// Where a shot is saved, asked for each shot so a change in Settings
+  /// takes the next one. The app passes the folder the user picked, or the
+  /// photo library album: the one they named, or [albumFor] its flavor.
+  final SaveDestination Function() destination;
 
   /// The album a build saves to. The dev build has its own, so what it
   /// downloads while testing stays out of the album of the released app
@@ -320,7 +320,7 @@ final class DownloadEngine extends ChangeNotifier {
   /// closes at once instead of at its next chunk or its own deadline.
   Completer<Object>? _abort;
   int _batchDone = 0;
-  MediaSaveException? _permissionProblem;
+  MediaSaveException? _saveProblem;
   bool _disposed = false;
 
   final ValueNotifier<DownloadProgress> progress = ValueNotifier(
@@ -357,13 +357,15 @@ final class DownloadEngine extends ChangeNotifier {
       _current == null &&
       _jobs.any((j) => j.state == DownloadState.queued);
 
-  /// Set when the photo library refused access; the queue was failed. Shown
-  /// once, then cleared with [dismissPermissionProblem].
-  MediaSaveException? get permissionProblem => _permissionProblem;
+  /// Set when no shot can be saved until the user acts
+  /// ([MediaSaveException.blocksEverySave]): the photo library refused
+  /// access, or the folder they picked cannot be used. The queue was
+  /// failed. Shown once, then cleared with [dismissSaveProblem].
+  MediaSaveException? get saveProblem => _saveProblem;
 
-  void dismissPermissionProblem() {
-    if (_permissionProblem == null) return;
-    _permissionProblem = null;
+  void dismissSaveProblem() {
+    if (_saveProblem == null) return;
+    _saveProblem = null;
     _notify();
   }
 
@@ -376,7 +378,7 @@ final class DownloadEngine extends ChangeNotifier {
 
   /// Some file of [shot] was saved to the phone: the grid's mark and the
   /// "Not downloaded" filter use this. The app cannot see whether it is
-  /// still in the photo library, so this is a hint only: it never stops a
+  /// still where it was saved, so this is a hint only: it never stops a
   /// download.
   bool isShotDownloaded(String serial, Shot shot) =>
       shot.files.any((f) => isFileDownloaded(serial, f));
@@ -576,7 +578,7 @@ final class DownloadEngine extends ChangeNotifier {
 
   /// Forgets [serial]'s camera, removed from the app: its jobs go, a
   /// running one stops, and so do the records of its files saved to the
-  /// phone. A shot the photo library is already saving still lands there.
+  /// phone. A shot that is already being saved is still saved.
   Future<void> forgetCamera(String serial) async {
     await _ready;
     final running = _current;
@@ -726,7 +728,7 @@ final class DownloadEngine extends ChangeNotifier {
       if (_stop case final reason?) throw _StopSignal(reason);
       await _markSaving(job);
       try {
-        await media.saveShot(local, album: album());
+        await media.saveShot(local, to: destination());
       } finally {
         job._saving = false;
       }
@@ -743,8 +745,8 @@ final class DownloadEngine extends ChangeNotifier {
       // A cancel may follow the pause that aborted the transfer.
       _stopped(job, _stop ?? s.reason);
     } on MediaSaveException catch (e) {
-      if (e.permissionDenied) {
-        _permissionProblem = e;
+      if (e.blocksEverySave) {
+        _saveProblem = e;
         for (final j in _jobs) {
           if (j.active) _fail(j, DownloadSaveFailed(e.failure), e);
         }

@@ -25,6 +25,7 @@ void main() {
   tearDown(() => messenger.setMockMethodCallHandler(channel, null));
 
   File file(String name) => File('/cache/downloads/$name');
+  const album = SaveToAlbum('GR Photo');
 
   List<Map<Object?, Object?>> sentFiles() =>
       ((calls.single.arguments as Map<Object?, Object?>)['files']!
@@ -35,11 +36,12 @@ void main() {
     await PlatformMediaSaver().saveShot([
       file('R0001234.DNG'),
       file('R0001234.JPG'),
-    ], album: 'GR Photo');
+    ], to: album);
 
     expect(calls.single.method, 'saveShot');
     final args = calls.single.arguments as Map<Object?, Object?>;
     expect(args['album'], 'GR Photo');
+    expect(args.containsKey('folder'), isFalse);
     expect(sentFiles(), [
       {
         'path': '/cache/downloads/R0001234.JPG',
@@ -58,9 +60,9 @@ void main() {
 
   test('single files carry their kind and MIME type', () async {
     final saver = PlatformMediaSaver();
-    await saver.saveShot([file('R0001235.jpeg')], album: 'GR Photo');
-    await saver.saveShot([file('R0001236.dng')], album: 'GR Photo');
-    await saver.saveShot([file('R0001237.MOV')], album: 'GR Photo');
+    await saver.saveShot([file('R0001235.jpeg')], to: album);
+    await saver.saveShot([file('R0001236.dng')], to: album);
+    await saver.saveShot([file('R0001237.MOV')], to: album);
 
     expect(
       [
@@ -90,7 +92,7 @@ void main() {
       [file('README')],
     ]) {
       await expectLater(
-        saver.saveShot(shot, album: 'GR Photo'),
+        saver.saveShot(shot, to: album),
         throwsA(
           isA<MediaSaveException>().having(
             (e) => e.failure,
@@ -110,10 +112,15 @@ void main() {
       message: 'GR Photo may not add to Photos',
     );
     await expectLater(
-      PlatformMediaSaver().saveShot([file('R0001234.JPG')], album: 'GR Photo'),
+      PlatformMediaSaver().saveShot([file('R0001234.JPG')], to: album),
       throwsA(
         isA<MediaSaveException>()
-            .having((e) => e.permissionDenied, 'permissionDenied', isTrue)
+            .having(
+              (e) => e.failure,
+              'failure',
+              MediaSaveFailure.permissionDenied,
+            )
+            .having((e) => e.blocksEverySave, 'blocksEverySave', isTrue)
             .having(
               (e) => e.detail,
               'detail',
@@ -126,11 +133,11 @@ void main() {
   test('unknown native errors map to failed', () async {
     reply = (_) async => throw PlatformException(code: 'IOException');
     await expectLater(
-      PlatformMediaSaver().saveShot([file('R0001234.JPG')], album: 'GR Photo'),
+      PlatformMediaSaver().saveShot([file('R0001234.JPG')], to: album),
       throwsA(
         isA<MediaSaveException>()
             .having((e) => e.failure, 'failure', MediaSaveFailure.failed)
-            .having((e) => e.permissionDenied, 'permissionDenied', isFalse),
+            .having((e) => e.blocksEverySave, 'blocksEverySave', isFalse),
       ),
     );
   });
@@ -138,7 +145,7 @@ void main() {
   test('a missing native side is reported as unsupported', () async {
     messenger.setMockMethodCallHandler(channel, null);
     await expectLater(
-      PlatformMediaSaver().saveShot([file('R0001234.JPG')], album: 'GR Photo'),
+      PlatformMediaSaver().saveShot([file('R0001234.JPG')], to: album),
       throwsA(
         isA<MediaSaveException>().having(
           (e) => e.failure,
@@ -147,5 +154,85 @@ void main() {
         ),
       ),
     );
+  });
+
+  test('a shot for a folder is sent with the id the picker gave', () async {
+    await PlatformMediaSaver().saveShot([
+      file('R0001234.JPG'),
+    ], to: const SaveFolder(id: 'folder-1', name: 'Imports'));
+
+    final args = calls.single.arguments as Map<Object?, Object?>;
+    expect(args['folder'], 'folder-1');
+    expect(args.containsKey('album'), isFalse);
+    expect(sentFiles().single['name'], 'R0001234.JPG');
+  });
+
+  test('a folder that can no longer be written to maps to '
+      'folderUnavailable, which blocks every save', () async {
+    reply = (_) async => throw PlatformException(code: 'folderUnavailable');
+    await expectLater(
+      PlatformMediaSaver().saveShot([
+        file('R0001234.JPG'),
+      ], to: const SaveFolder(id: 'folder-1', name: 'Imports')),
+      throwsA(
+        isA<MediaSaveException>()
+            .having(
+              (e) => e.failure,
+              'failure',
+              MediaSaveFailure.folderUnavailable,
+            )
+            .having((e) => e.blocksEverySave, 'blocksEverySave', isTrue),
+      ),
+    );
+  });
+
+  test('picking a folder returns its id and name', () async {
+    reply = (_) async => {'id': 'folder-1', 'name': 'Imports'};
+    final folder = await PlatformMediaSaver().pickFolder();
+
+    expect(calls.single.method, 'pickFolder');
+    expect(folder?.id, 'folder-1');
+    expect(folder?.name, 'Imports');
+  });
+
+  test('leaving the folder picker without a folder returns none', () async {
+    expect(await PlatformMediaSaver().pickFolder(), isNull);
+  });
+
+  test('a picker answer that is no folder is a failure', () async {
+    reply = (_) async => {'id': 'folder-1'};
+    await expectLater(
+      PlatformMediaSaver().pickFolder(),
+      throwsA(
+        isA<MediaSaveException>().having(
+          (e) => e.failure,
+          'failure',
+          MediaSaveFailure.failed,
+        ),
+      ),
+    );
+  });
+
+  test('a picker the platform could not show is a failure', () async {
+    reply = (_) async => throw PlatformException(code: 'failed');
+    await expectLater(
+      PlatformMediaSaver().pickFolder(),
+      throwsA(
+        isA<MediaSaveException>().having(
+          (e) => e.failure,
+          'failure',
+          MediaSaveFailure.failed,
+        ),
+      ),
+    );
+  });
+
+  test('forgetting a folder sends its id', () async {
+    await PlatformMediaSaver().forgetFolder(
+      const SaveFolder(id: 'folder-1', name: 'Imports'),
+    );
+
+    expect(calls.single.method, 'forgetFolder');
+    expect(calls.single.arguments, {'id': 'folder-1'});
   });
 }

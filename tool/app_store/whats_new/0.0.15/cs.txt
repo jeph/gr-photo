@@ -1,0 +1,1 @@
+• V Nastavení › Stažené je nový přepínač Ukládat do složky: stažené položky se pak ukládají jako soubory do složky, kterou si vyberete, třeba v aplikaci cloudového úložiště nebo na SD kartě, místo do knihovny fotek. Vaše aplikace na fotky nemusí to, co je tam uloženo, zobrazovat.

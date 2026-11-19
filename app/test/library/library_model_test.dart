@@ -13,6 +13,7 @@ import 'package:grphoto/src/downloads/download_engine.dart';
 import 'package:grphoto/src/library/library_model.dart';
 import 'package:grphoto/src/library/library_scope.dart';
 import 'package:grphoto/src/library/shot.dart';
+import 'package:grphoto/src/services.dart';
 
 import '../support/test_app.dart' show RecordingMediaSaver;
 
@@ -385,7 +386,7 @@ void main() {
         cacheDir: cache,
         media: RecordingMediaSaver(),
         link: link,
-        album: () => 'GR Photo',
+        destination: () => const SaveToAlbum('GR Photo'),
         transportGrace: Duration.zero,
       );
       images = CameraImages(cacheDir: cache, link: link, queue: queue);

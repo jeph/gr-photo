@@ -1,0 +1,1 @@
+• Inställningar › Hämtningar har ett nytt reglage, Spara i en mapp: hämtningar sparas då som filer i en mapp som du väljer, till exempel i en app för molnlagring eller på ett SD-kort, i stället för i bildbiblioteket. Din bildapp kanske inte visar det som sparas där.

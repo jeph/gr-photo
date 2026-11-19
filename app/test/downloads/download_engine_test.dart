@@ -98,8 +98,8 @@ final class Harness {
   final ValueNotifier<CameraLibrary?> link;
   final List<DownloadEngine> _engines = [];
 
-  /// The album the engines save to; a test changes it as Settings would.
-  String album = 'GR Photo';
+  /// Where the engines save to; a test changes it as Settings would.
+  SaveDestination destination = const SaveToAlbum('GR Photo');
 
   Directory get data => Directory('${root.path}/data');
   Directory get cache => Directory('${root.path}/cache');
@@ -119,7 +119,7 @@ final class Harness {
       cacheDir: cache,
       media: media,
       link: link,
-      album: () => album,
+      destination: () => destination,
       transportGrace: transportGrace,
       progressInterval: Duration.zero,
     );
@@ -156,21 +156,27 @@ void main() {
 
   tearDown(() => h.close());
 
-  test('a shot goes to the album named when it is saved', () async {
-    h = await Harness.start(
-      config: FakeCameraConfig(httpLatency: Duration.zero, photos: card()),
-    );
-    final engine = h.engine();
-    await engine.enqueue(serial, [h.shot('R0000001')]);
-    await engine.whenIdle();
-    h.album = 'Street';
-    await engine.enqueue(serial, [h.shot('R0000002')]);
-    await engine.whenIdle();
-    expect(
-      [for (final shot in h.media.shots) shot.album],
-      ['GR Photo', 'Street'],
-    );
-  });
+  test(
+    'a shot goes to the album or the folder chosen when it is saved',
+    () async {
+      h = await Harness.start(
+        config: FakeCameraConfig(httpLatency: Duration.zero, photos: card()),
+      );
+      final engine = h.engine();
+      await engine.enqueue(serial, [h.shot('R0000001')]);
+      await engine.whenIdle();
+      h.destination = const SaveToAlbum('Street');
+      await engine.enqueue(serial, [h.shot('R0000002')]);
+      await engine.whenIdle();
+      h.destination = const SaveFolder(id: 'folder-1', name: 'Imports');
+      await engine.enqueue(serial, [h.shot('R0000003')]);
+      await engine.whenIdle();
+      expect(
+        [for (final shot in h.media.shots) (shot.album, shot.folder)],
+        [('GR Photo', null), ('Street', null), (null, 'folder-1')],
+      );
+    },
+  );
 
   group('file kinds', () {
     for (final (kind, expected) in [
@@ -656,7 +662,7 @@ void main() {
           MediaSaveFailure.failed,
         ),
       );
-      expect(engine.permissionProblem, isNull);
+      expect(engine.saveProblem, isNull);
       // The save is known to have failed, so a restart says so.
       await engine.flush();
       final reopened = h.engine();
@@ -673,16 +679,16 @@ void main() {
       ]);
     });
 
-    test(
-      'permission denied fails the whole queue and is reported once',
-      () async {
+    for (final failure in [
+      MediaSaveFailure.permissionDenied,
+      MediaSaveFailure.folderUnavailable,
+    ]) {
+      test('${failure.name} fails the whole queue and is reported '
+          'once', () async {
         h = await Harness.start(
           config: FakeCameraConfig(httpLatency: Duration.zero, photos: card()),
         );
-        h.media.failWith = const MediaSaveException(
-          MediaSaveFailure.permissionDenied,
-          'Photos access denied',
-        );
+        h.media.failWith = MediaSaveException(failure, 'refused');
         final engine = h.engine();
         await engine.enqueue(serial, [
           h.shot('R0000002'),
@@ -690,23 +696,33 @@ void main() {
           h.shot('R0000004'),
         ]);
         await engine.whenIdle();
-        expect(engine.permissionProblem?.permissionDenied, isTrue);
+        expect(engine.saveProblem?.failure, failure);
         expect(engine.jobs, hasLength(3));
         expect(
           engine.jobs.map((j) => j.state),
           everyElement(DownloadState.failed),
         );
+        expect(
+          engine.jobs.map((j) => j.failure),
+          everyElement(
+            isA<DownloadSaveFailed>().having(
+              (f) => f.reason,
+              'reason',
+              failure,
+            ),
+          ),
+        );
         expect(h.saved, isEmpty);
 
-        engine.dismissPermissionProblem();
-        expect(engine.permissionProblem, isNull);
+        engine.dismissSaveProblem();
+        expect(engine.saveProblem, isNull);
         h.media.failWith = null;
         engine.retryFailed();
         await until(() => h.saved.length == 3, reason: 'retry all');
         await engine.whenIdle();
         expect(engine.jobs, isEmpty);
-      },
-    );
+      });
+    }
 
     test('a shot the photo library took just before the app stopped is not '
         'saved again on restart; its job asks instead', () async {
@@ -719,7 +735,7 @@ void main() {
         cacheDir: h.cache,
         media: crashing,
         link: h.link,
-        album: () => 'GR Photo',
+        destination: () => const SaveToAlbum('GR Photo'),
         progressInterval: Duration.zero,
       );
       await first.enqueue(serial, [h.shot('R0000002')]);
@@ -736,7 +752,7 @@ void main() {
         cacheDir: h.cache,
         media: h.media,
         link: h.link,
-        album: () => 'GR Photo',
+        destination: () => const SaveToAlbum('GR Photo'),
         progressInterval: Duration.zero,
       );
       h._engines.add(second);
@@ -1086,8 +1102,14 @@ final class _StoppingSaver implements MediaSaver {
   final saved = Completer<void>();
 
   @override
-  Future<void> saveShot(List<File> files, {required String album}) {
+  Future<void> saveShot(List<File> files, {required SaveDestination to}) {
     if (!saved.isCompleted) saved.complete();
     return Completer<void>().future;
   }
+
+  @override
+  Future<SaveFolder?> pickFolder() async => null;
+
+  @override
+  Future<void> forgetFolder(SaveFolder folder) async {}
 }

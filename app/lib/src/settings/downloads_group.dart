@@ -5,19 +5,31 @@ import 'package:flutter/services.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/data/settings.dart';
 import 'package:grphoto/src/pairing/pairing_widgets.dart';
+import 'package:grphoto/src/services.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:grphoto/src/widgets/gr_text_field.dart';
 import 'package:grphoto/src/widgets/group.dart';
+import 'package:grphoto/src/widgets/toast.dart';
 
-/// Settings' Downloads group: the photo library album downloads are saved
-/// to, which the user can rename.
+/// Settings' Downloads group: where downloads are saved. They go to the
+/// phone's photo library, into an album the user can rename, until Save to
+/// a folder is switched on, which asks for a folder with the system's
+/// folder picker and then shows it in place of the album.
 class DownloadsGroup extends StatelessWidget {
-  const new({required this.settings, required this.album, super.key});
+  const new({
+    required this.settings,
+    required this.media,
+    required this.album,
+    super.key,
+  });
 
   final SettingsController settings;
 
-  /// The album downloads are saved to now: the user's, or the build's own
-  /// while they named none.
+  /// Asks for the folder and holds the access to it.
+  final MediaSaver media;
+
+  /// The album downloads are saved to while no folder is picked: the
+  /// user's, or the build's own while they named none.
   final String album;
 
   Future<void> _rename(BuildContext context) async {
@@ -29,20 +41,87 @@ class DownloadsGroup extends StatelessWidget {
     settings.albumName = name;
   }
 
+  /// Asks for the folder downloads are saved to. Leaving the picker without
+  /// one changes nothing.
+  Future<void> _pickFolder(BuildContext context) async {
+    final toasts = Toasts.of(context);
+    final l10n = context.l10n;
+    final SaveFolder? picked;
+    try {
+      picked = await media.pickFolder();
+    } on MediaSaveException catch (e) {
+      debugPrint('Picking a folder for downloads failed: $e');
+      toasts.failed(l10n.settingsFolderPickFailed);
+      return;
+    }
+    if (picked == null) return;
+    final previous = settings.saveFolder;
+    settings.saveFolder = picked;
+    // Android knows a folder picked again by the id it had, and that
+    // access is the one just taken.
+    if (previous != null && previous.id != picked.id) await _forget(previous);
+  }
+
+  Future<void> _saveToPhotoLibrary() async {
+    final folder = settings.saveFolder;
+    if (folder == null) return;
+    settings.saveFolder = null;
+    await _forget(folder);
+  }
+
+  /// Gives up the access to [folder], which downloads no longer go to. A
+  /// failure only leaves the platform with access GR Photo does not use.
+  Future<void> _forget(SaveFolder folder) async {
+    try {
+      await media.forgetFolder(folder);
+    } on MediaSaveException catch (e) {
+      debugPrint('Giving up the access to a downloads folder failed: $e');
+    }
+  }
+
   @override
-  Widget build(BuildContext context) => GroupBox(
-    children: [
-      GroupRow(
-        key: const Key('setting-album'),
-        icon: Icons.photo_album_outlined,
-        title: context.l10n.settingsAlbum,
-        subtitle: context.l10n.settingsAlbumSubtitle,
-        trailing: TrailingFit.value(context, album),
-        chevron: true,
-        onTap: () => unawaited(_rename(context)),
-      ),
-    ],
-  );
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final folder = settings.saveFolder;
+    void toggle() => unawaited(
+      folder == null ? _pickFolder(context) : _saveToPhotoLibrary(),
+    );
+    return GroupBox(
+      children: [
+        GroupRow(
+          key: const Key('setting-save-to-folder'),
+          icon: Icons.folder_outlined,
+          title: l10n.settingsSaveToFolder,
+          subtitle: l10n.settingsSaveToFolderSubtitle,
+          trailing: Switch(
+            key: const Key('setting-save-to-folder-switch'),
+            value: folder != null,
+            onChanged: (_) => toggle(),
+          ),
+          onTap: toggle,
+        ),
+        if (folder == null)
+          GroupRow(
+            key: const Key('setting-album'),
+            icon: Icons.photo_album_outlined,
+            title: l10n.settingsAlbum,
+            subtitle: l10n.settingsAlbumSubtitle,
+            trailing: TrailingFit.value(context, album),
+            chevron: true,
+            onTap: () => unawaited(_rename(context)),
+          )
+        else
+          GroupRow(
+            key: const Key('setting-folder'),
+            icon: Icons.folder_open_outlined,
+            title: l10n.settingsFolder,
+            trailing: TrailingFit.value(context, folder.name),
+            chevron: true,
+            onTap: () => unawaited(_pickFolder(context)),
+          ),
+      ],
+    );
+  }
 }
 
 class _AlbumNameDialog extends StatefulWidget {
