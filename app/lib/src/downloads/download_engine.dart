@@ -281,9 +281,10 @@ final class DownloadEngine extends ChangeNotifier {
   /// get the same copies again, when a save that failed is retried.
   final Future<void> Function(String serial, List<File> files)? beforeSave;
 
-  /// The photo library album shots are saved to; the app passes
-  /// [albumFor] its flavor.
-  final String album;
+  /// The photo library album a shot is saved to, asked for each shot so a
+  /// new name in Settings takes the next one. The app passes the user's
+  /// album name, or [albumFor] its flavor when they chose none.
+  final String Function() album;
 
   /// The album a build saves to. The dev build has its own, so what it
   /// downloads while testing stays out of the album of the released app
@@ -725,7 +726,7 @@ final class DownloadEngine extends ChangeNotifier {
       if (_stop case final reason?) throw _StopSignal(reason);
       await _markSaving(job);
       try {
-        await media.saveShot(local, album: album);
+        await media.saveShot(local, album: album());
       } finally {
         job._saving = false;
       }

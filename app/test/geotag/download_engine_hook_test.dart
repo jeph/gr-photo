@@ -104,7 +104,7 @@ final class _Harness {
       cacheDir: Directory('${root.path}/cache'),
       media: media,
       link: link,
-      album: 'GR Photo',
+      album: () => 'GR Photo',
       beforeSave: beforeSave,
       transportGrace: Duration.zero,
       progressInterval: Duration.zero,

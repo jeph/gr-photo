@@ -62,4 +62,22 @@ void main() {
     await File('${temp.path}/settings.json').writeAsString('{"language":"nb"}');
     expect((await SettingsController.load(temp)).language, isNull);
   });
+
+  test('an album name is saved without what a folder name cannot hold, and '
+      'no name or an unusable one leaves the choice to the build', () async {
+    final settings = await SettingsController.load(temp);
+    expect(settings.albumName, isNull);
+    settings.albumName = '  .Tokyo/2026: day?  ';
+    expect(settings.albumName, 'Tokyo2026 day');
+    await settings.flush();
+    expect((await SettingsController.load(temp)).albumName, 'Tokyo2026 day');
+
+    settings.albumName = ' ./. ';
+    expect(settings.albumName, isNull);
+    await settings.flush();
+    expect((await SettingsController.load(temp)).albumName, isNull);
+
+    await File('${temp.path}/settings.json').writeAsString('{"albumName":7}');
+    expect((await SettingsController.load(temp)).albumName, isNull);
+  });
 }

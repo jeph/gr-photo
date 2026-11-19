@@ -1,0 +1,1 @@
+• Ajustes tiene una nueva sección Descargas, donde puedes cambiar el nombre del álbum de la fototeca en el que se guardan las descargas. Las fotos y los vídeos que ya has descargado se quedan en el álbum en el que están.

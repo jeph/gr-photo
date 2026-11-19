@@ -1,0 +1,1 @@
+• Settings has a new Downloads section, where you can rename the album in your photo library that downloads are saved to. Photos and videos you already downloaded stay in the album they're in.

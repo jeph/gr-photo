@@ -32,6 +32,20 @@ enum ShootMode {
   liveView,
 }
 
+/// Characters an album name cannot hold. Android keeps the album as a
+/// folder under `Pictures`, and MediaStore accepts only what a FAT file
+/// name allows there; iOS takes any title, and gets the same names so a
+/// name means the same on both.
+final albumNameForbidden = RegExp(r'[/\\:*?"<>|\x00-\x1F\x7F]');
+
+/// [name] as an album can be called: without [albumNameForbidden]
+/// characters and without spaces or dots at either end. Android hides a
+/// folder whose name starts with a dot from gallery apps, and a FAT name
+/// cannot end in one. Empty when nothing of [name] is left.
+String cleanAlbumName(String name) => name
+    .replaceAll(albumNameForbidden, '')
+    .replaceAll(RegExp(r'^[.\s]+|[.\s]+$'), '');
+
 /// User settings, persisted as `settings.json` in the app data directory.
 final class SettingsController extends ChangeNotifier {
   new _(this._file);
@@ -53,6 +67,7 @@ final class SettingsController extends ChangeNotifier {
       final debugLogging = json['debugLogging'];
       c
         .._debugLogging = debugLogging is bool ? debugLogging : null
+        .._albumName = _usableAlbumName(json[_albumNameKey])
         // A language GR Photo is no longer translated into follows the phone.
         .._language = AppLocalizations.supportedLocales
             .where((locale) => locale.toLanguageTag() == json[_languageKey])
@@ -69,6 +84,7 @@ final class SettingsController extends ChangeNotifier {
 
   /// Holds the language's BCP 47 tag (`de`, `zh-Hant`).
   static const _languageKey = 'language';
+  static const _albumNameKey = 'albumName';
 
   AppTheme _theme = AppTheme.system;
   AutoDisconnect _autoDisconnect = AutoDisconnect.fiveMinutes;
@@ -76,6 +92,7 @@ final class SettingsController extends ChangeNotifier {
   ShootMode _shootMode = ShootMode.remote;
   bool? _debugLogging;
   Locale? _language;
+  String? _albumName;
 
   AppTheme get theme => _theme;
 
@@ -101,12 +118,26 @@ final class SettingsController extends ChangeNotifier {
   /// languages.
   Locale? get language => _language;
 
+  /// The photo library album downloads are saved to, when the user named
+  /// one in Settings; null saves to the build's own album
+  /// (`DownloadEngine.albumFor`).
+  String? get albumName => _albumName;
+
   set theme(AppTheme v) => _update(() => _theme = v);
   set autoDisconnect(AutoDisconnect v) => _update(() => _autoDisconnect = v);
   set connectWhenNearby(bool v) => _update(() => _connectWhenNearby = v);
   set shootMode(ShootMode v) => _update(() => _shootMode = v);
   set debugLogging(bool? v) => _update(() => _debugLogging = v);
   set language(Locale? v) => _update(() => _language = v);
+  set albumName(String? v) => _update(() => _albumName = _usableAlbumName(v));
+
+  /// [name] cleaned ([cleanAlbumName]); null when it is no string or
+  /// nothing of it is left.
+  static String? _usableAlbumName(Object? name) {
+    if (name is! String) return null;
+    final cleaned = cleanAlbumName(name);
+    return cleaned.isEmpty ? null : cleaned;
+  }
 
   /// Applies [change] at once and saves every setting; a failed write goes
   /// to the debug log, and the next change writes every setting again.
@@ -120,6 +151,7 @@ final class SettingsController extends ChangeNotifier {
       'shootMode': _shootMode.name,
       'debugLogging': ?_debugLogging,
       _languageKey: ?_language?.toLanguageTag(),
+      _albumNameKey: ?_albumName,
     };
     unawaited(_file.save(() => snapshot));
   }

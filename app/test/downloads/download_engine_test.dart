@@ -98,6 +98,9 @@ final class Harness {
   final ValueNotifier<CameraLibrary?> link;
   final List<DownloadEngine> _engines = [];
 
+  /// The album the engines save to; a test changes it as Settings would.
+  String album = 'GR Photo';
+
   Directory get data => Directory('${root.path}/data');
   Directory get cache => Directory('${root.path}/cache');
 
@@ -116,7 +119,7 @@ final class Harness {
       cacheDir: cache,
       media: media,
       link: link,
-      album: 'GR Photo',
+      album: () => album,
       transportGrace: transportGrace,
       progressInterval: Duration.zero,
     );
@@ -152,6 +155,22 @@ void main() {
   late Harness h;
 
   tearDown(() => h.close());
+
+  test('a shot goes to the album named when it is saved', () async {
+    h = await Harness.start(
+      config: FakeCameraConfig(httpLatency: Duration.zero, photos: card()),
+    );
+    final engine = h.engine();
+    await engine.enqueue(serial, [h.shot('R0000001')]);
+    await engine.whenIdle();
+    h.album = 'Street';
+    await engine.enqueue(serial, [h.shot('R0000002')]);
+    await engine.whenIdle();
+    expect(
+      [for (final shot in h.media.shots) shot.album],
+      ['GR Photo', 'Street'],
+    );
+  });
 
   group('file kinds', () {
     for (final (kind, expected) in [
@@ -700,7 +719,7 @@ void main() {
         cacheDir: h.cache,
         media: crashing,
         link: h.link,
-        album: 'GR Photo',
+        album: () => 'GR Photo',
         progressInterval: Duration.zero,
       );
       await first.enqueue(serial, [h.shot('R0000002')]);
@@ -717,7 +736,7 @@ void main() {
         cacheDir: h.cache,
         media: h.media,
         link: h.link,
-        album: 'GR Photo',
+        album: () => 'GR Photo',
         progressInterval: Duration.zero,
       );
       h._engines.add(second);

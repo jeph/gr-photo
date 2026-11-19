@@ -1,0 +1,1 @@
+• Inställningar har ett nytt avsnitt, Hämtningar, där du kan byta namn på albumet i bildbiblioteket som hämtningar sparas i. Bilder och videor som du redan har hämtat ligger kvar i albumet de finns i.

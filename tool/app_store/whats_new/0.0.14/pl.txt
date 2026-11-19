@@ -1,0 +1,1 @@
+• Ustawienia mają nową sekcję Pobrane, w której możesz zmienić nazwę albumu w bibliotece zdjęć, do którego zapisywane są pobrane pliki. Zdjęcia i filmy, które już pobrano, zostają w albumie, w którym są.

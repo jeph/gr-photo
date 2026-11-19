@@ -1,0 +1,1 @@
+• A Beállításokban új, Letöltések nevű rész található, ahol átnevezheted a fotókönyvtár azon albumát, amelybe a letöltések kerülnek. A már letöltött fotók és videók abban az albumban maradnak, amelyben vannak.

@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/src/data/settings.dart';
 import 'package:grphoto/src/settings/settings_screen.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:grphoto/src/widgets/gr_dialog.dart';
 
 import '../support/test_app.dart';
 
@@ -71,4 +72,50 @@ void main() {
       await app.dispose();
     });
   }
+
+  testWidgets('the album downloads are saved to is that of the build until '
+      'the user names another', (tester) async {
+    final app = (await tester.runAsync(createTestApp))!;
+    final models = app.models;
+    await app.pumpWithin(tester, const SettingsScreen());
+    final row = find.byKey(const Key('setting-album'));
+    await tester.scrollUntilVisible(row, 200);
+    // `flutter test` is unflavored, which saves to the dev album.
+    expect(models.downloads.album(), 'GR Photo Dev');
+    expect(
+      find.descendant(of: row, matching: find.text('GR Photo Dev')),
+      findsOneWidget,
+    );
+
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    final field = find.byKey(const Key('album-name-field'));
+    final save = find.byKey(const Key('album-name-save'));
+    // A name with nothing a folder can be called cannot be saved.
+    await tester.enterText(field, ' . ');
+    await tester.pump();
+    expect(tester.widget<GrDialogAction>(save).onPressed, isNull);
+    // What a folder name cannot hold is not typed.
+    await tester.enterText(field, ' Street/Tokyo ');
+    await tester.pump();
+    await tester.tap(save);
+    await tester.pumpAndSettle();
+
+    expect(models.settings.albumName, 'StreetTokyo');
+    expect(models.downloads.album(), 'StreetTokyo');
+    expect(
+      find.descendant(of: row, matching: find.text('StreetTokyo')),
+      findsOneWidget,
+    );
+
+    var flushed = false;
+    unawaited(models.settings.flush().whenComplete(() => flushed = true));
+    await pumpUntil(tester, () => flushed, reason: 'settings write');
+    final reloaded = (await tester.runAsync(
+      () => SettingsController.load(models.services.dataDir),
+    ))!;
+    expect(reloaded.albumName, 'StreetTokyo');
+
+    await app.dispose();
+  });
 }

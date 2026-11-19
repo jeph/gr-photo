@@ -2743,6 +2743,26 @@
   "@privacyPolicyTitle": {
     "description": "Title of the screen that shows GR Photo's privacy policy. The policy text itself stays in English."
   },
+  "settingsAlbum": "Album",
+  "@settingsAlbum": {
+    "description": "Settings: title of the row that shows the name of the album in the phone's photo library that downloaded photos and videos are saved to. Tapping it opens the dialog that changes the name."
+  },
+  "settingsAlbumNote": "Photos and videos you download from now on are saved to this album in your photo library. Those you already downloaded stay in the album they're in.",
+  "@settingsAlbumNote": {
+    "description": "Text of the dialog that changes the name of the album downloads are saved to, above the field the name is typed in: the new name applies to later downloads only, and nothing already saved is moved."
+  },
+  "settingsAlbumSave": "Save",
+  "@settingsAlbumSave": {
+    "description": "Button of the album name dialog that saves the new name."
+  },
+  "settingsAlbumSubtitle": "Where downloads are saved in your photo library",
+  "@settingsAlbumSubtitle": {
+    "description": "Settings: explanation under Album."
+  },
+  "settingsAlbumTitle": "Album name",
+  "@settingsAlbumTitle": {
+    "description": "Title of the dialog that changes the name of the photo library album downloads are saved to."
+  },
   "settingsAppearance": "Appearance",
   "@settingsAppearance": {
     "description": "Settings section heading: theme."
@@ -2851,6 +2871,10 @@
   "settingsDeleteHistoryTitle": "Delete location history?",
   "@settingsDeleteHistoryTitle": {
     "description": "Title of the confirmation shown before the location history is deleted."
+  },
+  "settingsDownloads": "Downloads",
+  "@settingsDownloads": {
+    "description": "Settings section heading: where photos and videos downloaded from the camera are saved."
   },
   "settingsLanguage": "Language",
   "@settingsLanguage": {

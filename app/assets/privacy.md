@@ -1,6 +1,6 @@
 # GR Photo privacy policy
 
-Last updated: 14 November 2026
+Last updated: 18 November 2026
 
 GR Photo is an app for Ricoh GR cameras. It pairs with your camera over Bluetooth, connects to the camera's own Wi-Fi network, and lets you browse and download your photos and videos and shoot remotely. If you turn geotagging on, it also uses your phone's location to add the place to your photos (see Your location below). GR Photo has no accounts, no analytics, no advertising and no crash reporting. It sends nothing to the developer. The one thing it fetches from the internet is the map of where a photo was taken, from OpenFreeMap (see The map below).
 
@@ -8,7 +8,7 @@ GR Photo is an app for Ricoh GR cameras. It pairs with your camera over Bluetoot
 
 GR Photo keeps the following in its own app storage on your phone:
 
-- Your settings: the theme, the language if you chose one, whether GR Photo connects to your camera when it is nearby, the auto-disconnect time, the Shoot mode you used last and whether debug logging is on.
+- Your settings: the theme, the language if you chose one, whether GR Photo connects to your camera when it is nearby, the auto-disconnect time, the name of the album your downloads are saved to if you changed it, the Shoot mode you used last and whether debug logging is on.
 - Your paired cameras: the name you gave each one, its model, serial number, firmware version, Bluetooth name and address, the identifier your phone uses for it, when you paired it, whether your phone has already joined its Wi-Fi, and whether Live geotagging, Background geotagging and Sync camera clock are on for it.
 - A record of your downloads: which files from which camera you have saved, with the date and size the camera reported for each (so GR Photo notices when a camera later holds a different file under the same name), and downloads still waiting.
 - Your saved looks: the name you gave each one, its Image Control settings, where it came from (a photo's file name or a Custom slot) and, for a look saved from a photo, a smaller copy of that photo, which way up it was taken and the Image Control settings it was taken with.
@@ -19,7 +19,7 @@ GR Photo keeps the following in its own app storage on your phone:
 
 GR Photo reads your camera's Wi-Fi password from the camera over Bluetooth each time it connects and passes it to your phone's Wi-Fi system to join the camera's network. The password is not saved with your paired cameras. While debug logging is on, though, the password is written to the debug log on your phone, like the rest of the exchange with the camera (see below).
 
-Photos and videos you download are saved to your phone's photo library, in an album called GR Photo: on iOS an album in Photos, on Android the GR Photo folder under Pictures. While background geotagging is on for the camera they come from, GR Photo adds a location to a photo that has none before it saves it (see Your location below). Once saved they are yours and are managed by your photo app; GR Photo does not change or delete them.
+Photos and videos you download are saved to your phone's photo library, in an album called GR Photo unless you give it another name in Settings: on iOS an album in Photos, on Android a folder of that name under Pictures. While background geotagging is on for the camera they come from, GR Photo adds a location to a photo that has none before it saves it (see Your location below). Once saved they are yours and are managed by your photo app; GR Photo does not change or delete them.
 
 The demo version of GR Photo uses a simulated camera with sample photos included in the app. It keeps its data apart from that of real cameras.
 
@@ -83,7 +83,7 @@ On iOS, GR Photo asks for:
 - Bluetooth, to find, pair with, wake and control your camera. While Live geotagging is on for a camera, GR Photo also uses Bluetooth after you leave the app, to go on sending your location to that camera.
 - Location, only when you turn Live geotagging or Background geotagging on. Live geotagging needs precise location; with approximate location alone it sends nothing, because that can be kilometres off. Always is needed for background geotagging only; with While Using the App, live geotagging starts when you open GR Photo and carries on after you leave it, and iOS shows its location indicator while it does.
 - Local network, to talk to the camera over its Wi-Fi network.
-- Photos, to save the photos and videos you download to the GR Photo album. iOS lets an app keep an album only with full access to your library, so that is what GR Photo asks for. It uses the access only to add what you download and to find the album named GR Photo; it does not look at, change or delete your other photos and videos. If you allow limited access or Add Photos Only instead, GR Photo still saves what you download, outside the album.
+- Photos, to save the photos and videos you download to its album (GR Photo, or the name you chose in Settings). iOS lets an app keep an album only with full access to your library, so that is what GR Photo asks for. It uses the access only to add what you download and to find the album by its name; it does not look at, change or delete your other photos and videos. If you allow limited access or Add Photos Only instead, GR Photo still saves what you download, outside the album.
 - Joining the camera's Wi-Fi network, which iOS asks you to approve. GR Photo also reads the name of the Wi-Fi network your phone is on, only to check that it has joined the camera.
 
 On iOS, GR Photo shows two things on the Lock Screen and in the Dynamic Island while you use another app: that live geotagging is running, with the camera's name and a Stop button (iOS 17 and later), and a running download (iOS 26 and later). Neither needs a permission. You can turn Live Activities off for GR Photo in the Settings app; downloads and geotagging run either way.

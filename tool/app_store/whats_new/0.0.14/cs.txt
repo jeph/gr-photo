@@ -1,0 +1,1 @@
+• Nastavení má nový oddíl Stažené, kde můžete přejmenovat album v knihovně fotek, do kterého se ukládají stažené soubory. Fotky a videa, které jste už stáhli, zůstávají v albu, ve kterém jsou.
