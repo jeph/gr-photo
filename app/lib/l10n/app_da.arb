@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Systemstandard",
   "settingsLocation": "Lokalitet",
   "settingsSaveToFolder": "Gem i en mappe",
-  "settingsSaveToFolderSubtitle": "Gemmer downloads som filer i en mappe, du vælger, i stedet for i dit fotobibliotek. Din fotoapp viser dem måske ikke.",
+  "settingsSaveToFolderSubtitle": "Gemmer downloads som filer i en mappe, du vælger. Din fotoapp viser dem måske ikke.",
   "settingsTheme": "Tema",
   "settingsThemeName": "{theme, select, light{Lyst} dark{Mørkt} darkroom{Mørkekammer} paper{Papir} cyanotype{Cyanotypi} other{Auto}}",
   "settingsThemeSemantics": "{theme, select, light{Lyst tema} dark{Mørkt tema} darkroom{Temaet Mørkekammer} paper{Temaet Papir} cyanotype{Temaet Cyanotypi} other{Automatisk tema}}",

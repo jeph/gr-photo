@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Domyślny systemowy",
   "settingsLocation": "Lokalizacja",
   "settingsSaveToFolder": "Zapisuj w folderze",
-  "settingsSaveToFolderSubtitle": "Pobrane pliki są zapisywane w wybranym folderze, a nie w bibliotece zdjęć. Aplikacja do zdjęć może ich nie pokazywać.",
+  "settingsSaveToFolderSubtitle": "Pobrane pliki są zapisywane w wybranym folderze. Aplikacja do zdjęć może ich nie pokazywać.",
   "settingsTheme": "Motyw",
   "settingsThemeName": "{theme, select, light{Jasny} dark{Ciemny} darkroom{Ciemnia} paper{Papier} cyanotype{Cyjanotypia} other{Auto}}",
   "settingsThemeSemantics": "{theme, select, light{Motyw jasny} dark{Motyw ciemny} darkroom{Motyw Ciemnia} paper{Motyw Papier} cyanotype{Motyw Cyjanotypia} other{Motyw automatyczny}}",

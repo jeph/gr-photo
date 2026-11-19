@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Sistem varsayılanı",
   "settingsLocation": "Konum",
   "settingsSaveToFolder": "Klasöre kaydet",
-  "settingsSaveToFolderSubtitle": "İndirilenleri fotoğraf arşivinize değil, seçtiğiniz bir klasöre dosya olarak kaydeder. Fotoğraf uygulamanız bunları göstermeyebilir.",
+  "settingsSaveToFolderSubtitle": "İndirilenleri seçtiğiniz bir klasöre dosya olarak kaydeder. Fotoğraf uygulamanız bunları göstermeyebilir.",
   "settingsTheme": "Tema",
   "settingsThemeName": "{theme, select, light{Açık} dark{Koyu} darkroom{Karanlık oda} paper{Kâğıt} cyanotype{Siyanotip} other{Otomatik}}",
   "settingsThemeSemantics": "{theme, select, light{Açık tema} dark{Koyu tema} darkroom{Karanlık oda teması} paper{Kâğıt teması} cyanotype{Siyanotip teması} other{Otomatik tema}}",

@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Προεπιλογή συστήματος",
   "settingsLocation": "Τοποθεσία",
   "settingsSaveToFolder": "Αποθήκευση σε φάκελο",
-  "settingsSaveToFolderSubtitle": "Αποθηκεύει τις λήψεις ως αρχεία σε φάκελο που επιλέγετε, όχι στη βιβλιοθήκη φωτογραφιών σας. Η εφαρμογή φωτογραφιών σας ίσως να μην τις εμφανίζει.",
+  "settingsSaveToFolderSubtitle": "Αποθηκεύει τις λήψεις ως αρχεία σε φάκελο που επιλέγετε. Η εφαρμογή φωτογραφιών σας ίσως να μην τις εμφανίζει.",
   "settingsTheme": "Θέμα",
   "settingsThemeName": "{theme, select, light{Φωτεινό} dark{Σκούρο} darkroom{Σκοτεινός θάλαμος} paper{Χαρτί} cyanotype{Κυανοτυπία} other{Αυτόματο}}",
   "settingsThemeSemantics": "{theme, select, light{Φωτεινό θέμα} dark{Σκούρο θέμα} darkroom{Θέμα «Σκοτεινός θάλαμος»} paper{Θέμα «Χαρτί»} cyanotype{Θέμα «Κυανοτυπία»} other{Αυτόματο θέμα}}",

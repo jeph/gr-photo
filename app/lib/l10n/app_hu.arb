@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Rendszerbeállítás szerint",
   "settingsLocation": "Helymeghatározás",
   "settingsSaveToFolder": "Mentés mappába",
-  "settingsSaveToFolderSubtitle": "A letöltéseket fájlként menti a kiválasztott mappába, nem a fotókönyvtárba. Előfordulhat, hogy a fotóalkalmazás nem jeleníti meg őket.",
+  "settingsSaveToFolderSubtitle": "A letöltéseket fájlként menti a kiválasztott mappába. Előfordulhat, hogy a fotóalkalmazás nem jeleníti meg őket.",
   "settingsTheme": "Téma",
   "settingsThemeName": "{theme, select, light{Világos} dark{Sötét} darkroom{Sötétkamra} paper{Papír} cyanotype{Cianotípia} other{Automatikus}}",
   "settingsThemeSemantics": "{theme, select, light{Világos téma} dark{Sötét téma} darkroom{Sötétkamra téma} paper{Papír téma} cyanotype{Cianotípia téma} other{Automatikus téma}}",

@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "システムのデフォルト",
   "settingsLocation": "位置情報",
   "settingsSaveToFolder": "フォルダに保存",
-  "settingsSaveToFolderSubtitle": "ダウンロードを写真ライブラリではなく、選んだフォルダにファイルとして保存します。写真アプリには表示されないことがあります。",
+  "settingsSaveToFolderSubtitle": "ダウンロードを選んだフォルダにファイルとして保存します。写真アプリには表示されないことがあります。",
   "settingsTheme": "テーマ",
   "settingsThemeName": "{theme, select, light{ライト} dark{ダーク} darkroom{暗室} paper{印画紙} cyanotype{サイアノタイプ} other{自動}}",
   "settingsThemeSemantics": "{theme, select, light{ライトテーマ} dark{ダークテーマ} darkroom{暗室テーマ} paper{印画紙テーマ} cyanotype{サイアノタイプテーマ} other{自動テーマ}}",

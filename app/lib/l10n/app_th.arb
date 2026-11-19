@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "ค่าเริ่มต้นของระบบ",
   "settingsLocation": "ตำแหน่ง",
   "settingsSaveToFolder": "บันทึกลงโฟลเดอร์",
-  "settingsSaveToFolderSubtitle": "บันทึกรายการดาวน์โหลดเป็นไฟล์ในโฟลเดอร์ที่คุณเลือก ไม่ใช่ในคลังรูปภาพ แอปรูปภาพของคุณอาจไม่แสดงรายการเหล่านี้",
+  "settingsSaveToFolderSubtitle": "บันทึกรายการดาวน์โหลดเป็นไฟล์ในโฟลเดอร์ที่คุณเลือก แอปรูปภาพของคุณอาจไม่แสดงรายการเหล่านี้",
   "settingsTheme": "ธีม",
   "settingsThemeName": "{theme, select, light{สว่าง} dark{มืด} darkroom{ห้องมืด} paper{กระดาษ} cyanotype{ไซยาโนไทป์} other{อัตโนมัติ}}",
   "settingsThemeSemantics": "{theme, select, light{ธีมสว่าง} dark{ธีมมืด} darkroom{ธีมห้องมืด} paper{ธีมกระดาษ} cyanotype{ธีมไซยาโนไทป์} other{ธีมอัตโนมัติ}}",

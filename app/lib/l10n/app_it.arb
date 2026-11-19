@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Predefinita di sistema",
   "settingsLocation": "Posizione",
   "settingsSaveToFolder": "Salva in una cartella",
-  "settingsSaveToFolderSubtitle": "Salva i download come file in una cartella scelta da te, non nella libreria foto. La tua app per le foto potrebbe non mostrarli.",
+  "settingsSaveToFolderSubtitle": "Salva i download come file in una cartella scelta da te. La tua app per le foto potrebbe non mostrarli.",
   "settingsTheme": "Tema",
   "settingsThemeName": "{theme, select, light{Chiaro} dark{Scuro} darkroom{Camera oscura} paper{Carta} cyanotype{Cianotipia} other{Auto}}",
   "settingsThemeSemantics": "{theme, select, light{Tema chiaro} dark{Tema scuro} darkroom{Tema Camera oscura} paper{Tema Carta} cyanotype{Tema Cianotipia} other{Tema automatico}}",

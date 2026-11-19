@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Systemstandard",
   "settingsLocation": "Standort",
   "settingsSaveToFolder": "In einem Ordner speichern",
-  "settingsSaveToFolderSubtitle": "Speichert Downloads als Dateien in einem Ordner deiner Wahl statt in deiner Fotomediathek. Deine Fotos-App zeigt sie möglicherweise nicht an.",
+  "settingsSaveToFolderSubtitle": "Speichert Downloads als Dateien in einem Ordner deiner Wahl. Deine Fotos-App zeigt sie möglicherweise nicht an.",
   "settingsTheme": "Design",
   "settingsThemeName": "{theme, select, light{Hell} dark{Dunkel} darkroom{Dunkelkammer} paper{Papier} cyanotype{Cyanotypie} other{Automatisch}}",
   "settingsThemeSemantics": "{theme, select, light{Helles Design} dark{Dunkles Design} darkroom{Design „Dunkelkammer“} paper{Design „Papier“} cyanotype{Design „Cyanotypie“} other{Automatisches Design}}",

@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Järjestelmän oletus",
   "settingsLocation": "Sijainti",
   "settingsSaveToFolder": "Tallenna kansioon",
-  "settingsSaveToFolderSubtitle": "Tallentaa lataukset tiedostoina valitsemaasi kansioon, ei kuvakirjastoon. Kuvasovelluksesi ei välttämättä näytä niitä.",
+  "settingsSaveToFolderSubtitle": "Tallentaa lataukset tiedostoina valitsemaasi kansioon. Kuvasovelluksesi ei välttämättä näytä niitä.",
   "settingsTheme": "Teema",
   "settingsThemeName": "{theme, select, light{Vaalea} dark{Tumma} darkroom{Pimiö} paper{Paperi} cyanotype{Sinikopio} other{Automaattinen}}",
   "settingsThemeSemantics": "{theme, select, light{Vaalea teema} dark{Tumma teema} darkroom{Pimiöteema} paper{Paperiteema} cyanotype{Sinikopioteema} other{Automaattinen teema}}",

@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Podle systému",
   "settingsLocation": "Poloha",
   "settingsSaveToFolder": "Ukládat do složky",
-  "settingsSaveToFolderSubtitle": "Stažené položky se ukládají jako soubory do složky, kterou vyberete, ne do knihovny fotek. Aplikace pro fotky je nemusí zobrazovat.",
+  "settingsSaveToFolderSubtitle": "Stažené položky se ukládají jako soubory do složky, kterou vyberete. Aplikace pro fotky je nemusí zobrazovat.",
   "settingsTheme": "Motiv",
   "settingsThemeName": "{theme, select, light{Světlý} dark{Tmavý} darkroom{Temná komora} paper{Papír} cyanotype{Kyanotypie} other{Automaticky}}",
   "settingsThemeSemantics": "{theme, select, light{Světlý motiv} dark{Tmavý motiv} darkroom{Motiv Temná komora} paper{Motiv Papír} cyanotype{Motiv Kyanotypie} other{Automatický motiv}}",

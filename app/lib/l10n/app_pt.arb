@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Predefinição do sistema",
   "settingsLocation": "Localização",
   "settingsSaveToFolder": "Guardar numa pasta",
-  "settingsSaveToFolderSubtitle": "Guarda as transferências como ficheiros numa pasta à sua escolha, e não na biblioteca de fotografias. A sua app de fotografias pode não as mostrar.",
+  "settingsSaveToFolderSubtitle": "Guarda as transferências como ficheiros numa pasta à sua escolha. A sua app de fotografias pode não as mostrar.",
   "settingsTheme": "Tema",
   "settingsThemeName": "{theme, select, light{Claro} dark{Escuro} darkroom{Câmara escura} paper{Papel} cyanotype{Cianotipia} other{Automático}}",
   "settingsThemeSemantics": "{theme, select, light{Tema claro} dark{Tema escuro} darkroom{Tema Câmara escura} paper{Tema Papel} cyanotype{Tema Cianotipia} other{Tema automático}}",

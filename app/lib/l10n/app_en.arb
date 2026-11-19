@@ -2916,7 +2916,7 @@
   "@settingsSaveToFolder": {
     "description": "Settings, Downloads: title of the switch that saves downloaded photos and videos as files in a folder the user picks with the phone's folder picker, instead of in the phone's photo library."
   },
-  "settingsSaveToFolderSubtitle": "Saves downloads as files in a folder you choose, not in your photo library. Your photos app may not show them.",
+  "settingsSaveToFolderSubtitle": "Saves downloads as files in a folder you choose. Your photos app may not show them.",
   "@settingsSaveToFolderSubtitle": {
     "description": "Settings: explanation under Save to a folder. The folder can be anywhere the phone's folder picker offers, a cloud storage app included, so the phone's photo or gallery app may not show what is saved there."
   },

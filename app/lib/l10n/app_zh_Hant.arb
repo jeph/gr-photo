@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "系統預設",
   "settingsLocation": "位置",
   "settingsSaveToFolder": "儲存到資料夾",
-  "settingsSaveToFolderSubtitle": "將下載項目以檔案形式儲存到所選的資料夾，而不是照片圖庫。照片 App 可能不會顯示這些檔案。",
+  "settingsSaveToFolderSubtitle": "將下載項目以檔案形式儲存到所選的資料夾。照片 App 可能不會顯示這些檔案。",
   "settingsTheme": "主題",
   "settingsThemeName": "{theme, select, light{淺色} dark{深色} darkroom{暗房} paper{相紙} cyanotype{藍曬} other{自動}}",
   "settingsThemeSemantics": "{theme, select, light{淺色主題} dark{深色主題} darkroom{暗房主題} paper{相紙主題} cyanotype{藍曬主題} other{自動主題}}",

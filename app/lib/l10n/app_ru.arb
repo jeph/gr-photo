@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Как в системе",
   "settingsLocation": "Геопозиция",
   "settingsSaveToFolder": "Сохранять в папку",
-  "settingsSaveToFolderSubtitle": "Загрузки сохраняются как файлы в выбранную вами папку, а не в галерею. Приложение для фото может их не показывать.",
+  "settingsSaveToFolderSubtitle": "Загрузки сохраняются как файлы в выбранную вами папку. Приложение для фото может их не показывать.",
   "settingsTheme": "Тема",
   "settingsThemeName": "{theme, select, light{Светлая} dark{Темная} darkroom{Проявочная} paper{Бумага} cyanotype{Цианотипия} other{Авто}}",
   "settingsThemeSemantics": "{theme, select, light{Светлая тема} dark{Темная тема} darkroom{Тема «Проявочная»} paper{Тема «Бумага»} cyanotype{Тема «Цианотипия»} other{Автоматическая тема}}",

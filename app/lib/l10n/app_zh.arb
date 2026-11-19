@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "跟随系统",
   "settingsLocation": "位置信息",
   "settingsSaveToFolder": "保存到文件夹",
-  "settingsSaveToFolderSubtitle": "将下载内容以文件形式保存到所选文件夹，而不是手机相册。照片应用可能不会显示这些文件。",
+  "settingsSaveToFolderSubtitle": "将下载内容以文件形式保存到所选文件夹。照片应用可能不会显示这些文件。",
   "settingsTheme": "主题",
   "settingsThemeName": "{theme, select, light{浅色} dark{深色} darkroom{暗房} paper{相纸} cyanotype{蓝晒} other{自动}}",
   "settingsThemeSemantics": "{theme, select, light{浅色主题} dark{深色主题} darkroom{暗房主题} paper{相纸主题} cyanotype{蓝晒主题} other{自动主题}}",

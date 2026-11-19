@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Langue du système",
   "settingsLocation": "Position",
   "settingsSaveToFolder": "Enregistrer dans un dossier",
-  "settingsSaveToFolderSubtitle": "Enregistre les téléchargements sous forme de fichiers dans le dossier de votre choix, et non dans votre photothèque. Votre app de photos peut ne pas les afficher.",
+  "settingsSaveToFolderSubtitle": "Enregistre les téléchargements sous forme de fichiers dans le dossier de votre choix. Votre app de photos peut ne pas les afficher.",
   "settingsTheme": "Thème",
   "settingsThemeName": "{theme, select, light{Clair} dark{Sombre} darkroom{Chambre noire} paper{Papier} cyanotype{Cyanotype} other{Auto}}",
   "settingsThemeSemantics": "{theme, select, light{Thème clair} dark{Thème sombre} darkroom{Thème Chambre noire} paper{Thème Papier} cyanotype{Thème Cyanotype} other{Thème automatique}}",

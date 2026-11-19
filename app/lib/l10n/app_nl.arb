@@ -553,7 +553,7 @@
   "settingsLanguageSystem": "Systeemstandaard",
   "settingsLocation": "Locatie",
   "settingsSaveToFolder": "Opslaan in een map",
-  "settingsSaveToFolderSubtitle": "Slaat downloads op als bestanden in een map die je kiest, niet in je fotobibliotheek. Je foto-app toont ze mogelijk niet.",
+  "settingsSaveToFolderSubtitle": "Slaat downloads op als bestanden in een map die je kiest. Je foto-app toont ze mogelijk niet.",
   "settingsTheme": "Thema",
   "settingsThemeName": "{theme, select, light{Licht} dark{Donker} darkroom{Doka} paper{Papier} cyanotype{Cyanotypie} other{Automatisch}}",
   "settingsThemeSemantics": "{theme, select, light{Thema Licht} dark{Thema Donker} darkroom{Thema Doka} paper{Thema Papier} cyanotype{Thema Cyanotypie} other{Thema Automatisch}}",
