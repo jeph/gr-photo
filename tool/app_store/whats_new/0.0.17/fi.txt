@@ -1,1 +1,2 @@
 • Kamerat-näytön Lisää kamera toimii nyt myös silloin, kun kameraan vielä yhdistetään.
+• RAW+JPEG-muodossa otetun kuvan nimessä näkyvät nyt molemmat tiedostot, kun kuva avataan Kirjastossa, esimerkiksi R0001234.JPG + DNG.

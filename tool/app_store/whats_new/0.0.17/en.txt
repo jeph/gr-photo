@@ -1,1 +1,2 @@
 • Add a camera on the Cameras screen now works while a camera is still connecting.
+• A photo shot as RAW+JPEG now shows both files in its name when opened in the Library, for example R0001234.JPG + DNG.

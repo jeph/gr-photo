@@ -1,1 +1,2 @@
 • Kamera hinzufügen auf dem Bildschirm Kameras funktioniert jetzt auch, während eine Kamera noch verbunden wird.
+• Ein als RAW+JPEG aufgenommenes Foto zeigt in der Mediathek jetzt beide Dateien in seinem Namen an, zum Beispiel R0001234.JPG + DNG.

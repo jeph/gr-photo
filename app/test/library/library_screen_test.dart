@@ -314,7 +314,7 @@ void main() {
     // The viewer's Download asks which half of the pair, again. Info
     // shows the pair's details.
     await tester.tap(_cell(pair));
-    await pumpUntilFound(tester, find.text('R0000268.JPG'));
+    await pumpUntilFound(tester, find.text('R0000268.JPG + DNG'));
     await tapWhenReady(tester, _inViewer('viewer-info'));
     expect(
       find.descendant(

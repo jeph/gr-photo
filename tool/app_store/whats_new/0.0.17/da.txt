@@ -1,1 +1,2 @@
 • Tilføj et kamera på skærmen Kameraer virker nu også, mens et kamera er ved at oprette forbindelse.
+• Et billede taget som RAW+JPEG viser nu begge filer i sit navn, når det åbnes i Bibliotek, for eksempel R0001234.JPG + DNG.

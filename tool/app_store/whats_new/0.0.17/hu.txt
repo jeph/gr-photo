@@ -1,1 +1,2 @@
 • A Kamerák képernyőn a Kamera hozzáadása mostantól akkor is működik, amikor egy kamera még csatlakozik.
+• A RAW+JPEG formátumban készült fotó neve a Könyvtárban megnyitva mostantól mindkét fájlt mutatja, például R0001234.JPG + DNG.

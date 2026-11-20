@@ -1,1 +1,2 @@
 • Adicionar câmara, no ecrã Câmaras, funciona agora também enquanto uma câmara ainda está a ligar.
+• Uma fotografia tirada em RAW+JPEG mostra agora os dois ficheiros no nome quando é aberta na Biblioteca, por exemplo R0001234.JPG + DNG.

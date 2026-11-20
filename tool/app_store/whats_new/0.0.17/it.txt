@@ -1,1 +1,2 @@
 • Aggiungi fotocamera, nella schermata Fotocamere, ora funziona anche mentre una fotocamera si sta ancora connettendo.
+• Una foto scattata in RAW+JPEG ora mostra entrambi i file nel nome quando viene aperta nella Libreria, ad esempio R0001234.JPG + DNG.

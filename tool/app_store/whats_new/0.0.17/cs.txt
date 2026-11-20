@@ -1,1 +1,2 @@
 • Přidat fotoaparát na obrazovce Fotoaparáty teď funguje i ve chvíli, kdy se fotoaparát teprve připojuje.
+• Fotografie pořízená jako RAW+JPEG má teď po otevření v Knihovně v názvu oba soubory, například R0001234.JPG + DNG.

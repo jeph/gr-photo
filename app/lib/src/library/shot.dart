@@ -20,6 +20,12 @@ final class Shot {
   /// The file the grid and viewer show: the JPEG of a pair.
   CameraFile get primary => movie ?? jpeg ?? raw!;
 
+  /// What the viewer's header calls the shot: its file's name as the camera
+  /// lists it, or for a pair the JPEG's name and the RAW's extension
+  /// (`R0001234.JPG + DNG`).
+  String get name =>
+      isPair ? '${jpeg!.name} + ${raw!.extension}' : primary.name;
+
   String? get storage => primary.storage;
   String get dir => primary.dir;
   String get base => primary.base;

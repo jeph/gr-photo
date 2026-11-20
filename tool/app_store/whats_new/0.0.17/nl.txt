@@ -1,1 +1,2 @@
 • Camera toevoegen op het scherm Camera's werkt nu ook terwijl een camera nog verbinding maakt.
+• Een foto die als RAW+JPEG is gemaakt, toont nu beide bestanden in zijn naam wanneer die in de Bibliotheek wordt geopend, bijvoorbeeld R0001234.JPG + DNG.

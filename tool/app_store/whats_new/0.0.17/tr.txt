@@ -1,1 +1,2 @@
 • Kameralar ekranındaki Kamera ekle artık bir kamera bağlanırken de çalışıyor.
+• RAW+JPEG olarak çekilen bir fotoğraf, Arşiv'de açıldığında artık adında iki dosyayı da gösteriyor, örneğin R0001234.JPG + DNG.

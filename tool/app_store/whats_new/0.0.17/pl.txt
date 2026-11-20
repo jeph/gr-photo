@@ -1,1 +1,2 @@
 • Dodaj aparat na ekranie Aparaty działa teraz także wtedy, gdy aparat jeszcze się łączy.
+• Zdjęcie zrobione jako RAW+JPEG po otwarciu w Bibliotece pokazuje teraz w nazwie oba pliki, na przykład R0001234.JPG + DNG.

@@ -29,7 +29,8 @@ final Finder _viewer = find.byWidgetPredicate(
 Finder _inViewer(Finder finder) =>
     find.descendant(of: _viewer, matching: finder);
 
-/// The viewer shows the shot whose primary file is [name]: its title.
+/// The viewer shows the shot named [name]: its title, a file's name or a
+/// pair's `R0000001.JPG + DNG`.
 Finder _showing(String name) => _inViewer(
   find.descendant(of: find.byType(AppBar), matching: find.text(name)),
 );
@@ -146,8 +147,9 @@ DisplayFeature _fold(Rect bounds) => DisplayFeature(
   state: DisplayFeatureState.postureFlat,
 );
 
-/// The pair `R0000001` loses [deleted]; the viewer shows the shot left,
-/// whose Download no longer asks which files and downloads only [kept].
+/// The pair `R0000001`, named by both its files, loses [deleted]; the
+/// viewer shows the shot left under its file's name, whose Download no
+/// longer asks which files and downloads only [kept].
 Future<void> _pairLoses(
   WidgetTester tester, {
   required String deleted,
@@ -166,6 +168,7 @@ Future<void> _pairLoses(
   final pairFormat = _inViewer(find.text('RAW+JPEG'));
   await pumpUntilFound(tester, pairFormat);
   expect(download, findsOneWidget);
+  expect(_showing('R0000001.JPG + DNG'), findsOneWidget);
 
   _delete(app, deleted);
   await pumpUntil(
@@ -1148,7 +1151,7 @@ void main() {
 
       // Newest first: the pair is the page before.
       await tester.fling(pages, const Offset(300, 0), 1000);
-      await pumpUntilFound(tester, _showing('R0000002.JPG'));
+      await pumpUntilFound(tester, _showing('R0000002.JPG + DNG'));
       await pumpUntilFound(tester, map);
       expect(shown(tester).$1, const GrPhotoLocation(38.7075, -9.1364));
       await app.dispose();

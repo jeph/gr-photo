@@ -1337,7 +1337,7 @@ class _ShotName extends StatelessWidget {
       crossAxisAlignment: alignment,
       children: [
         Text(
-          shot.primary.name,
+          shot.name,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
