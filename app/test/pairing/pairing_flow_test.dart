@@ -13,6 +13,7 @@ import 'package:gr_protocol/gr_protocol.dart'
         BleTransport,
         grRicohCompanyId;
 import 'package:grphoto/src/connection/connection_controller.dart';
+import 'package:grphoto/src/data/cameras.dart';
 import 'package:grphoto/src/library/library_screen.dart';
 import 'package:grphoto/src/pairing/pairing_flow.dart';
 import 'package:grphoto/src/theme/tokens.dart';
@@ -427,6 +428,62 @@ void main() {
       () => app.models.connection.status == ConnectionStatus.bluetooth,
       reason: 'the saved camera linked again',
     );
+
+    await app.dispose();
+  });
+
+  testWidgets('a camera is added while the saved one is still connecting: '
+      'the attempt goes on until pairing starts, and starts again when '
+      'pairing is cancelled', (tester) async {
+    tester.view
+      ..physicalSize = const Size(1170, 2532)
+      ..devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    // The saved camera is not around and connecting to it goes on for the
+    // whole test; the fake camera is another one, waiting to pair.
+    final app = (await tester.runAsync(() async {
+      final app = await createTestApp(
+        config: const FakeCameraConfig(executePairingOpen: true),
+        sessionOptions: const GrSessionOptions(bleConnectAttempts: 1000),
+      );
+      await app.models.cameras.add(
+        SavedCamera(
+          paired: const GrPairedCamera(
+            deviceId: '00:00:5E:00:53:01',
+            serialNumber: '1111111',
+            modelName: 'RICOH GR IIIx',
+          ),
+          name: 'Street',
+          pairedAt: DateTime(2026),
+        ),
+      );
+      return app;
+    }))!;
+    final connection = app.models.connection;
+    await app.pumpApp(tester);
+    await tapWhenReady(tester, find.byKey(const Key('camera-card-power')));
+    await pumpUntil(
+      tester,
+      () => connection.status == ConnectionStatus.connecting,
+      reason: 'connecting to the saved camera',
+    );
+
+    await tapWhenReady(tester, find.byKey(const Key('cameras-add')));
+    await _select(tester);
+    expect(connection.status, ConnectionStatus.connecting);
+
+    await tapWhenReady(tester, find.byKey(const Key('pair-start')));
+    await _awaitCode(tester, app.camera);
+    expect(connection.status, ConnectionStatus.offline);
+
+    await tapWhenReady(tester, find.byKey(const Key('pairing-cancel')));
+    await pumpUntil(tester, () => find.byType(PairingFlow).evaluate().isEmpty);
+    await pumpUntil(
+      tester,
+      () => connection.status == ConnectionStatus.connecting,
+      reason: 'connecting to the saved camera again',
+    );
+    expect(app.models.cameras.current?.serial, '1111111');
 
     await app.dispose();
   });

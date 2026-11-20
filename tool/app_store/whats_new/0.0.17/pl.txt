@@ -1,0 +1,1 @@
+• Dodaj aparat na ekranie Aparaty działa teraz także wtedy, gdy aparat jeszcze się łączy.

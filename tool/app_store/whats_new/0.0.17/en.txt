@@ -1,0 +1,1 @@
+• Add a camera on the Cameras screen now works while a camera is still connecting.

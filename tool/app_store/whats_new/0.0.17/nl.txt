@@ -1,0 +1,1 @@
+• Camera toevoegen op het scherm Camera's werkt nu ook terwijl een camera nog verbinding maakt.

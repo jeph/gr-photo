@@ -1,0 +1,1 @@
+• Ajouter un appareil photo, sur l'écran Appareils photo, fonctionne désormais aussi pendant qu'un appareil est en cours de connexion.

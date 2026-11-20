@@ -1,0 +1,1 @@
+• A Kamerák képernyőn a Kamera hozzáadása mostantól akkor is működik, amikor egy kamera még csatlakozik.

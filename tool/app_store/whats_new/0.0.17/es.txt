@@ -1,0 +1,1 @@
+• Añadir una cámara, en la pantalla Cámaras, ahora funciona también mientras una cámara se está conectando.

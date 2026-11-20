@@ -1,0 +1,1 @@
+• Kamera hinzufügen auf dem Bildschirm Kameras funktioniert jetzt auch, während eine Kamera noch verbunden wird.

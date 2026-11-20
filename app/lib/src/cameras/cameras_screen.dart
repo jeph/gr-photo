@@ -499,24 +499,28 @@ class _CameraList extends StatelessWidget {
             connection: connection,
           ),
           SectionLabel(context.l10n.camerasOtherCameras),
-          IgnorePointer(
-            ignoring: connecting,
-            child: AnimatedOpacity(
-              opacity: connecting ? .42 : 1,
-              duration: const Duration(milliseconds: 200),
-              child: GroupBox(
-                key: const Key('cameras-others'),
-                children: [
-                  for (final camera in others)
-                    _OtherCameraRow(
+          GroupBox(
+            key: const Key('cameras-others'),
+            children: [
+              for (final camera in others)
+                // Locked while the current camera is connecting \[design\].
+                IgnorePointer(
+                  ignoring: connecting,
+                  child: AnimatedOpacity(
+                    opacity: connecting ? .42 : 1,
+                    duration: const Duration(milliseconds: 200),
+                    child: _OtherCameraRow(
                       camera: camera,
                       presence: presence,
                       onConnect: () => onConnect(camera.serial),
                     ),
-                  const _AddCameraRow(),
-                ],
-              ),
-            ),
+                  ),
+                ),
+              // Open while connecting too: the attempt goes on under the
+              // pairing flow, which ends it only once pairing starts and
+              // starts it again when left without a new camera.
+              const _AddCameraRow(),
+            ],
           ),
         ],
       ),

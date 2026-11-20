@@ -1,0 +1,1 @@
+• Přidat fotoaparát na obrazovce Fotoaparáty teď funguje i ve chvíli, kdy se fotoaparát teprve připojuje.

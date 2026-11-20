@@ -1,0 +1,1 @@
+• Adicionar câmara, no ecrã Câmaras, funciona agora também enquanto uma câmara ainda está a ligar.

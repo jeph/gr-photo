@@ -1,0 +1,1 @@
+• Aggiungi fotocamera, nella schermata Fotocamere, ora funziona anche mentre una fotocamera si sta ancora connettendo.

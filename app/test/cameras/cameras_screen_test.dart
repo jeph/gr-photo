@@ -713,6 +713,37 @@ void main() {
     await app.dispose();
   });
 
+  testWidgets('while connecting, the other cameras are locked and Add a '
+      'camera is not', (tester) async {
+    final app = await _start(
+      tester,
+      config: _unreachable,
+      sessionOptions: const GrSessionOptions(scanTimeout: Duration(minutes: 1)),
+      withOther: true,
+    );
+    final otherConnect = find
+        .byKey(const Key('camera-row-connect-1111111'))
+        .hitTestable();
+    final add = find.byKey(const Key('cameras-add')).hitTestable();
+    // The rows under the card start below the fold.
+    await tester.ensureVisible(find.byKey(const Key('cameras-add')));
+    await tester.pump();
+    expect(otherConnect, findsOneWidget);
+    expect(add, findsOneWidget);
+
+    await _tap(tester, const Key('camera-card-power'));
+    await _untilStatus(tester, app, ConnectionStatus.connecting);
+    await tester.pump();
+    expect(otherConnect, findsNothing);
+    expect(add, findsOneWidget);
+
+    await _tap(tester, const Key('cameras-add'));
+    await pumpUntilFound(tester, find.byType(PairingFlow));
+    expect(app.models.connection.status, ConnectionStatus.connecting);
+
+    await app.dispose();
+  });
+
   testWidgets('forgetting the camera while connecting ends the attempt', (
     tester,
   ) async {

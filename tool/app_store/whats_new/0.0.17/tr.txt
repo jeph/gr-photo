@@ -1,0 +1,1 @@
+• Kameralar ekranındaki Kamera ekle artık bir kamera bağlanırken de çalışıyor.
