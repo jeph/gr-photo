@@ -10,6 +10,7 @@ import 'package:gr_protocol/gr_protocol.dart' show GrBleCatalog, GrImageSize;
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app.dart';
 import 'package:grphoto/src/app_scope.dart';
+import 'package:grphoto/src/data/settings.dart';
 import 'package:grphoto/src/library/shot_cell.dart';
 import 'package:grphoto/src/platform/app_dirs.dart';
 import 'package:grphoto/src/platform/background_downloads.dart';
@@ -18,6 +19,7 @@ import 'package:grphoto/src/platform/device_services.dart';
 import 'package:grphoto/src/platform/media_saver.dart';
 import 'package:grphoto/src/platform/window_pose.dart';
 import 'package:grphoto/src/services.dart';
+import 'package:grphoto/src/theme/tokens.dart';
 import 'package:integration_test/integration_test.dart';
 
 /// Where the host waits for screenshot requests: a simulator app reads and
@@ -28,9 +30,18 @@ late final String _shotDir;
 /// downloads: `scenes.json` and `sNN_{thumb,view,full,live}.jpg`.
 late final String _mediaDir;
 
-/// Reads [_shotDir] and [_mediaDir] from `store-screenshots.json`, which the
-/// host puts into the app's data folder before it starts the app: an app
-/// started on a simulator gets no arguments or environment from the host.
+/// The themes each screen is taken in, one screenshot each, for the website
+/// (`run.sh --site`). Empty for the store screenshots, which are taken once
+/// in the phone's dark appearance.
+late final List<AppTheme> _themes;
+
+/// The app's settings, which set the theme of each of [_themes].
+late final SettingsController _settings;
+
+/// Reads [_shotDir], [_mediaDir] and [_themes] from `store-screenshots.json`,
+/// which the host puts into the app's data folder before it starts the app:
+/// an app started on a simulator gets no arguments or environment from the
+/// host.
 Future<void> _readFolders() async {
   final dirs = await appDirectories();
   final folders = jsonDecode(
@@ -38,6 +49,10 @@ Future<void> _readFolders() async {
   ) as Map<String, dynamic>;
   _shotDir = folders['shots'] as String;
   _mediaDir = folders['media'] as String;
+  _themes = [
+    for (final name in (folders['themes'] as List<dynamic>?) ?? const [])
+      AppTheme.values.byName(name as String),
+  ];
 }
 
 typedef _P = LookParameter;
@@ -273,13 +288,13 @@ Future<AppServices> _services(
   );
 }
 
-/// Walks the app through the screens of the App Store screenshots against
-/// a simulated camera whose card and looks look used. At each screen it
-/// writes `<name>.request` into [_shotDir] and waits for the host
-/// (`tool/store_screenshots/run.sh`) to take the simulator's screenshot and
-/// delete the request. The last request, `cmd-lock`, has the host lock the
-/// simulator for the Lock Screen with the geotagging Live Activity and end
-/// the run: a locked app no longer runs the test.
+/// Walks the app through the screens of the App Store screenshots and the
+/// website against a simulated camera whose card and looks look used. At
+/// each screen it writes `<name>.request` into [_shotDir] and waits for the
+/// host (`tool/store_screenshots/run.sh`) to take the simulator's screenshot
+/// and delete the request. The last request, `cmd-lock`, has the host lock
+/// the simulator for the Lock Screen with the geotagging Live Activity and
+/// end the run: a locked app no longer runs the test.
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized().framePolicy =
       LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
@@ -292,7 +307,7 @@ void main() {
       // Why the walk stopped and what was on screen: the host ends the app
       // before the test can report it.
       File('$_shotDir/failure.txt').writeAsStringSync('$error\n$stack');
-      await _snap(tester, 'failure', settle: 0);
+      await _request(tester, 'failure');
       rethrow;
     }
   }, timeout: const Timeout(Duration(minutes: 15)));
@@ -310,6 +325,7 @@ Future<void> _walk(WidgetTester tester) async {
   final wide = tester.view.physicalSize.width / tester.view.devicePixelRatio;
   final scenes = _readScenes(perDay: twoPages || wide < 600 ? 9 : 10);
   final models = await AppModels.load(await _services(scenes, pose));
+  _settings = models.settings;
   runApp(GrPhotoApp(models: models));
 
   for (final key in ['cameras-add', 'pair-add-1234567', 'pair-start']) {
@@ -444,6 +460,7 @@ Future<void> _walk(WidgetTester tester) async {
 
   await _tapKey(tester, 'camera-tab-shoot');
   await _waitKey(tester, 'shoot-shutter', seconds: 30);
+  await _snap(tester, 'remote', settle: 4);
   _inLiveView = true;
   await _tapKey(tester, 'shoot-mode-liveView');
   await _waitKey(tester, 'live-picture', seconds: 60);
@@ -455,7 +472,7 @@ Future<void> _walk(WidgetTester tester) async {
   await _tapKey(tester, 'shoot-mode-remote');
   await _pumpFor(tester, 3);
 
-  await _snap(tester, 'cmd-lock', settle: 0);
+  await _request(tester, 'cmd-lock');
 }
 
 Finder _cell(int scene, int scenes) {
@@ -482,8 +499,23 @@ Future<void> _back(WidgetTester tester) async {
   await _pumpFor(tester, 2);
 }
 
+/// Has the host take the screen on show as [name] after [settle] seconds:
+/// once in each of [_themes], as `<name>.<theme>`, when there are any.
 Future<void> _snap(WidgetTester tester, String name, {int settle = 3}) async {
   await _pumpFor(tester, settle);
+  if (_themes.isEmpty) {
+    await _request(tester, name);
+    return;
+  }
+  for (final theme in _themes) {
+    _settings.theme = theme;
+    await _pumpFor(tester, 1);
+    await _request(tester, '$name.${theme.name}');
+  }
+}
+
+/// Writes `<name>.request` and waits for the host to take the screenshot.
+Future<void> _request(WidgetTester tester, String name) async {
   final request = File('$_shotDir/$name.request')..writeAsStringSync('');
   await _pumpUntil(
     tester,

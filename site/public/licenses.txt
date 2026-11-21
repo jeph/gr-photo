@@ -1,0 +1,170 @@
+GR Photo's website: notices for what it serves that is not GR Photo's own.
+
+The app itself is under the MIT License: https://github.com/jeph/gr-photo/blob/main/LICENSE
+
+
+Photos in the screenshots
+=========================
+
+The screenshots show the app with these photos on a simulated camera's card
+(tool/store_screenshots/photos.json in GR Photo's repository). They are from
+Unsplash, under the Unsplash License: https://unsplash.com/license
+
+- Ari Dinar: https://unsplash.com/photos/a-yellow-trolley-on-a-street-ymXJbgaSLkg
+- Louise Vildmark: https://unsplash.com/photos/a-red-scooter-parked-in-front-of-a-building-DrZJGGceBj8
+- Angelo Casto: https://unsplash.com/photos/red-and-yellow-concrete-building-during-daytime-NDVvMHrqvCc
+- 雙 film: https://unsplash.com/photos/colorful-buildings-with-orange-roofs-under-a-cloudy-sky-qgaCFGFa0hQ
+- Bob Brewer: https://unsplash.com/photos/a-colorful-volkswagen-beetle-parked-by-brightly-painted-buildings-qMi-L7OEOOM
+- Blaz Erzetic: https://unsplash.com/photos/hanged-umbrellas-on-alley-4NpkhE5DyRI
+- David Xeli: https://unsplash.com/photos/a-group-of-buildings-with-a-crane-in-the-background-1XVbdEE9-g0
+- Marco Angelo: https://unsplash.com/photos/a-large-group-of-colorful-umbrellas-C8epZYuusxU
+- Toni Zaat: https://unsplash.com/photos/people-walking-on-street-between-buildings-during-daytime-VEtsz2FZ4sc
+- Jezael Melgoza: https://unsplash.com/photos/people-walking-on-road-near-well-lit-buildings-layMbSJ3YOE
+- Jezael Melgoza: https://unsplash.com/photos/white-and-red-buss-on-the-middle-of-crossing-street-photo-NiyRORf8d8I
+- Tom Podmore: https://unsplash.com/photos/neon-signs-in-shibuya-tokyo-street-p8lNJRI9MRc
+- Rach Teo: https://unsplash.com/photos/a-street-with-signs-and-people-zzktyLQfEJI
+- HANVIN CHEONG: https://unsplash.com/photos/a-city-street-filled-with-lots-of-traffic-at-night-uAxcTBYpvaQ
+- Jezael Melgoza: https://unsplash.com/photos/people-walking-between-city-building-_noSmX8Kgoo
+- Hiep Duong: https://unsplash.com/photos/black-car-on-road-during-night-time-mm6VFRGTqWk
+- ayumi kubo: https://unsplash.com/photos/a-busy-street-lined-with-illuminated-signs-at-dusk-x9YNc2fEbss
+- Denys Nevozhai: https://unsplash.com/photos/alleyway-with-red-lanterns-in-tokyo-D68ADLeMh5Q
+- Fer Troulik: https://unsplash.com/photos/a-colorful-and-modern-building-against-a-blue-sky-GrmmcwnJdF8
+- Viktor Forgacs: https://unsplash.com/photos/a-bunch-of-different-colored-steps-against-a-blue-sky-WZT4YzbXiMk
+- Scott Webb: https://unsplash.com/photos/low-angle-photography-of-building-with-red-green-and-white-curtain-wall-YZyYSeVQGmM
+- Adrian Newell: https://unsplash.com/photos/a-row-of-multicolored-houses-on-a-street-UtfxJZ-uy5Q
+- Vivu Vietnam: https://unsplash.com/photos/colorful-buildings-on-a-hillside-under-a-clear-blue-sky-vx5R9iWEunQ
+- Remon Geo: https://unsplash.com/photos/a-multi-colored-building-with-a-clock-on-the-front-of-it-hXYIHwDFIAk
+- kt Leung: https://unsplash.com/photos/a-bright-pink-building-features-colorful-murals-rVZQIM5dBRU
+- sopo tsulukidze: https://unsplash.com/photos/a-row-of-buildings-with-scaffolding-on-the-windows-1sgJzfd1QM0
+- Julia Taubitz: https://unsplash.com/photos/a-colorful-house-stands-on-a-city-street-2d7_Jgq6re4
+- Delaney Van: https://unsplash.com/photos/white-and-blue-boat-on-water-h9W3-wBMVFs
+- Eddie Mark Blair: https://unsplash.com/photos/white-and-blue-boat-on-sea-during-daytime-4AUy3MKWJq8
+- Nikola Radojcic: https://unsplash.com/photos/two-blue-and-brown-boat-beside-each-other-NBCha2p7jNg
+- Chris King: https://unsplash.com/photos/six-blue-and-white-boats-on-body-of-water-during-daytime-AOy0hibZK0w
+- Nattu Adnan: https://unsplash.com/photos/aerial-nature-photography-of-green-palms-on-seashore-during-daytime-atSUvc1hMwk
+- David Vives: https://unsplash.com/photos/brown-beach-umbrellas-on-beach-during-daytime-ELf8M_YWRTY
+- Michael Monahan: https://unsplash.com/photos/sandy-beach-path-with-wooden-fence-6idW8XGY8zU
+- Kunal Kalra: https://unsplash.com/photos/white-and-blue-boat-on-sea-during-daytime-PyUWkJGYQjc
+- Samielle Støyl: https://unsplash.com/photos/a-serene-canal-scene-in-venice-italy-VrUlRH-IYuY
+- Daniel Spilka: https://unsplash.com/photos/assorted-flowers-in-container-on-display--6FnCzLt3DE
+- Svetlana Gumerova: https://unsplash.com/photos/two-bikes-parked-in-garden-46rezEDmah4
+- Valentina D: https://unsplash.com/photos/a-bunch-of-pink-and-white-flowers-on-display-UNbftEXc9ws
+- Alisa Anton: https://unsplash.com/photos/pink-flowers-in-gray-steel-bucket-D4Blldtly00
+- Hossein Hosseini: https://unsplash.com/photos/a-path-in-a-park-with-lots-of-leaves-on-the-ground-agjh7wg3uK8
+- Tom Chen: https://unsplash.com/photos/blue-red-and-white-plastic-containers-6DH6BojClJg
+- Aki: https://unsplash.com/photos/a-road-surrounded-by-trees-with-orange-and-yellow-leaves-pCrQgZSQw-4
+- KWON JUNHO: https://unsplash.com/photos/yellow-leaf-trees-near-gray-concrete-road-during-daytime-kGADjDKaorM
+- Nika Benedictova: https://unsplash.com/photos/a-single-leaf-laying-on-the-ground-iEbAyryC62U
+- Pauline Bernfeld: https://unsplash.com/photos/cruise-ship-on-dock-near-city-during-daytime-xoEBWRp05fA
+- John Wilander: https://unsplash.com/photos/cityscape-at-dusk-with-illuminated-buildings-and-sunset-sky-r_tZ7moJluA
+- Joel Mott: https://unsplash.com/photos/photograph-of-city-during-sunset-k-G2NhZjlVg
+- Msganaw Wogaso: https://unsplash.com/photos/classic-black-volkswagen-beetle-parked-on-street-pzMeB9qEEro
+- Aurélien Courtet: https://unsplash.com/photos/red-car-on-the-road-during-daytime-RWssH7E9wz0
+- Carlos Torres: https://unsplash.com/photos/a-blue-car-parked-in-front-of-a-blue-building-qNqCmwXaHeQ
+- Ten: https://unsplash.com/photos/a-set-of-colorful-steps-leading-up-to-a-building-239dUuWEm9s
+- Yasuto Takeuchi: https://unsplash.com/photos/people-walking-on-sidewalk-near-red-and-white-tram-during-daytime-EOjpwDfs9fk
+- Subhashis Das: https://unsplash.com/photos/a-yellow-and-blue-tram-on-a-city-street-pc_sZ1DLdGU
+
+
+App Store badge
+===============
+
+The "Download on the App Store" badges are Apple's, used as Apple's App Store
+marketing guidelines allow. App Store is a trademark of Apple Inc.
+
+
+Inter
+=====
+
+Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION AND CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.

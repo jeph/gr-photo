@@ -1,0 +1,81 @@
+---
+import "../styles/theme.css";
+import "../styles/global.css";
+import interRegular from "../assets/fonts/Inter-Regular.woff2?url";
+import interBold from "../assets/fonts/Inter-Bold.woff2?url";
+import { LOCALES, pagePath, type Locale } from "../i18n/locales.ts";
+import themeInit from "../scripts/theme-init.js?raw";
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+}
+
+const { locale, title, description } = Astro.props;
+const canonical = new URL(pagePath(locale), Astro.site);
+const english = LOCALES[0];
+// For the English page's redirect: each language's page by its code.
+const paths = Object.fromEntries(LOCALES.map((other) => [other.code, pagePath(other)]));
+---
+
+<!doctype html>
+<html lang={locale.tag}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {LOCALES.map((other) => <link rel="alternate" hreflang={other.tag} href={new URL(pagePath(other), Astro.site)} />)}
+    {english && <link rel="alternate" hreflang="x-default" href={new URL(pagePath(english), Astro.site)} />}
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href={interRegular} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interBold} as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GR Photo" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale.tag.replace("-", "_")} />
+    <script is:inline set:html={themeInit} />
+    {
+      locale.path === "" && (
+        <script is:inline data-paths={JSON.stringify(paths)}>
+          // The English page is the root, where a visitor who hasn't picked a language goes to the page in the
+          // first of the browser's languages the site has, as the app follows the phone's language and falls back
+          // to English (resolveAppLocale in app/lib/l10n/l10n.dart, which reads Chinese the same way).
+          (() => {
+            const paths = JSON.parse(document.currentScript.dataset.paths);
+            try {
+              if (localStorage.getItem("gr-photo-language") !== null) return;
+            } catch {
+              // Without storage a picked English could not be remembered, so the browser's language isn't followed.
+              return;
+            }
+            for (const tag of navigator.languages) {
+              const [language, ...subtags] = tag.toLowerCase().split("-");
+              let code = language;
+              if (code === "zh") {
+                const traditional =
+                  subtags.includes("hant") ||
+                  (!subtags.includes("hans") && subtags.some((subtag) => ["tw", "hk", "mo"].includes(subtag)));
+                code = traditional ? "zh_Hant" : "zh";
+              }
+              const path = paths[code];
+              if (path === undefined) continue;
+              if (path !== "/") location.replace(path);
+              return;
+            }
+          })();
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

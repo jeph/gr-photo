@@ -1,0 +1,525 @@
+---
+// The landing page, once in each of the app's languages: English at the root, the others under their own path.
+import { readFileSync } from "node:fs";
+import type { GetStaticPaths } from "astro";
+import IconSelect from "../../components/IconSelect.astro";
+import Screen from "../../components/Screen.astro";
+import Base from "../../layouts/Base.astro";
+import { LOCALES, pagePath, type Locale } from "../../i18n/locales.ts";
+import { messagesFor } from "../../i18n/messages.ts";
+import { THEMES } from "../../themes.ts";
+
+export const getStaticPaths = (() =>
+  LOCALES.map((locale) => ({
+    params: { lang: locale.path === "" ? undefined : locale.path },
+    props: { locale },
+  }))) satisfies GetStaticPaths;
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = messagesFor(locale);
+const languages = LOCALES.map((other) => ({ other, name: messagesFor(other).languageName }));
+
+const appStore = "https://apps.apple.com/app/id6833800832";
+const releases = "https://github.com/jeph/gr-photo/releases/latest";
+const repository = "https://github.com/jeph/gr-photo";
+const privacyPolicy = `${repository}/blob/main/app/assets/privacy.md`;
+
+// Apple's badge in this language (public/badges), shown 48 pixels high: its width follows its own viewBox.
+const badge = `/badges/app-store-${locale.code}.svg`;
+const badgeViewBox = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(readFileSync(`public${badge}`, "utf8"));
+if (badgeViewBox === null) throw new Error(`${badge} has no viewBox`);
+const badgeWidth = Math.round((48 * Number(badgeViewBox[1])) / Number(badgeViewBox[2]));
+
+const features = [
+  {
+    title: t.editTitle,
+    text: t.editText,
+    gr4Only: true,
+    screens: [
+      { name: "look-editor", alt: t.altLookEditor },
+      { name: "look-editor-colour", alt: t.altLookEditorColour },
+    ],
+  },
+  {
+    title: t.saveTitle,
+    text: t.saveText,
+    gr4Only: true,
+    screens: [
+      { name: "viewer-details", alt: t.altViewerDetails },
+      { name: "looks-load-confirm", alt: t.altLooksLoad },
+    ],
+  },
+  {
+    title: t.shootTitle,
+    text: t.shootText,
+    gr4Only: false,
+    screens: [
+      { name: "remote", alt: t.altRemote },
+      { name: "live-view", alt: t.altLiveView },
+    ],
+  },
+  {
+    title: t.downloadTitle,
+    text: t.downloadText,
+    gr4Only: false,
+    screens: [
+      { name: "library", alt: t.altLibrary },
+      { name: "viewer-map", alt: t.altViewerMap },
+    ],
+  },
+];
+
+const reasons = [
+  { title: t.fastTitle, text: t.fastText },
+  { title: t.platformsTitle, text: t.platformsText },
+  { title: t.openTitle, text: t.openText },
+  { title: t.languagesTitle, text: t.languagesText },
+];
+---
+
+<Base locale={locale} title={t.title} description={t.description}>
+  <nav class="wrap">
+    <a class="brand" href={pagePath(locale)}><img src="/apple-touch-icon.png" alt="" width="32" height="32" />GR Photo</a>
+    <IconSelect kind="language" label={t.language}>
+      <svg slot="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z"></path>
+      </svg>
+      {
+        languages.map(({ other, name }) => (
+          <option value={pagePath(other)} lang={other.tag} selected={other === locale}>
+            {name}
+          </option>
+        ))
+      }
+    </IconSelect>
+    <IconSelect kind="theme" label={t.theme}>
+      <svg slot="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"></path>
+      </svg>
+      {
+        THEMES.map((theme) => (
+          <option value={theme} selected={theme === "auto"}>
+            {t.themeNames[theme]}
+          </option>
+        ))
+      }
+    </IconSelect>
+    <a class="get" href="#get">{t.getApp}</a>
+  </nav>
+
+  <header class="wrap hero">
+    <h1>{t.heroTitle}</h1>
+    <p class="lede">{t.heroText}</p>
+    <div class="ctas" id="get">
+      <a href={appStore}><img src={badge} alt={t.appStore} width={badgeWidth} height="48" /></a>
+      <a class="apk" href={releases}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>
+        {t.androidApk}
+      </a>
+    </div>
+    <div class="fan">
+      <Screen locale={locale} name="library" alt={t.altLibrary} />
+      <Screen locale={locale} name="look-editor-colour" alt={t.altLookEditorColour} />
+      <Screen locale={locale} name="looks" alt={t.altLooks} />
+    </div>
+  </header>
+
+  <ul class="wrap reasons">
+    {
+      reasons.map((reason) => (
+        <li>
+          <b>{reason.title}</b>
+          <span>{reason.text}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <main class="wrap">
+    {
+      features.map((feature) => (
+        <section class="feature">
+          <div class="copy">
+            <h2>{feature.title}</h2>
+            <p>{feature.text}</p>
+            {feature.gr4Only && <span class="tag">{t.gr4Only}</span>}
+          </div>
+          <div class="pair">
+            {feature.screens.map((screen) => (
+              <Screen locale={locale} name={screen.name} alt={screen.alt} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="end">
+      <h2>{t.endTitle}</h2>
+      <p>{t.endText}</p>
+      <div class="ctas">
+        <a href={appStore}><img src={badge} alt={t.appStore} width={badgeWidth} height="48" /></a>
+        <a class="apk" href={releases}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>
+          {t.androidApk}
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>{t.independent}</p>
+      <div class="links">
+        <a href={privacyPolicy}>{t.privacyPolicy}</a>
+        <a href="/licenses.txt">{t.licenses}</a>
+        <a href={repository}>{t.sourceCode}</a>
+      </div>
+    </div>
+  </footer>
+</Base>
+
+<script>
+  import "../../scripts/menus.ts";
+</script>
+
+<style>
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 72px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: auto;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .brand img {
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px var(--line2);
+  }
+
+  .get {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 20px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .hero {
+    padding-top: 64px;
+    text-align: center;
+  }
+
+  h1 {
+    max-width: 13em;
+    margin: 0 auto;
+    font-size: clamp(40px, 6.4vw, 76px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .lede {
+    max-width: 34em;
+    margin: 20px auto 0;
+    color: var(--t2);
+    font-size: 19px;
+    text-wrap: pretty;
+  }
+
+  /* Apple's badge, and the APK link drawn to match it. */
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .ctas img {
+    display: block;
+  }
+
+  .apk {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 18px 0 14px;
+    border: 1px solid #a6a6a6;
+    border-radius: 9px;
+    background: #000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .apk svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Three phones fanned out, fading into the page at the bottom. */
+  .fan {
+    position: relative;
+    height: 600px;
+    margin-top: 56px;
+    overflow: hidden;
+  }
+
+  .fan::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    height: 160px;
+    background: linear-gradient(transparent, var(--bg));
+  }
+
+  .fan :global(.phone) {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 290px;
+  }
+
+  .fan :global(.phone:nth-child(1)) {
+    translate: -155% 60px;
+    rotate: -6deg;
+  }
+
+  .fan :global(.phone:nth-child(2)) {
+    z-index: 2;
+    translate: -50% 0;
+  }
+
+  .fan :global(.phone:nth-child(3)) {
+    translate: 55% 60px;
+    rotate: 6deg;
+  }
+
+  .reasons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line2);
+    border-radius: 20px;
+    background: var(--line2);
+    list-style: none;
+  }
+
+  .reasons li {
+    padding: 22px 22px 20px;
+    background: var(--s1);
+  }
+
+  .reasons b {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .reasons span {
+    display: block;
+    margin-top: 4px;
+    color: var(--t2);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    align-items: center;
+    gap: 56px;
+    padding-top: 120px;
+  }
+
+  .feature:nth-of-type(even) .copy {
+    order: 2;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .feature p {
+    max-width: 26em;
+    margin: 14px 0 0;
+    color: var(--t2);
+    font-size: 18px;
+    text-wrap: pretty;
+  }
+
+  .tag {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .pair {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    padding: 44px 24px;
+    border: 1px solid var(--line);
+    border-radius: 32px;
+    background: var(--s1);
+  }
+
+  .pair :global(.phone) {
+    width: 250px;
+  }
+
+  .end {
+    padding-top: 120px;
+    text-align: center;
+  }
+
+  .end h2 {
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: -0.035em;
+  }
+
+  .end p {
+    max-width: 32em;
+    margin: 12px auto 0;
+    color: var(--t2);
+    font-size: 17px;
+  }
+
+  footer {
+    margin-top: 100px;
+    padding: 28px 0 56px;
+    border-top: 1px solid var(--line);
+    color: var(--t3);
+    font-size: 13.5px;
+  }
+
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  footer p {
+    margin: 0;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: var(--t2);
+  }
+
+  @media (max-width: 860px) {
+    .get {
+      display: none;
+    }
+
+    .hero {
+      padding-top: 36px;
+    }
+
+    .lede {
+      font-size: 17px;
+    }
+
+    .fan {
+      height: 440px;
+      margin-top: 40px;
+    }
+
+    .fan :global(.phone) {
+      width: 210px;
+    }
+
+    .fan :global(.phone:nth-child(1)) {
+      translate: -128% 50px;
+    }
+
+    .fan :global(.phone:nth-child(3)) {
+      translate: 28% 50px;
+    }
+
+    .reasons {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .reasons li {
+      padding: 16px;
+    }
+
+    .feature {
+      grid-template-columns: 1fr;
+      gap: 26px;
+      padding-top: 80px;
+    }
+
+    .feature:nth-of-type(even) .copy {
+      order: 0;
+    }
+
+    .feature p {
+      font-size: 16.5px;
+    }
+
+    .pair {
+      gap: 12px;
+      padding: 26px 16px;
+      border-radius: 24px;
+    }
+
+    .pair :global(.phone) {
+      width: calc(50% - 6px);
+      max-width: 220px;
+    }
+
+    .end {
+      padding-top: 80px;
+    }
+
+    footer .wrap {
+      flex-direction: column;
+    }
+  }
+</style>

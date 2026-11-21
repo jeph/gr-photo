@@ -58,6 +58,9 @@ if [[ "$static_only" == false ]]; then
     fi
   done
   step "test tool/app_store" python3 -m unittest discover -s tool/app_store -p '*_test.py'
+  # The website's types, lint, formatting and build, which also fails on a
+  # missing translation. Not in --static: the app's builds don't need Node.
+  step "site" bash -c "cd site && pnpm install --frozen-lockfile --silent && pnpm check && pnpm build"
 fi
 
 if ((${#failed[@]})); then

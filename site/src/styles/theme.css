@@ -1,0 +1,76 @@
+/* The app's themes as the site's: the colours are GrColors in app/lib/src/theme/tokens.dart. With no theme picked
+   (Auto, the app's System) the page follows the browser between Light and Dark through light-dark(); a picked theme
+   sets data-palette on the root (scripts/theme-init.js). Light and Dark only pin the colour scheme, and the tinted
+   themes replace every colour. */
+
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#ffffff, #0a0a0b);
+  --s1: light-dark(#ffffff, #121214);
+  --s2: light-dark(#f3f3f5, #1a1a1d);
+  --line: light-dark(rgb(0 0 0 / 0.08), rgb(255 255 255 / 0.07));
+  --line2: light-dark(rgb(0 0 0 / 0.12), rgb(255 255 255 / 0.12));
+  --t1: light-dark(#121214, #f3f1ec);
+  --t2: light-dark(#5c5c63, #a8a6a0);
+  --t3: light-dark(#8b8b93, #6b6a66);
+  --accent: light-dark(#1b50cf, #6ea8ff);
+  --accent-ink: light-dark(#ffffff, #06142e);
+  --shadow: light-dark(rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.45));
+}
+
+:root[data-palette="light"] {
+  color-scheme: light;
+}
+
+:root[data-palette="dark"] {
+  color-scheme: dark;
+}
+
+:root[data-palette="darkroom"] {
+  color-scheme: dark;
+  --bg: #0e0908;
+  --s1: #170f0d;
+  --s2: #201613;
+  --line: rgb(255 255 255 / 0.07);
+  --line2: rgb(255 255 255 / 0.12);
+  --t1: #f5e8e0;
+  --t2: #b39a8f;
+  --t3: #786259;
+  --accent: #ff6038;
+  --accent-ink: #2c0700;
+  --shadow: rgb(0 0 0 / 0.45);
+}
+
+:root[data-palette="paper"] {
+  color-scheme: light;
+  --bg: #f7f2e8;
+  --s1: #fcf9f2;
+  --s2: #efe8da;
+  --line: rgb(0 0 0 / 0.08);
+  --line2: rgb(0 0 0 / 0.12);
+  --t1: #1e1912;
+  --t2: #5f5646;
+  --t3: #8c826f;
+  --accent: #a8481a;
+  --accent-ink: #ffffff;
+  --shadow: rgb(0 0 0 / 0.12);
+}
+
+:root[data-palette="cyanotype"] {
+  color-scheme: dark;
+  --bg: #071626;
+  --s1: #0c1e33;
+  --s2: #12273f;
+  --line: rgb(255 255 255 / 0.07);
+  --line2: rgb(255 255 255 / 0.12);
+  --t1: #eaf1f7;
+  --t2: #9bb1c8;
+  --t3: #607a96;
+  --accent: #7fd6f7;
+  --accent-ink: #032436;
+  --shadow: rgb(0 0 0 / 0.45);
+}
+
+:root {
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+}

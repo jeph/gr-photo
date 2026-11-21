@@ -1,0 +1,98 @@
+---
+// One of the app's screens in a phone. Every screen is taken in each of the app's themes
+// (tool/store_screenshots/run.sh --site), and the phone shows the one for the theme the page is in, so the app on
+// the page always matches it. The others stay hidden, and lazy loading leaves hidden images unfetched.
+import type { Locale } from "../i18n/locales.ts";
+
+/** The themes the screens are taken in; Auto shows Light or Dark. */
+const THEMES = ["light", "dark", "darkroom", "paper", "cyanotype"] as const;
+
+interface Props {
+  locale: Locale;
+  /** The screen's name in run.sh's site_screens. */
+  name: string;
+  alt: string;
+  class?: string;
+}
+
+const { locale, name, alt, class: className } = Astro.props;
+---
+
+<figure class:list={["phone", className]}>
+  <div class="screen">
+    {
+      THEMES.map((theme) => (
+        <img
+          class={theme}
+          src={`/screens/${locale.code}/${theme}/${name}.webp`}
+          alt={alt}
+          width="600"
+          height="1304"
+          loading="lazy"
+          decoding="async"
+        />
+      ))
+    }
+    <span class="island"></span>
+  </div>
+</figure>
+
+<style>
+  /* An iPhone 17 Pro Max, whose screenshots these are (440 by 956 points): a thin black band around the screen, its
+     rounded corners and the Dynamic Island, which a simulator's screenshot leaves out. */
+  .phone {
+    margin: 0;
+    padding: 2.6%;
+    border-radius: 14% / 6.6%;
+    background: #0b0b0c;
+    box-shadow:
+      0 0 0 1px var(--line2),
+      0 30px 60px -30px var(--shadow);
+  }
+
+  .screen {
+    position: relative;
+  }
+
+  img {
+    display: none;
+    width: 100%;
+    height: auto;
+    border-radius: 11.6% / 5.4%;
+  }
+
+  /* 126 by 37 points, 11 from the top; a percentage margin is a share of the width. */
+  .island {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 28.6%;
+    margin-top: 2.5%;
+    aspect-ratio: 126 / 37;
+    translate: -50% 0;
+    border-radius: 999px;
+    background: #000;
+  }
+
+  :global(:root:not([data-palette])) img.light {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-palette])) img.light {
+      display: none;
+    }
+
+    :global(:root:not([data-palette])) img.dark {
+      display: block;
+    }
+  }
+
+  :global(:root[data-palette="light"]) img.light,
+  :global(:root[data-palette="dark"]) img.dark,
+  :global(:root[data-palette="darkroom"]) img.darkroom,
+  :global(:root[data-palette="paper"]) img.paper,
+  :global(:root[data-palette="cyanotype"]) img.cyanotype {
+    display: block;
+  }
+</style>

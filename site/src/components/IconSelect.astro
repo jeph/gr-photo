@@ -1,0 +1,68 @@
+---
+// An icon button over a native select, as on Pipkin's site, so a phone shows its own picker and a computer a plain
+// list. Hidden without JavaScript, which picking needs (scripts/menus.ts).
+interface Props {
+  label: string;
+  /** Picks the script that connects it. */
+  kind: "theme" | "language";
+}
+
+const { label, kind } = Astro.props;
+---
+
+<label class="icon-select" data-kind={kind} title={label}>
+  <span class="visually-hidden">{label}</span>
+  <slot name="icon" />
+  <select>
+    <slot />
+  </select>
+</label>
+
+<style>
+  .icon-select {
+    position: relative;
+    display: none;
+    flex: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line2);
+    border-radius: 999px;
+    color: var(--t1);
+    transition: background-color 0.2s ease;
+  }
+
+  :global(.js) .icon-select {
+    display: grid;
+  }
+
+  .icon-select:hover {
+    background: var(--s2);
+  }
+
+  .icon-select:has(select:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .icon-select :global(svg) {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* The select covers the button invisibly, so a tap anywhere on it opens the list. */
+  select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 16px;
+  }
+</style>

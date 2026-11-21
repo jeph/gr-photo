@@ -1,0 +1,81 @@
+/* Inter, the app's interface font (app/assets/fonts), as WOFF2. Scripts it lacks (Thai, Chinese, Japanese, Korean)
+   fall back to the system's, as they do in the app. */
+@font-face {
+  font-family: Inter;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Inter;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: Inter;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/Inter-Bold.woff2") format("woff2");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--t1);
+  font:
+    400 16px/1.55 Inter,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Japanese headings break between phrases rather than inside a word, where the browser can tell them. */
+:lang(ja) :is(h1, h2) {
+  word-break: auto-phrase;
+}
+
+.wrap {
+  width: min(1120px, 100% - 48px);
+  margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  .wrap {
+    width: calc(100% - 32px);
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

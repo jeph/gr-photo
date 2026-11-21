@@ -34,18 +34,26 @@
 # The photos on the card are listed in photos.json: Unsplash photos under
 # the Unsplash License, fetched on the first run and kept out of the
 # repository.
+#
+# With --site (and only an iphone= device) the walk takes each screen once
+# in each of the app's themes instead, in the light ones too, for the
+# website: the screens it shows go to site/public/screens/<locale>/<theme>,
+# as WebP 600 pixels wide: twice the widest phone on the page.
 set -euo pipefail
 
 devices=()
 locales=()
+site=false
 for argument in "$@"; do
   case "$argument" in
+  --site) site=true ;;
   iphone=* | ipad=* | duo=* | android=*) devices+=("$argument") ;;
   *) locales+=("$argument") ;;
   esac
 done
-if [[ ${#devices[@]} -eq 0 ]]; then
+if [[ ${#devices[@]} -eq 0 ]] || { $site && [[ "${devices[*]}" != iphone=* || ${#devices[@]} -gt 1 ]]; }; then
   echo "usage: $0 <iphone|ipad|duo|android>=<udid|serial> ... [locale ...]" >&2
+  echo "       $0 --site iphone=<udid> [locale ...]" >&2
   exit 64
 fi
 [[ ${#locales[@]} -gt 0 ]] || locales=(en)
@@ -59,8 +67,14 @@ bundle=io.jeph.grphoto.dev
 # app can't read the Mac's file system there, so the host copies the photos
 # in and looks for requests with run-as.
 android_files="/data/user/0/$bundle/files"
-# How long a walk may take before the run gives up on it.
+# How long a walk may take before the run gives up on it: a walk for the
+# site takes every screen five times.
 walk_seconds=420
+$site && walk_seconds=900
+# The themes the site's screens are taken in (AppTheme's names; Auto is
+# Light or Dark), and the screens site/src/pages shows.
+site_themes='["light","dark","darkroom","paper","cyanotype"]'
+site_screens=(library viewer-details viewer-map looks looks-load-confirm look-editor look-editor-colour remote live-view)
 
 # Each scene in the three sizes a camera serves, and as a live view frame:
 # the app drops frames over 1 MiB, which the views are. An upright photo is
@@ -292,8 +306,9 @@ start_simulator() {
   # nothing from the host's environment.
   data="$(xcrun simctl get_app_container "$udid" "$bundle" data)/Library/Application Support"
   mkdir -p "$data"
-  jq -n --arg shots "$shots" --arg media "$media" '{$shots, $media}' \
-    >"$data/store-screenshots.json"
+  jq -n --arg shots "$shots" --arg media "$media" \
+    --argjson themes "$($site && echo "$site_themes" || echo '[]')" \
+    '{$shots, $media, $themes}' >"$data/store-screenshots.json"
 }
 
 # Waits for an emulator to finish booting and has its adb run as root.
@@ -388,6 +403,7 @@ start_emulator() {
 take() {
   local device="$1" id="$2" locale="$3"
   local shots="$work/raw/$device/$locale" watcher app
+  $site && shots="$work/raw/site/$locale"
   mkdir -p "$shots"
   rm -f "$shots"/*
 
@@ -422,7 +438,20 @@ take() {
     return 1
   fi
   rm -f "$shots/done"
+  $site && export_site "$shots" "$locale"
   echo "$device $locale"
+}
+
+# Copies the screens the site shows from a walk for it into the site.
+export_site() {
+  local shots="$1" locale="$2" theme name out
+  for theme in $(jq -r '.[]' <<<"$site_themes"); do
+    out="$root/site/public/screens/$locale/$theme"
+    mkdir -p "$out"
+    for name in "${site_screens[@]}"; do
+      magick "$shots/$name.$theme.png" -resize 600x -quality 75 "$out/$name.webp"
+    done
+  done
 }
 
 # Every language on one device, which is left in English.
