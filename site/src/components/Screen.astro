@@ -41,8 +41,8 @@ const { locale, name, alt, class: className } = Astro.props;
   /* An iPhone 17 Pro Max, whose screenshots these are (440 by 956 points): a thin black band around the screen, its
      rounded corners and the Dynamic Island, which a simulator's screenshot leaves out. */
   .phone {
+    display: flow-root;
     margin: 0;
-    padding: 2.6%;
     border-radius: 14% / 6.6%;
     background: #0b0b0c;
     box-shadow:
@@ -52,6 +52,8 @@ const { locale, name, alt, class: className } = Astro.props;
 
   .screen {
     position: relative;
+    /* Percentages resolve against the phone's width here, not the surrounding feature or hero. */
+    margin: 2.6%;
   }
 
   img {

@@ -110,13 +110,12 @@ const reasons = [
         ))
       }
     </IconSelect>
-    <a class="get" href="#get">{t.getApp}</a>
   </nav>
 
   <header class="wrap hero">
     <h1>{t.heroTitle}</h1>
     <p class="lede">{t.heroText}</p>
-    <div class="ctas" id="get">
+    <div class="ctas">
       <a href={appStore}><img src={badge} alt={t.appStore} width={badgeWidth} height="48" /></a>
       <a class="apk" href={releases}>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>
@@ -209,19 +208,6 @@ const reasons = [
   .brand img {
     border-radius: 8px;
     box-shadow: 0 0 0 1px var(--line2);
-  }
-
-  .get {
-    display: inline-flex;
-    align-items: center;
-    height: 40px;
-    padding: 0 16px;
-    border-radius: 20px;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
   }
 
   .hero {
@@ -452,10 +438,6 @@ const reasons = [
   }
 
   @media (max-width: 860px) {
-    .get {
-      display: none;
-    }
-
     .hero {
       padding-top: 36px;
     }
