@@ -1,0 +1,2 @@
+• Unter Android werden chinesische, japanische und koreanische Ortsnamen auf der Karte eines Fotos in der Mediathek jetzt in der Schrift des Telefons angezeigt.
+• Bricht die Bluetooth-Verbindung ab, während Aufnehmen die Kamera einschaltet, meldet GR Photo jetzt „Die Bluetooth-Verbindung ist abgebrochen.“ statt „Die Kamera hat nicht geantwortet.“

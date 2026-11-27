@@ -1,0 +1,2 @@
+• En Android, los nombres de lugares en chino, japonés y coreano del mapa de una foto en la Biblioteca se muestran ahora con la fuente del propio teléfono.
+• Si la conexión Bluetooth se corta mientras Disparo enciende la cámara, GR Photo ahora indica «La conexión Bluetooth se cortó.» en lugar de «La cámara no respondió.»

@@ -1,0 +1,2 @@
+• V Androidu se čínské, japonské a korejské názvy míst na mapě fotografie v Knihovně nyní zobrazují vlastním písmem telefonu.
+• Když se při zapínání fotoaparátu z karty Snímání přeruší spojení Bluetooth, GR Photo nyní místo „Fotoaparát neodpověděl.“ hlásí „Spojení Bluetooth se přerušilo.“

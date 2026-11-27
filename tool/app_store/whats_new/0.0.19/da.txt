@@ -1,0 +1,2 @@
+• På Android vises kinesiske, japanske og koreanske stednavne på et billedes kort i Bibliotek nu med telefonens egen skrifttype.
+• Hvis Bluetooth-forbindelsen afbrydes, mens Optag tænder kameraet, skriver GR Photo nu ”Bluetooth-forbindelsen blev afbrudt.” i stedet for ”Kameraet svarede ikke.”

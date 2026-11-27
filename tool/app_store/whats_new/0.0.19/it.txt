@@ -1,0 +1,2 @@
+• Su Android, i nomi di luoghi in cinese, giapponese e coreano sulla mappa di una foto nella Libreria vengono ora mostrati con il carattere del telefono.
+• Se la connessione Bluetooth si interrompe mentre Scatta accende la fotocamera, GR Photo ora indica «La connessione Bluetooth si è interrotta.» invece di «La fotocamera non ha risposto.»

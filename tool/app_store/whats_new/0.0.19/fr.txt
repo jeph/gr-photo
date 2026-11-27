@@ -1,0 +1,2 @@
+• Sur Android, les noms de lieux en chinois, japonais et coréen sur la carte d'une photo dans la Bibliothèque s'affichent désormais avec la police du téléphone.
+• Si la connexion Bluetooth est interrompue pendant que Prise de vue allume l'appareil photo, GR Photo indique désormais « La connexion Bluetooth a été interrompue. » au lieu de « L'appareil photo n'a pas répondu. »

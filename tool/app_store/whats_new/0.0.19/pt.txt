@@ -1,0 +1,2 @@
+• No Android, os nomes de locais em chinês, japonês e coreano no mapa de uma fotografia na Biblioteca são agora apresentados com o tipo de letra do telemóvel.
+• Se a ligação Bluetooth cair enquanto Disparar liga a câmara, o GR Photo indica agora «A ligação Bluetooth caiu.» em vez de «A câmara não respondeu.»

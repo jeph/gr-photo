@@ -1,0 +1,2 @@
+• Op Android worden Chinese, Japanse en Koreaanse plaatsnamen op de kaart van een foto in de Bibliotheek nu in het eigen lettertype van de telefoon weergegeven.
+• Als de Bluetooth-verbinding wegvalt terwijl Opname de camera aanzet, meldt GR Photo nu ‘De Bluetooth-verbinding is weggevallen.’ in plaats van ‘De camera reageerde niet.’

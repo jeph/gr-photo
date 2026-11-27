@@ -1,0 +1,2 @@
+• Android'de Arşiv'deki bir fotoğrafın haritasında Çince, Japonca ve Korece yer adları artık telefonun kendi yazı tipiyle gösteriliyor.
+• Çekim kamerayı açarken Bluetooth bağlantısı koparsa GR Photo artık “Kamera yanıt vermedi.” yerine “Bluetooth bağlantısı koptu.” diyor.

@@ -1,0 +1,2 @@
+• På Android visas kinesiska, japanska och koreanska ortnamn på ett fotos karta i Bibliotek nu med telefonens eget typsnitt.
+• Om Bluetooth-anslutningen bryts medan Fota slår på kameran visar GR Photo nu ”Bluetooth-anslutningen bröts.” i stället för ”Kameran svarade inte.”

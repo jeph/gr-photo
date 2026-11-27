@@ -1,0 +1,2 @@
+• On Android, Chinese, Japanese and Korean place names on a photo's map in the Library are now drawn in the phone's own font.
+• If the Bluetooth connection drops while Shoot turns the camera on, GR Photo now says “The Bluetooth connection dropped.” instead of “The camera didn't answer.”

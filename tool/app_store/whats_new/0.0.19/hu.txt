@@ -1,0 +1,2 @@
+• Androidon a Könyvtárban egy fotó térképén a kínai, japán és koreai helynevek mostantól a telefon saját betűtípusával jelennek meg.
+• Ha a Bluetooth-kapcsolat megszakad, miközben a Fotózás bekapcsolja a kamerát, a GR Photo mostantól azt írja, hogy „Megszakadt a Bluetooth-kapcsolat.”, nem azt, hogy „A kamera nem válaszolt.”

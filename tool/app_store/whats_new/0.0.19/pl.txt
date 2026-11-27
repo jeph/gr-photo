@@ -1,0 +1,2 @@
+• Na Androidzie chińskie, japońskie i koreańskie nazwy miejsc na mapie zdjęcia w Bibliotece są teraz wyświetlane czcionką telefonu.
+• Jeśli połączenie Bluetooth zostanie przerwane, gdy Fotografuj włącza aparat, GR Photo pokazuje teraz „Połączenie Bluetooth zostało przerwane.” zamiast „Aparat nie odpowiedział.”

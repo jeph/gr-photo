@@ -1,0 +1,2 @@
+• Androidissa kuvan kartalla Kirjastossa näkyvät kiinan-, japanin- ja koreankieliset paikannimet näytetään nyt puhelimen omalla fontilla.
+• Jos Bluetooth-yhteys katkeaa, kun Kuvaus kytkee kameran päälle, GR Photo ilmoittaa nyt ”Bluetooth-yhteys katkesi.” eikä ”Kamera ei vastannut.”
