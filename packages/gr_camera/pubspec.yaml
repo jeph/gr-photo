@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
   gr_protocol:
     path: ../gr_protocol
-  universal_ble: ^3.2.0
+  universal_ble: ^3.4.2
 
 dev_dependencies:
   fake_async: ^1.3.3
