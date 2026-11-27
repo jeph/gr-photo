@@ -167,7 +167,7 @@ iOS-en a GR Photo az [App Store-ból](https://apps.apple.com/app/id6833800832) t
 kiadás azután kerül az App Store-ba, hogy az Apple átnézte, így egy-két nappal az androidos után
 érkezhet meg oda.
 
-A forráskódból történő fordításhoz [Flutter](https://flutter.dev) 3.47 vagy újabb szükséges,
+A forráskódból történő fordításhoz [Flutter](https://flutter.dev) 3.50 vagy újabb szükséges,
 beállított Android SDK-val vagy Xcode-dal.
 
 ```sh

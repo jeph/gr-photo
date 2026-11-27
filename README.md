@@ -154,7 +154,7 @@ On iOS, install GR Photo from the [App Store](https://apps.apple.com/app/id68338
 reaches the App Store once Apple has reviewed it, so it can arrive there a day or two after the
 Android one.
 
-Building from source needs [Flutter](https://flutter.dev) 3.47 or newer with the Android SDK or
+Building from source needs [Flutter](https://flutter.dev) 3.50 or newer with the Android SDK or
 Xcode set up.
 
 ```sh

@@ -164,7 +164,7 @@ GR Photo — молодой проект. В журнале испытаний �
 На iOS установите GR Photo из [App Store](https://apps.apple.com/app/id6833800832). Релиз попадает в
 App Store после проверки Apple, поэтому он может появиться там на день-два позже, чем для Android.
 
-Для сборки из исходного кода нужен [Flutter](https://flutter.dev) 3.47 или новее с настроенным
+Для сборки из исходного кода нужен [Flutter](https://flutter.dev) 3.50 или новее с настроенным
 Android SDK или Xcode.
 
 ```sh

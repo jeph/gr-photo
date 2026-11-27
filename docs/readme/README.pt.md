@@ -166,7 +166,7 @@ No iOS, instale o GR Photo a partir da [App Store](https://apps.apple.com/app/id
 versão chega à App Store depois de a Apple a rever, pelo que pode aparecer lá um ou dois dias depois
 da versão Android.
 
-Compilar a partir do código-fonte precisa do [Flutter](https://flutter.dev) 3.47 ou posterior, com
+Compilar a partir do código-fonte precisa do [Flutter](https://flutter.dev) 3.50 ou posterior, com
 o Android SDK ou o Xcode configurado.
 
 ```sh

@@ -164,7 +164,7 @@ V iOS si GR Photo nainstalujte z [App Storu](https://apps.apple.com/app/id683380
 App Storu dostane, jakmile ho Apple zkontroluje, takže tam může dorazit o den či dva později než
 verze pro Android.
 
-K sestavení ze zdrojového kódu je potřeba [Flutter](https://flutter.dev) 3.47 nebo novější
+K sestavení ze zdrojového kódu je potřeba [Flutter](https://flutter.dev) 3.50 nebo novější
 a nastavené Android SDK nebo Xcode.
 
 ```sh

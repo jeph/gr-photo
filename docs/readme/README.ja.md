@@ -105,7 +105,7 @@ Androidでは、スマートフォンで[最新のリリース](https://github.c
 
 iOSでは、[App Store](https://apps.apple.com/app/id6833800832)からGR Photoをインストールします。リリースはAppleの審査を経てからApp Storeに並ぶため、Android版より1〜2日遅れて届くことがあります。
 
-ソースからのビルドには[Flutter](https://flutter.dev) 3.47以降と、セットアップ済みのAndroid SDKまたはXcodeが必要です。
+ソースからのビルドには[Flutter](https://flutter.dev) 3.50以降と、セットアップ済みのAndroid SDKまたはXcodeが必要です。
 
 ```sh
 git clone https://github.com/jeph/gr-photo.git

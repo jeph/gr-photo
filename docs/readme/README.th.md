@@ -105,7 +105,7 @@ GR Photo ยังเป็นแอปใหม่ บันทึกการ�
 
 บน iOS ให้ติดตั้ง GR Photo จาก [App Store](https://apps.apple.com/app/id6833800832) รุ่นใหม่จะขึ้น App Store เมื่อ Apple ตรวจสอบเสร็จแล้ว จึงอาจมาถึงช้ากว่ารุ่น Android หนึ่งหรือสองวัน
 
-การบิลด์จากซอร์สโค้ดต้องใช้ [Flutter](https://flutter.dev) 3.47 ขึ้นไป และตั้งค่า Android SDK หรือ Xcode ไว้แล้ว
+การบิลด์จากซอร์สโค้ดต้องใช้ [Flutter](https://flutter.dev) 3.50 ขึ้นไป และตั้งค่า Android SDK หรือ Xcode ไว้แล้ว
 
 ```sh
 git clone https://github.com/jeph/gr-photo.git

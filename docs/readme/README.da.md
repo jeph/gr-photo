@@ -163,7 +163,7 @@ På iOS installerer du GR Photo fra [App Store](https://apps.apple.com/app/id683
 udgivelse når App Store, når Apple har gennemgået den, så den kan komme dertil en dag eller to efter
 Android-udgivelsen.
 
-At bygge fra kildekoden kræver [Flutter](https://flutter.dev) 3.47 eller nyere med Android SDK eller
+At bygge fra kildekoden kræver [Flutter](https://flutter.dev) 3.50 eller nyere med Android SDK eller
 Xcode sat op.
 
 ```sh

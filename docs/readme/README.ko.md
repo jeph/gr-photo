@@ -154,7 +154,7 @@ Android에서는 휴대전화에서 [최신 릴리스](https://github.com/jeph/g
 iOS에서는 [App Store](https://apps.apple.com/app/id6833800832)에서 GR Photo를 설치합니다. 릴리스는 Apple의 심사를 거친 뒤
 App Store에 올라오므로, Android 릴리스보다 하루나 이틀 늦게 도착할 수 있습니다.
 
-소스에서 빌드하려면 [Flutter](https://flutter.dev) 3.47 이상과 Android SDK 또는 Xcode가 설정되어
+소스에서 빌드하려면 [Flutter](https://flutter.dev) 3.50 이상과 Android SDK 또는 Xcode가 설정되어
 있어야 합니다.
 
 ```sh

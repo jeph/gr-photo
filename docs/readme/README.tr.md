@@ -166,7 +166,7 @@ Apple onu inceledikten sonra App Store’a ulaşır; bu yüzden oraya Android s�
 sonra gelebilir.
 
 Kaynak koddan derleme için Android SDK’sı veya Xcode kurulu olan [Flutter](https://flutter.dev)
-3.47 veya sonrası gerekir.
+3.50 veya sonrası gerekir.
 
 ```sh
 git clone https://github.com/jeph/gr-photo.git

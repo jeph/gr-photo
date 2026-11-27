@@ -105,7 +105,7 @@ GR Photo 还很年轻。硬件日志记录了在固件为 1.20 的 GR IV HDF 上
 
 在 iOS 上，请从 [App Store](https://apps.apple.com/app/id6833800832) 安装 GR Photo。发行版要经过 Apple 审核后才会上架 App Store，因此可能比 Android 版晚一两天到达。
 
-从源代码构建需要 [Flutter](https://flutter.dev) 3.47 或更高版本，并配置好 Android SDK 或 Xcode。
+从源代码构建需要 [Flutter](https://flutter.dev) 3.50 或更高版本，并配置好 Android SDK 或 Xcode。
 
 ```sh
 git clone https://github.com/jeph/gr-photo.git

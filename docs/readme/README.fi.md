@@ -164,7 +164,7 @@ iOS:ssä GR Photo asennetaan [App Storesta](https://apps.apple.com/app/id6833800
 App Storeen, kun Apple on tarkastanut sen, joten se voi ilmestyä sinne päivän tai kaksi
 Android-julkaisun jälkeen.
 
-Lähdekoodista kääntämiseen tarvitaan [Flutter](https://flutter.dev) 3.47 tai uudempi sekä
+Lähdekoodista kääntämiseen tarvitaan [Flutter](https://flutter.dev) 3.50 tai uudempi sekä
 käyttövalmis Android SDK tai Xcode.
 
 ```sh
