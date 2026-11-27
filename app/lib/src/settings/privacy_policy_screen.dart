@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// GR Photo's privacy policy (Settings › About), rendered from the bundled
 /// `assets/privacy.md`. The policy is the legal text and stays in English;

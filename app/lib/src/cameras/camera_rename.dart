@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/data/cameras.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:grphoto/src/widgets/gr_text_field.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Asks for a new display name for [camera] and saves it.
 Future<void> showRenameCameraDialog(

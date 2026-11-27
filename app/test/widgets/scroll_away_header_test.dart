@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/src/widgets/scroll_away_header.dart';
+import 'package:material_ui/material_ui.dart';
 
 const _headerHeight = 50.0;
 const _header = Key('header');

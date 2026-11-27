@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
@@ -11,6 +10,7 @@ import 'package:grphoto/src/geotag/geotag_need.dart';
 import 'package:grphoto/src/geotag/geotag_text.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/group.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The Live geotagging switch of the camera card, for a camera that can be
 /// sent a location (nothing otherwise). Off until the user turns it on,

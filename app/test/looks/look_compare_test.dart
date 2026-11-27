@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
@@ -11,6 +10,7 @@ import 'package:grphoto/src/looks/look_compare.dart';
 import 'package:grphoto/src/looks/look_preview.dart';
 import 'package:grphoto/src/looks/look_widgets.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/test_app.dart';
 
@@ -69,7 +69,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: grTheme(GrColors.dark),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: appLocalizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Center(
           child: RepaintBoundary(
@@ -291,7 +291,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: grTheme(GrColors.dark),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: appLocalizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: Center(
             child: RepaintBoundary(
@@ -444,7 +444,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: grTheme(GrColors.light),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: appLocalizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Center(
           child: LookCompareModeSwitch(

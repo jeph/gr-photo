@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/pairing/pairing_widgets.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   for (final scale in [1.0, 1.3, 2.0, 3.0]) {
@@ -12,7 +12,7 @@ void main() {
         await tester.pumpWidget(
           MaterialApp(
             theme: grTheme(colors),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            localizationsDelegates: appLocalizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             home: MediaQuery(
               data: MediaQueryData(textScaler: TextScaler.linear(scale)),

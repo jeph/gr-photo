@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/connection/connection_controller.dart';
 import 'package:grphoto/src/pairing/pairing_widgets.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Bluetooth, then Wi-Fi (mock `b-home-connecting`), where the Library and
 /// live view wait for the camera's Wi-Fi.

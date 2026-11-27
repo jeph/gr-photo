@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:grphoto/l10n/app_localizations.dart';
+import 'package:material_ui/material_ui.dart';
 
 export 'package:grphoto/l10n/app_localizations.dart';
 
@@ -8,6 +8,16 @@ extension L10n on BuildContext {
   /// Messages for the locale in effect at this point of the tree.
   AppLocalizations get l10n => AppLocalizations.of(this);
 }
+
+/// What [MaterialApp.localizationsDelegates] takes: the app's messages and
+/// `material_ui`'s Material, Cupertino and widgets localizations. Not
+/// `AppLocalizations.localizationsDelegates`: gen-l10n puts the deprecated
+/// `flutter_localizations` delegates there, which don't localize
+/// `material_ui`'s widgets.
+const appLocalizationsDelegates = <LocalizationsDelegate<Object?>>[
+  AppLocalizations.delegate,
+  ...GlobalMaterialLocalizations.delegates,
+];
 
 /// The language GR Photo is shown in while the user has not chosen one in
 /// Settings: the first of the phone's languages ([preferred], the most

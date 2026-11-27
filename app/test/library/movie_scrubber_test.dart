@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/src/library/movie_scrubber.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:video_player/video_player.dart';
 
 /// A ten-second movie whose seeks land when the test completes them, as a

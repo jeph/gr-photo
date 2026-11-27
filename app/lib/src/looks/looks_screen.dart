@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:gr_camera/gr_camera.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/camera/camera_top_bar.dart';
@@ -18,6 +16,7 @@ import 'package:grphoto/src/widgets/pressable.dart';
 import 'package:grphoto/src/widgets/skeleton.dart';
 import 'package:grphoto/src/widgets/toast.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Which saved looks the list shows.
 enum LooksFilter { all, mono, colour }

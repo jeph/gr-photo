@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' show DisplayFeature, DisplayFeatureState, DisplayFeatureType;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_fake_camera/gr_fake_camera.dart';
 import 'package:grphoto/src/camera/camera_top_bar.dart';
@@ -14,6 +13,7 @@ import 'package:grphoto/src/library/viewer.dart';
 import 'package:grphoto/src/services.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/duo_window.dart';
 import '../support/test_app.dart';

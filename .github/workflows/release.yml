@@ -72,9 +72,9 @@ defaults:
 
 env:
   # tool/install_flutter.sh installs this Flutter and refuses an archive with another digest.
-  FLUTTER_VERSION: 3.47.9
-  FLUTTER_SHA256_LINUX_X64: 25ed8c3c29d51a7353f2a944310b478af8214920639524b19c50a19e6c044c5a
-  FLUTTER_SHA256_MACOS_ARM64: 6545b85938745dc5070e9faf2adf70233c1811009d87fe6d27bfcda5a04b7698
+  FLUTTER_VERSION: 3.50.1
+  FLUTTER_SHA256_LINUX_X64: 4ad17fc8462fbcef2ba19ff4a78c0a16b7147fde1add8578e267ea62cdb92678
+  FLUTTER_SHA256_MACOS_ARM64: 872883d49965e0cc1d8e477d2d87f2f45930d13f94b34889e53783586f04c715
   BUILD_TOOLS_VERSION: 37.0.0
   # The Xcode that GR Photo's TestFlight builds are made with.
   DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer

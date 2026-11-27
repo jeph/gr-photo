@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The tabs of the look editor (mock `b-look-edit`).
 enum LookGroup { tone, colour, detail, effects }

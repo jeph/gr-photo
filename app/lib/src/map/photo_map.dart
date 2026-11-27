@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/src/map/map_style.dart';
 import 'package:grphoto/src/platform/map_network.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A map with a pin on [place], where a photo was taken, in the colours of
 /// the app's theme ([mapStyle]).

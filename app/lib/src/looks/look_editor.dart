@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gr_camera/gr_camera.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/camera/camera_top_bar.dart';
 import 'package:grphoto/src/looks/look_base_stepper.dart';
@@ -20,6 +18,7 @@ import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/pressable.dart';
 import 'package:grphoto/src/widgets/toast.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Opens the editor on [look] under [name]. [saved] is the library entry
 /// it edits, if any; [slot] is the Custom slot it was opened from, which

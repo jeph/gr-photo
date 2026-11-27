@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/cameras/camera_identity.dart';
@@ -13,6 +11,7 @@ import 'package:grphoto/src/pairing/pairing_widgets.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:grphoto/src/widgets/group.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// One paired camera, from ⋯ on the Cameras screen (mock
 /// `b-camera-detail`): rename it, its clock, its background geotagging

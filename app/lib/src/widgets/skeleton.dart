@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Stands in for content that is still loading: [child] is built from
 /// [SkeletonBox]es and [SkeletonLine]s in the shape of what will replace

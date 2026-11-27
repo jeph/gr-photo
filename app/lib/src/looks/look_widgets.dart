@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gr_camera/gr_camera.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/library/image_orientation.dart';
 import 'package:grphoto/src/looks/look_spec.dart';
@@ -13,6 +11,7 @@ import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:grphoto/src/widgets/gr_text_field.dart';
 import 'package:grphoto/src/widgets/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The picture standing for a look: the photo it was saved from, turned
 /// upright by [orientation] ([SavedLook.photoOrientation]), or a swatch in

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
@@ -22,6 +21,7 @@ import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/toast.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Android delivers the volume buttons to the app as key events; iOS does
 /// not, so the hint only promises them on Android.

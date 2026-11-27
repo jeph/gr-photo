@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:clock/clock.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:gr_fake_camera/gr_fake_camera.dart';
 import 'package:grphoto/src/settings/settings_screen.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/test_app.dart';
 

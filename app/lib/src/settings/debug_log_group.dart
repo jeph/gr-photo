@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
-
 import 'package:grphoto/src/debug/debug_log.dart';
 import 'package:grphoto/src/pairing/pairing_widgets.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The debug logging switch, export and clear, so a bug report can carry
 /// the app's debug logs, including what went to and from the camera.

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_fake_camera/gr_fake_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
@@ -9,6 +8,7 @@ import 'package:grphoto/src/library/library_screen.dart';
 import 'package:grphoto/src/looks/looks_screen.dart';
 import 'package:grphoto/src/settings/settings_screen.dart';
 import 'package:grphoto/src/shoot/shoot_screen.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/test_app.dart';
 

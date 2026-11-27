@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Uppercase label above a [GroupBox] (mock `.seclabel`).
 class SectionLabel extends StatelessWidget {

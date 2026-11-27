@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/cameras/camera_rename.dart';
 import 'package:grphoto/src/pairing/pairing_widgets.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/group.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Last pairing page (mock `b-pair-done`). The camera is already saved and
 /// connecting underneath; this page names it and asks how to connect.

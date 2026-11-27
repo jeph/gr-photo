@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/data/settings.dart';
@@ -10,6 +9,7 @@ import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:grphoto/src/widgets/gr_text_field.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Settings' Downloads group: where downloads are saved. They go to the
 /// phone's photo library, into an album the user can rename, until Save to

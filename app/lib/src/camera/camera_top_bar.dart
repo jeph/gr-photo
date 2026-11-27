@@ -1,13 +1,12 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/connection/camera_pill.dart';
 import 'package:grphoto/src/settings/settings_screen.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/scroll_away_header.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The row at the top of the camera's pages (mock `.topbar`): back to the
 /// Cameras screen, the camera pill and Settings. In a window with a

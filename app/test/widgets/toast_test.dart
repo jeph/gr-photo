@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 const _page = Key('page');
 const _toast = Key('toast');

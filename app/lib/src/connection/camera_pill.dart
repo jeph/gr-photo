@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/connection/camera_sheet.dart';
 import 'package:grphoto/src/connection/link_state.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Camera name, link state and battery at the top of the Library (mock
 /// `.pill` in `b-library-*`, `b-connect`). Tapping opens the camera sheet.

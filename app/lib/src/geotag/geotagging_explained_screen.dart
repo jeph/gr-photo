@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/geotag/geotag_controller.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// What background geotagging does, how it compares with live geotagging,
 /// what the phone asks when it is turned on, and where and for how long

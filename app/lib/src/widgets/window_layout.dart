@@ -2,9 +2,8 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/src/platform/window_pose.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Gives the pages under it the window's [WindowPose]: the vertical bar
 /// ([VerticalBar.of]) and, as a display feature of the [MediaQuery], the

@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/cameras/cameras_screen.dart';
 import 'package:grphoto/src/looks/looks_model.dart';
 import 'package:grphoto/src/looks/looks_screen.dart';
 import 'package:grphoto/src/widgets/dock.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The pages of the home dock, shown while no camera's pages are open.
 enum HomeTab {

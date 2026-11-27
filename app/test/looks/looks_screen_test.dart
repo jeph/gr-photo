@@ -2,12 +2,10 @@ import 'dart:io';
 import 'dart:ui' show DisplayFeature, DisplayFeatureState, DisplayFeatureType;
 
 import 'package:flutter/gestures.dart' show kLongPressTimeout;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:gr_fake_camera/gr_fake_camera.dart';
-
 import 'package:grphoto/src/camera/camera_pages.dart';
 import 'package:grphoto/src/camera/camera_top_bar.dart';
 import 'package:grphoto/src/library/image_orientation.dart';
@@ -18,6 +16,7 @@ import 'package:grphoto/src/sample_photos.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/skeleton.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/duo_window.dart';
 import '../support/test_app.dart';

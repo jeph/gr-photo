@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:gr_fake_camera/gr_fake_camera.dart';
@@ -25,6 +24,7 @@ import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/toast.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The app wired to a [FakeGrCamera], with its data in a temporary
 /// directory.
@@ -106,7 +106,7 @@ final class TestApp {
         models: models,
         child: MaterialApp(
           theme: grTheme(colors),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: appLocalizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           builder: (context, child) => WindowPoseScope(
             pose: windowPose,

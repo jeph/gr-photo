@@ -1,7 +1,6 @@
 import 'dart:ui' show DisplayFeature, DisplayFeatureState, DisplayFeatureType;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
@@ -19,6 +18,7 @@ import 'package:grphoto/src/shoot/shoot_screen.dart';
 import 'package:grphoto/src/shoot/shoot_widgets.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/pressable.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/duo_window.dart';
 import '../support/test_app.dart';

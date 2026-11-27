@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui' show DisplayFeature, DisplayFeatureState, DisplayFeatureType;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,6 +14,7 @@ import 'package:grphoto/src/map/photo_map.dart';
 import 'package:grphoto/src/services.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:image/image.dart' as img;
+import 'package:material_ui/material_ui.dart';
 
 import '../support/duo_window.dart';
 import '../support/test_app.dart';

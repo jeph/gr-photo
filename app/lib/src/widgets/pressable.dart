@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A button that draws itself: while a finger is on it, [child] dims and
 /// shrinks a little under a highlight in the button's [shape], so a touch

@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The space between two buttons of a [GrDialog].
 const double _actionGap = 8;

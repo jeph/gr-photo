@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:gr_camera/gr_camera.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/looks/look_spec.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/pressable.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A look's base image in the look editor: [name] and its place among
 /// [bases], between arrows that move the look to the base before and the

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
@@ -9,6 +8,7 @@ import 'package:grphoto/src/debug/debug_log.dart';
 import 'package:grphoto/src/settings/debug_log_group.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   late Directory temp;
@@ -34,7 +34,7 @@ void main() {
       tester.pumpWidget(
         MaterialApp(
           theme: grTheme(GrColors.light),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: appLocalizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           builder: (context, child) => ToastHost(child: child!),
           home: Scaffold(

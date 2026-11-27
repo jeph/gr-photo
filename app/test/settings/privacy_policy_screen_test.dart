@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/src/settings/privacy_policy_screen.dart';
 import 'package:grphoto/src/settings/settings_screen.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/test_app.dart';
 

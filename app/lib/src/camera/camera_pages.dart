@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/camera/camera_tab_bar.dart';
 import 'package:grphoto/src/connection/connection_controller.dart';
@@ -9,6 +8,7 @@ import 'package:grphoto/src/looks/looks_screen.dart';
 import 'package:grphoto/src/shoot/shoot_model.dart';
 import 'package:grphoto/src/shoot/shoot_screen.dart';
 import 'package:grphoto/src/widgets/dock.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The camera's pages, Library, Shoot and Looks (when the camera has
 /// Custom slots to load looks into, [ConnectionController.tabs]), switched

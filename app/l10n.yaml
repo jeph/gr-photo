@@ -6,6 +6,13 @@ template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 output-class: AppLocalizations
 nullable-getter: false
+# gen-l10n in Flutter 3.50 still writes flutter_localizations' delegates,
+# deprecated for material_ui's, into AppLocalizations.localizationsDelegates.
+# The app does not use that list (appLocalizationsDelegates in
+# lib/l10n/l10n.dart), and the generated files cannot be edited, so they
+# ignore that one rule. Remove this once gen-l10n writes material_ui's
+# delegates (https://github.com/flutter/flutter/issues/191072).
+header: '// ignore_for_file: deprecated_member_use'
 # GR Photo is translated into the languages of the camera's own menus
 # (research/camera-menu-languages.md), listed here in the order Ricoh lists
 # them; Settings shows them in this order. English stays first: it is the

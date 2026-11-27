@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:gr_fake_camera/gr_fake_camera.dart';
@@ -8,6 +7,7 @@ import 'package:grphoto/src/cameras/camera_drawing.dart';
 import 'package:grphoto/src/connection/camera_pill.dart';
 import 'package:grphoto/src/connection/connection_controller.dart';
 import 'package:grphoto/src/connection/link_state.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/test_app.dart';
 

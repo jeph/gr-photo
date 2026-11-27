@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
@@ -32,6 +31,7 @@ import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/skeleton.dart';
 import 'package:grphoto/src/widgets/toast.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:video_player/video_player.dart';
 
 /// Full-screen viewer: swipe between [shots] and pinch to zoom. A shot

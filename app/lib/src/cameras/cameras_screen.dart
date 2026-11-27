@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/camera/camera_tab_bar.dart';
@@ -23,6 +22,7 @@ import 'package:grphoto/src/settings/settings_screen.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/toast.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Where the app opens and where it returns whenever no camera is
 /// connected (mock `b-home` … `b-home-lost`, and `b-welcome` before any

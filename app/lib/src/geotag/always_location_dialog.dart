@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Says why background geotagging needs location all the time, which
 /// choice allows it and what the location history is used for, before

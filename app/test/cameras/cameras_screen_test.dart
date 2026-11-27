@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:gr_fake_camera/gr_fake_camera.dart';
@@ -17,6 +16,7 @@ import 'package:grphoto/src/pairing/pairing_flow.dart';
 import 'package:grphoto/src/sample_photos.dart';
 import 'package:grphoto/src/shoot/shoot_screen.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../support/test_app.dart';
 

@@ -17,7 +17,7 @@ class MainActivity : FlutterActivity() {
     private var cameraWifi: CameraWifiChannel? = null
 
     override fun provideFlutterEngine(context: Context): FlutterEngine =
-        AppEngine.obtain(context, flutterShellArgs.toArray())
+        AppEngine.obtain(context, flutterEngineFlags.toTypedArray())
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)

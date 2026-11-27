@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/main.dart' as app;
 import 'package:grphoto/src/library/shot_cell.dart';
 import 'package:grphoto/src/platform/app_dirs.dart';
 import 'package:grphoto/src/widgets/gr_dialog.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The whole app on a device or simulator against the demo camera:
 /// first-run pairing, connecting, the Library grid, and downloading two

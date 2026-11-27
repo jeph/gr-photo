@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/camera/camera_pages.dart';
@@ -13,6 +11,7 @@ import 'package:grphoto/src/home/home_pages.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/toast.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
+import 'package:material_ui/material_ui.dart';
 
 class GrPhotoApp extends StatelessWidget {
   const new({required this.models, super.key});
@@ -28,7 +27,7 @@ class GrPhotoApp extends StatelessWidget {
         final chosen = models.settings.theme.colors;
         return MaterialApp(
           onGenerateTitle: (context) => context.l10n.appTitle,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: appLocalizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           // The language chosen in Settings, or else the phone's.
           locale: models.settings.language,

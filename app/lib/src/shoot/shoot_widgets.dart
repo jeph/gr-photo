@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/data/settings.dart';
 import 'package:grphoto/src/shoot/shoot_format.dart';
@@ -10,6 +9,7 @@ import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/pressable.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
 import 'package:intl/intl.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Remote / Live view, at the top of Shoot in both modes (mock `.modeseg`).
 /// Shrinks to fit a narrow window or large text rather than overflowing.

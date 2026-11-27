@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
-
 import 'package:grphoto/src/platform/window_pose.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/window_layout.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The app's toasts, as a screen shows them: a short message that
 /// something worked ([done]) or did not ([failed]), in a capsule of the

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
 import 'package:grphoto/src/data/settings.dart';
@@ -12,6 +11,7 @@ import 'package:grphoto/src/settings/privacy_policy_screen.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/group.dart';
 import 'package:grphoto/src/widgets/pressable.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// App settings (subset of mock `b-settings`): appearance and language,
 /// connecting to the camera when the app opens, leaving its Wi-Fi when the

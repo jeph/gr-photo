@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/library/format.dart';
@@ -10,6 +9,7 @@ import 'package:grphoto/src/library/library_scope.dart';
 import 'package:grphoto/src/library/shot.dart';
 import 'package:grphoto/src/theme/tokens.dart';
 import 'package:grphoto/src/widgets/pressable.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Badge in a cell's top-right corner.
 enum CellMark { none, downloaded, queued, selected, unselected }

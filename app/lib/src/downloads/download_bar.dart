@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/downloads/download_engine.dart';
@@ -7,6 +6,7 @@ import 'package:grphoto/src/library/library_scope.dart';
 import 'package:grphoto/src/library/shot_cell.dart';
 import 'package:grphoto/src/services.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Mini download bar floating over the grid (mock `.mini`): what is being
 /// downloaded, "2 of 6 · 31 MB/s", pause/resume and cancel. Tapping it

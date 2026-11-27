@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:gr_camera/gr_camera.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/app_scope.dart';
@@ -13,6 +12,7 @@ import 'package:grphoto/src/geotag/geotag_text.dart';
 import 'package:grphoto/src/geotag/geotagging_explained_screen.dart';
 import 'package:grphoto/src/pairing/pairing_widgets.dart';
 import 'package:grphoto/src/widgets/group.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// The Location section of a camera's details:
 ///

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grphoto/l10n/l10n.dart';
 import 'package:grphoto/src/looks/look_widgets.dart';
 import 'package:grphoto/src/theme/tokens.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('the name dialog answers with the name typed, and is still '
@@ -14,7 +14,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: grTheme(GrColors.light),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: appLocalizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Builder(
           builder: (context) => TextButton(
